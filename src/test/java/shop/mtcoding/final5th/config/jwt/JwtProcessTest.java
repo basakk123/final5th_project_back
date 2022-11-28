@@ -1,0 +1,17 @@
+package shop.mtcoding.final5th.config.jwt;
+
+import org.junit.jupiter.api.Test;
+
+import shop.mtcoding.final5th.config.auth.LoginUser;
+import shop.mtcoding.final5th.domain.user.User;
+
+public class JwtProcessTest {
+    @Test
+    public void create_test() {
+        // given
+        User user = User.builder().id(1L).username("ssar").build();
+        LoginUser loginUser = new LoginUser(user);
+        String token = JwtProcess.create(loginUser);
+        System.out.println(token);
+    }
+}
