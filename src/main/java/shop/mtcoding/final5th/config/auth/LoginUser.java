@@ -7,15 +7,15 @@ import shop.mtcoding.final5th.domain.user.User;
 @Setter
 @Getter
 public class LoginUser {
-    private Long id;
-    private String username;
+    private Long userId;
+    private String userName;
 
     public LoginUser(User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
+        this.userId = user.getUserId();
+        this.userName = user.getUserName();
     }
 
     public User toEntity() {
-        return User.builder().id(id).username(username).build();
+        return User.builder().userId(userId).userName(userName).build();
     }
 }

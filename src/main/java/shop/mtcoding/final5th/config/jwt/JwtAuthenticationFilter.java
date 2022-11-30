@@ -2,7 +2,6 @@ package shop.mtcoding.final5th.config.jwt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.Optional;
 
 import javax.servlet.Filter;
@@ -15,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -69,7 +66,7 @@ public class JwtAuthenticationFilter implements Filter {
         User userPS = userOP.get();
         SHA256 sh = new SHA256();
         String encPassword = sh.encrypt(loginReqDto.getPassword());
-        if (!userPS.getPassword().equals(encPassword)) {
+        if (!userPS.getUserPassword().equals(encPassword)) {
             customResponse("패스워드가 틀렸습니다.", resp);
             return;
         }

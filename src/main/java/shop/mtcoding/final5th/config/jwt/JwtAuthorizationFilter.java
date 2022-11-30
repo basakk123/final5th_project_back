@@ -49,12 +49,12 @@ public class JwtAuthorizationFilter implements Filter {
         jwtToken = jwtToken.trim();
         try {
             DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken);
-            Long id = decodedJWT.getClaim("id").asLong();
-            String username = decodedJWT.getClaim("username").asString();
-            LoginUser loginUser = new LoginUser(User.builder().id(id).username(username).build());
+            Long userId = decodedJWT.getClaim("id").asLong();
+            String userName = decodedJWT.getClaim("username").asString();
+            LoginUser loginUser = new LoginUser(User.builder().userId(userId).userName(userName).build());
             HttpSession session = req.getSession();
             session.setAttribute("loginUser", loginUser);
-            log.debug("디버그 id : " + id);
+            log.debug("디버그 userId : " + userId);
         } catch (Exception e) {
             customResponse("토큰 검증 실패", resp);
         }

@@ -11,10 +11,10 @@ public class JwtProcess {
 
     public static String create(LoginUser loginUser) {
         String jwtToken = JWT.create()
-                .withSubject(loginUser.getUsername())
+                .withSubject(loginUser.getUserName())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
-                .withClaim("id", loginUser.getId())
-                .withClaim("username", loginUser.getUsername())
+                .withClaim("userId", loginUser.getUserId())
+                .withClaim("userName", loginUser.getUserName())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
         return JwtProperties.TOKEN_PREFIX + jwtToken;
