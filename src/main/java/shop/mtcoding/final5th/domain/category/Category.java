@@ -29,4 +29,7 @@ public class Category {
 
     @Column(nullable = false)
     private Long userId;
+
+    @Column(nullable = false, length = 50)
+    private String categoryColor;
 }
