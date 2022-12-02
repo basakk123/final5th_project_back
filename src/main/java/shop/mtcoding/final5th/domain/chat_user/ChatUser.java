@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name = "chat_ser")
+@Table(name = "chat_user")
 @Entity
 public class ChatUser {
 

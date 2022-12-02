@@ -19,7 +19,7 @@ public class ShareSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long key;
+    private Long shareScheduleKey;
 
     @Column(nullable = false)
     private Long userId;
