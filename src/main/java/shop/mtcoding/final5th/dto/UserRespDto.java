@@ -8,11 +8,11 @@ public class UserRespDto {
 
     @Setter
     @Getter
-    public static class UserNameRespDto {
+    public static class UserRealnameRespDto {
         private String userName;
 
-        public UserNameRespDto(User user) {
-            this.userName = user.getUserName();
+        public UserRealnameRespDto(User user) {
+            this.userName = user.getUserRealname();
         }
     }
 }

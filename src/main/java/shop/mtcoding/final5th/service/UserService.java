@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
-import shop.mtcoding.final5th.dto.UserRespDto.UserNameRespDto;
+import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -17,10 +17,10 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserNameRespDto findUserNameById(Long userId) {
+    public UserRealnameRespDto findUserRealnameById(Long userId) {
         User userPS = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-        return new UserNameRespDto(userPS);
+        return new UserRealnameRespDto(userPS);
     }
 
 }
