@@ -14,13 +14,13 @@ public class ScheduleRespDto {
     @Setter
     @Getter
     public static class ScheduleListRespDto {
-        private List<ScheduleDto> schedules;
-        private List<CategoryDto> categories;
+        private List<ScheduleDto> scheduleDtos;
+        private List<CategoryDto> categoryDtos;
 
         public ScheduleListRespDto(List<Schedule> scheduleList, List<Category> categoryList) {
-            this.schedules = scheduleList.stream().map((schedule) -> new ScheduleDto(schedule))
+            this.scheduleDtos = scheduleList.stream().map((schedule) -> new ScheduleDto(schedule))
                     .collect(Collectors.toList());
-            this.categories = categoryList.stream().map((category) -> new CategoryDto(category))
+            this.categoryDtos = categoryList.stream().map((category) -> new CategoryDto(category))
                     .collect(Collectors.toList());
         }
 
