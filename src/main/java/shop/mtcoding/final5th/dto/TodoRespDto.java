@@ -54,6 +54,22 @@ public class TodoRespDto {
 
     @Setter
     @Getter
+    public static class TodoSaveRespDto {
+        private Long todoId;
+        private Long userId;
+        private String todoTitle;
+        private boolean todoFinished;
+
+        public TodoSaveRespDto(Todo todo) {
+            this.todoId = todo.getTodoId();
+            this.userId = todo.getUserId();
+            this.todoTitle = todo.getTodoTitle();
+            this.todoFinished = todo.isTodoFinished();
+        }
+    }
+
+    @Setter
+    @Getter
     public static class TodoUpdateRespDto {
         private String todoTitle;
         private boolean todoFinished;

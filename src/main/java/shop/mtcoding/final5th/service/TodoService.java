@@ -15,10 +15,11 @@ import shop.mtcoding.final5th.domain.todo.Todo;
 import shop.mtcoding.final5th.domain.todo.TodoRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
-import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleUpdateRespDto;
+import shop.mtcoding.final5th.dto.TodoReqDto.TodoSaveReqDto;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoUpdateReqDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoDetailRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoListRespDto;
+import shop.mtcoding.final5th.dto.TodoRespDto.TodoSaveRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoUpdateRespDto;
 
 @Transactional(readOnly = true)
@@ -44,6 +45,12 @@ public class TodoService {
                 Todo todoPS = todoRepository.findById(todoId)
                                 .orElseThrow(() -> new CustomApiException("해당 투두가 없습니다", HttpStatus.BAD_REQUEST));
                 return new TodoDetailRespDto(todoPS);
+        }
+
+        @Transactional
+        public TodoSaveRespDto saveTodo(TodoSaveReqDto TodoSaveReqDto) {
+                Todo TodoPS = todoRepository.save(TodoSaveReqDto.toEntity());
+                return new TodoSaveRespDto(TodoPS);
         }
 
         @Transactional

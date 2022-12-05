@@ -22,7 +22,7 @@ public class ScheduleReqDto {
         private String field;
 
         public Schedule toEntity() {
-            return Schedule.builder()
+            Schedule schedule = Schedule.builder()
                     .scheduleId(userId)
                     .scheduleTitle(scheduleTitle)
                     .scheduleCreatedAt(scheduleCreatedAt)
@@ -33,6 +33,7 @@ public class ScheduleReqDto {
                     .scheduleNote(scheduleNote)
                     .field(field)
                     .build();
+            return schedule;
         }
     }
 
