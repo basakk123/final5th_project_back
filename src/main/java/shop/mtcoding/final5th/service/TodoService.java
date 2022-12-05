@@ -15,6 +15,7 @@ import shop.mtcoding.final5th.domain.todo.Todo;
 import shop.mtcoding.final5th.domain.todo.TodoRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.TodoRespDto.TodoDetailRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoListRespDto;
 
 @Transactional(readOnly = true)
@@ -32,6 +33,14 @@ public class TodoService {
                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
         List<Todo> todoListPS = todoRepository.findTodoListByUserId(userId);
         return new TodoListRespDto(todoListPS);
+    }
+
+    public TodoDetailRespDto findTodoDetail(Long userId, Long todoId) {
+        User userPS = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+        Todo todoPS = todoRepository.findById(todoId)
+                .orElseThrow(() -> new CustomApiException("해당 투두가 없습니다", HttpStatus.BAD_REQUEST));
+        return new TodoDetailRespDto(todoPS);
     }
 
 }

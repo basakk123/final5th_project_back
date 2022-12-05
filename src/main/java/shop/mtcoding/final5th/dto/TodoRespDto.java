@@ -35,4 +35,20 @@ public class TodoRespDto {
             }
         }
     }
+
+    @Setter
+    @Getter
+    public static class TodoDetailRespDto {
+        private Long todoId;
+        private Long userId;
+        private String todoTitle;
+        private boolean todoFinished;
+
+        public TodoDetailRespDto(Todo todo) {
+            this.todoId = todo.getTodoId();
+            this.userId = todo.getUserId();
+            this.todoTitle = todo.getTodoTitle();
+            this.todoFinished = todo.isTodoFinished();
+        }
+    }
 }

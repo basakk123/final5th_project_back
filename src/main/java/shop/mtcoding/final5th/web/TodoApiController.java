@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.dto.ResponseDto;
+import shop.mtcoding.final5th.dto.TodoRespDto.TodoDetailRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoListRespDto;
 import shop.mtcoding.final5th.service.TodoService;
 import shop.mtcoding.final5th.service.UserService;
@@ -31,6 +32,13 @@ public class TodoApiController {
     public ResponseEntity<?> findTodoListByUserId(@PathVariable Long userId) {
         TodoListRespDto tododListRespDto = todoService.findTodoListByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 리스트 보기 성공", tododListRespDto),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("user/{userId}/todo/{todoId}")
+    public ResponseEntity<?> findTodoListByUserId(@PathVariable Long userId, @PathVariable Long todoId) {
+        TodoDetailRespDto todoDetailRespDto = todoService.findTodoDetail(userId, todoId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 상세보기 성공", todoDetailRespDto),
                 HttpStatus.OK);
     }
 }
