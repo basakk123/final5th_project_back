@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
+import shop.mtcoding.final5th.dto.JoinedChatRespDto.JoinedChatDetailRespDto;
 import shop.mtcoding.final5th.dto.JoinedChatRespDto.JoinedChatListRespDto;
 import shop.mtcoding.final5th.dto.ResponseDto;
 import shop.mtcoding.final5th.service.JoinedChatService;
@@ -37,6 +38,13 @@ public class JoinedChatApiController {
         }
         JoinedChatListRespDto joinedChatListRespDto = joinedChatService.findJoindeChatListByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "참여중인 채팅 리스트 보기 성공", joinedChatListRespDto),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("user/{userId}/joinedchat/{joinedchatId}")
+    public ResponseEntity<?> findJoinedChatDetail(@PathVariable Long userId, @PathVariable Long joinedChatId) {
+        JoinedChatDetailRespDto joinedChatDetailRespDto = joinedChatService.findJoinedChatDetail(userId, joinedChatId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "채팅 상세보기 성공", joinedChatDetailRespDto),
                 HttpStatus.OK);
     }
 }

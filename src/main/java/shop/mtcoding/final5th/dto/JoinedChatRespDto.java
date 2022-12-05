@@ -36,4 +36,20 @@ public class JoinedChatRespDto {
             }
         }
     }
+
+    @Setter
+    @Getter
+    public static class JoinedChatDetailRespDto {
+        private Long joinedChatRoomId;
+        private Long userId;
+        private Long chatRoomId2;
+        private Timestamp joinedChatCreatedAt;
+
+        public JoinedChatDetailRespDto(JoinedChat joinedChat) {
+            this.joinedChatRoomId = joinedChat.getJoinedChatRoomId();
+            this.userId = joinedChat.getUserId();
+            this.chatRoomId2 = joinedChat.getChatRoomId2();
+            this.joinedChatCreatedAt = joinedChat.getJoinedChatCreatedAt();
+        }
+    }
 }
