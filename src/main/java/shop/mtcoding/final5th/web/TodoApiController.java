@@ -36,7 +36,7 @@ public class TodoApiController {
     }
 
     @GetMapping("user/{userId}/todo/{todoId}")
-    public ResponseEntity<?> findTodoListByUserId(@PathVariable Long userId, @PathVariable Long todoId) {
+    public ResponseEntity<?> findTodoDetail(@PathVariable Long userId, @PathVariable Long todoId) {
         TodoDetailRespDto todoDetailRespDto = todoService.findTodoDetail(userId, todoId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 상세보기 성공", todoDetailRespDto),
                 HttpStatus.OK);

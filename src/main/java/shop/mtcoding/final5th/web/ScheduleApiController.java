@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.dto.ResponseDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto;
+import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto.ScheduleDetailRespDto;
 import shop.mtcoding.final5th.service.ScheduleService;
 import shop.mtcoding.final5th.service.UserService;
 
@@ -31,6 +32,13 @@ public class ScheduleApiController {
     public ResponseEntity<?> findScheduleListAndCategoryByUserId(@PathVariable Long userId) {
         ScheduleListRespDto scheduleListRespDto = scheduleService.findScheduleListAndCategoryByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "일정과 카테고리 리스트 보기 성공", scheduleListRespDto),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("user/{userId}/schedule/{scheduleId}")
+    public ResponseEntity<?> findScheduleDetail(@PathVariable Long userId, @PathVariable Long scheduleId) {
+        ScheduleDetailRespDto scheduleDetailRespDto = scheduleService.findScheduleDetail(userId, scheduleId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "스케줄 상세보기 성공", scheduleDetailRespDto),
                 HttpStatus.OK);
     }
 }

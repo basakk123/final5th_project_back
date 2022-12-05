@@ -69,5 +69,33 @@ public class ScheduleRespDto {
                 this.categoryColor = category.getCategoryColor();
             }
         }
+
+        @Setter
+        @Getter
+        public static class ScheduleDetailRespDto {
+            private Long scheduleId;
+            private Long userId;
+            private String scheduleTitle;
+            private Timestamp scheduleCreatedAt;
+            private Timestamp scheduleStartAt;
+            private Timestamp scheduleFinishAt;
+            private String scheduleLocation;
+            private String scheduleContent;
+            private String scheduleNote;
+            private String field;
+
+            public ScheduleDetailRespDto(Schedule schedule) {
+                this.scheduleId = schedule.getScheduleId();
+                this.userId = schedule.getUserId();
+                this.scheduleTitle = schedule.getScheduleTitle();
+                this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
+                this.scheduleStartAt = schedule.getScheduleStartAt();
+                this.scheduleFinishAt = schedule.getScheduleFinishAt();
+                this.scheduleLocation = schedule.getScheduleLocation();
+                this.scheduleContent = schedule.getScheduleContent();
+                this.scheduleNote = schedule.getScheduleNote();
+                this.field = schedule.getField();
+            }
+        }
     }
 }
