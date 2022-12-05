@@ -26,36 +26,45 @@ import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleUpdateRespDto;
 @Service
 public class ScheduleService {
 
-    private final UserRepository userRepository;
-    private final ScheduleRepository scheduleRepository;
-    private final CategoryRepository categoryRepository;
-    private final Logger log = LoggerFactory.getLogger(getClass());
+        private final UserRepository userRepository;
+        private final ScheduleRepository scheduleRepository;
+        private final CategoryRepository categoryRepository;
+        private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public ScheduleListRespDto findScheduleListAndCategoryByUserId(Long userId) {
-        User userPS = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-        List<Schedule> scheduleListPS = scheduleRepository.findScheduleListByUserId(userId);
-        List<Category> categoryListPS = categoryRepository.findCategoryListByUserId(userId);
-        return new ScheduleListRespDto(scheduleListPS, categoryListPS);
-    }
+        public ScheduleListRespDto findScheduleListAndCategoryByUserId(Long userId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                List<Schedule> scheduleListPS = scheduleRepository.findScheduleListByUserId(userId);
+                List<Category> categoryListPS = categoryRepository.findCategoryListByUserId(userId);
+                return new ScheduleListRespDto(scheduleListPS, categoryListPS);
+        }
 
-    public ScheduleDetailRespDto findScheduleDetail(Long userId, Long scheduleId) {
-        User userPS = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-        Schedule SchedulePS = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
-        return new ScheduleDetailRespDto(SchedulePS);
-    }
+        public ScheduleDetailRespDto findScheduleDetail(Long userId, Long scheduleId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                Schedule SchedulePS = scheduleRepository.findById(scheduleId)
+                                .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
+                return new ScheduleDetailRespDto(SchedulePS);
+        }
 
-    @Transactional
-    public ScheduleUpdateRespDto updateSchedule(Long userId, Long scheduleId,
-            ScheduleUpdateReqDto scheduleUpdateReqDto) {
-        User userPS = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-        Schedule SchedulePS = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
-        Schedule Schedule = scheduleUpdateReqDto.toEntity();
-        SchedulePS = scheduleRepository.save(Schedule);
-        return new ScheduleUpdateRespDto(SchedulePS);
-    }
+        @Transactional
+        public ScheduleUpdateRespDto updateSchedule(Long userId, Long scheduleId,
+                        ScheduleUpdateReqDto scheduleUpdateReqDto) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                Schedule SchedulePS = scheduleRepository.findById(scheduleId)
+                                .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
+                Schedule Schedule = scheduleUpdateReqDto.toEntity();
+                SchedulePS = scheduleRepository.save(Schedule);
+                return new ScheduleUpdateRespDto(SchedulePS);
+        }
+
+        @Transactional
+        public void deleteByScheduleId(Long userId, Long scheduleId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                Schedule SchedulePS = scheduleRepository.findById(scheduleId)
+                                .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
+                scheduleRepository.deleteById(scheduleId);
+        }
 }
