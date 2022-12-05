@@ -16,8 +16,10 @@ import shop.mtcoding.final5th.domain.schedule.Schedule;
 import shop.mtcoding.final5th.domain.schedule.ScheduleRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleUpdateReqDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto.ScheduleDetailRespDto;
+import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleUpdateRespDto;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -43,5 +45,17 @@ public class ScheduleService {
         Schedule SchedulePS = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
         return new ScheduleDetailRespDto(SchedulePS);
+    }
+
+    @Transactional
+    public ScheduleUpdateRespDto updateSchedule(Long userId, Long scheduleId,
+            ScheduleUpdateReqDto scheduleUpdateReqDto) {
+        User userPS = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+        Schedule SchedulePS = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
+        Schedule Schedule = scheduleUpdateReqDto.toEntity();
+        SchedulePS = scheduleRepository.save(Schedule);
+        return new ScheduleUpdateRespDto(SchedulePS);
     }
 }

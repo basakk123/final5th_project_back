@@ -98,4 +98,28 @@ public class ScheduleRespDto {
             }
         }
     }
+
+    @Setter
+    @Getter
+    public static class ScheduleUpdateRespDto {
+        private String scheduleTitle;
+        private Timestamp scheduleCreatedAt;
+        private Timestamp scheduleStartAt;
+        private Timestamp scheduleFinishAt;
+        private String scheduleLocation;
+        private String scheduleContent;
+        private String scheduleNote;
+        private String field;
+
+        public ScheduleUpdateRespDto(Schedule schedule) {
+            this.scheduleTitle = schedule.getScheduleTitle();
+            this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
+            this.scheduleStartAt = schedule.getScheduleStartAt();
+            this.scheduleFinishAt = schedule.getScheduleFinishAt();
+            this.scheduleLocation = schedule.getScheduleLocation();
+            this.scheduleContent = schedule.getScheduleContent();
+            this.scheduleNote = schedule.getScheduleNote();
+            this.field = schedule.getField();
+        }
+    }
 }

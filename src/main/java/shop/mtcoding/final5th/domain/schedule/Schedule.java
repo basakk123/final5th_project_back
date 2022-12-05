@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,4 +42,21 @@ public class Schedule {
     private String scheduleNote;
 
     private String field;
+
+    @Builder
+    public Schedule(Long scheduleId, Long userId, String scheduleTitle, Timestamp scheduleCreatedAt,
+            Timestamp scheduleStartAt, Timestamp scheduleFinishAt, String scheduleLocation, String scheduleContent,
+            String scheduleNote, String field) {
+        this.scheduleId = scheduleId;
+        this.userId = userId;
+        this.scheduleTitle = scheduleTitle;
+        this.scheduleCreatedAt = scheduleCreatedAt;
+        this.scheduleStartAt = scheduleStartAt;
+        this.scheduleFinishAt = scheduleFinishAt;
+        this.scheduleLocation = scheduleLocation;
+        this.scheduleContent = scheduleContent;
+        this.scheduleNote = scheduleNote;
+        this.field = field;
+    }
+
 }
