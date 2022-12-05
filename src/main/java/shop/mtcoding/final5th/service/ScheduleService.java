@@ -16,9 +16,11 @@ import shop.mtcoding.final5th.domain.schedule.Schedule;
 import shop.mtcoding.final5th.domain.schedule.ScheduleRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleSaveReqDto;
 import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleUpdateReqDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto.ScheduleDetailRespDto;
+import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleSaveRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleUpdateRespDto;
 
 @Transactional(readOnly = true)
@@ -45,6 +47,12 @@ public class ScheduleService {
                 Schedule SchedulePS = scheduleRepository.findById(scheduleId)
                                 .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
                 return new ScheduleDetailRespDto(SchedulePS);
+        }
+
+        @Transactional
+        public ScheduleSaveRespDto saveSchedule(ScheduleSaveReqDto scheduleSaveReqDto) {
+                Schedule SchedulePS = scheduleRepository.save(scheduleSaveReqDto.toEntity());
+                return new ScheduleSaveRespDto(SchedulePS);
         }
 
         @Transactional
