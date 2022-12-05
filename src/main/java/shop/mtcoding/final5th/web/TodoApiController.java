@@ -85,12 +85,12 @@ public class TodoApiController {
     }
 
     @DeleteMapping("user/{userId}/todo/{todoId}")
-    public ResponseEntity<?> deleteByToId(@PathVariable Long userId, @PathVariable Long todoId) {
+    public ResponseEntity<?> deleteByTodoId(@PathVariable Long userId, @PathVariable Long todoId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {
             throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
         }
-        todoService.deleteByToId(userId, todoId);
+        todoService.deleteByTodoId(userId, todoId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 삭제 성공", null),
                 HttpStatus.OK);
     }

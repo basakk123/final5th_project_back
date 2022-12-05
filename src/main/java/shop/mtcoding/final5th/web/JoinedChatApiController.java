@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,17 @@ public class JoinedChatApiController {
     public ResponseEntity<?> findJoinedChatDetail(@PathVariable Long userId, @PathVariable Long joinedChatId) {
         JoinedChatDetailRespDto joinedChatDetailRespDto = joinedChatService.findJoinedChatDetail(userId, joinedChatId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "채팅 상세보기 성공", joinedChatDetailRespDto),
+                HttpStatus.OK);
+    }
+
+    @DeleteMapping("user/{userId}/joinedchat/{joinedchatId}")
+    public ResponseEntity<?> deleteByJoinedChatId(@PathVariable Long userId, @PathVariable Long joinedChatId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        joinedChatService.deleteByJoinedChatId(userId, joinedChatId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "채팅방 삭제 성공", null),
                 HttpStatus.OK);
     }
 }

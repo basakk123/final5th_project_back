@@ -40,4 +40,13 @@ public class JoinedChatService {
                                 .orElseThrow(() -> new CustomApiException("해당 투두가 없습니다", HttpStatus.BAD_REQUEST));
                 return new JoinedChatDetailRespDto(joinedChatPS);
         }
+
+        @Transactional
+        public void deleteByJoinedChatId(Long userId, Long joinedChatId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                JoinedChat joinedChatPS = joinedChatRepository.findById(joinedChatId)
+                                .orElseThrow(() -> new CustomApiException("해당 투두가 없습니다", HttpStatus.BAD_REQUEST));
+                joinedChatRepository.deleteById(joinedChatId);
+        }
 }

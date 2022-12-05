@@ -66,7 +66,7 @@ public class TodoService {
         }
 
         @Transactional
-        public void deleteByToId(Long userId, Long todoId) {
+        public void deleteByTodoId(Long userId, Long todoId) {
                 User userPS = userRepository.findById(userId)
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
                 Todo todoPS = todoRepository.findById(todoId)
