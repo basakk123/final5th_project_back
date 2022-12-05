@@ -51,4 +51,16 @@ public class TodoRespDto {
             this.todoFinished = todo.isTodoFinished();
         }
     }
+
+    @Setter
+    @Getter
+    public static class TodoUpdateRespDto {
+        private String todoTitle;
+        private boolean todoFinished;
+
+        public TodoUpdateRespDto(Todo todo) {
+            this.todoTitle = todo.getTodoTitle();
+            this.todoFinished = todo.isTodoFinished();
+        }
+    }
 }

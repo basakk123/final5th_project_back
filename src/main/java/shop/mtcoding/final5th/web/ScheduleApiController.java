@@ -57,7 +57,7 @@ public class ScheduleApiController {
     }
 
     @PostMapping("user/{userId}/schedule/{scheduleId}")
-    public ResponseEntity<?> updateScheduleDetail(@PathVariable Long userId, @PathVariable Long scheduleId,
+    public ResponseEntity<?> updateSchedule(@PathVariable Long userId, @PathVariable Long scheduleId,
             @RequestBody ScheduleUpdateReqDto scheduleUpdateReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {

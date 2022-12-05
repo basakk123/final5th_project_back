@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,12 @@ public class Todo {
 
     @Column(nullable = false)
     private boolean todoFinished;
+
+    @Builder
+    public Todo(Long todoId, Long userId, String todoTitle, boolean todoFinished) {
+        this.todoId = todoId;
+        this.userId = userId;
+        this.todoTitle = todoTitle;
+        this.todoFinished = todoFinished;
+    }
 }
