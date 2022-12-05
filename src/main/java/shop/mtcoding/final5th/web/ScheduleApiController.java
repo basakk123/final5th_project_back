@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.final5th.config.auth.LoginUser;
+import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.ResponseDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto.ScheduleDetailRespDto;
@@ -30,6 +32,10 @@ public class ScheduleApiController {
 
     @GetMapping("/user/{userId}/schedule")
     public ResponseEntity<?> findScheduleListAndCategoryByUserId(@PathVariable Long userId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
         ScheduleListRespDto scheduleListRespDto = scheduleService.findScheduleListAndCategoryByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "일정과 카테고리 리스트 보기 성공", scheduleListRespDto),
                 HttpStatus.OK);
@@ -37,6 +43,10 @@ public class ScheduleApiController {
 
     @GetMapping("user/{userId}/schedule/{scheduleId}")
     public ResponseEntity<?> findScheduleDetail(@PathVariable Long userId, @PathVariable Long scheduleId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
         ScheduleDetailRespDto scheduleDetailRespDto = scheduleService.findScheduleDetail(userId, scheduleId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "스케줄 상세보기 성공", scheduleDetailRespDto),
                 HttpStatus.OK);
