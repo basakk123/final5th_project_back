@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -66,6 +67,17 @@ public class TodoApiController {
         TodoUpdateRespDto todoUpdateRespDto = todoService.updateTodo(userId, todoId,
                 todoUpdateReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 수정 성공", todoUpdateRespDto),
+                HttpStatus.OK);
+    }
+
+    @DeleteMapping("user/{userId}/todo/{todoId}")
+    public ResponseEntity<?> deleteByToId(@PathVariable Long userId, @PathVariable Long todoId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        todoService.deleteByToId(userId, todoId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 삭제 성공", null),
                 HttpStatus.OK);
     }
 }
