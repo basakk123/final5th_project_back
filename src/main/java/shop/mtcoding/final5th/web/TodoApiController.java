@@ -27,7 +27,7 @@ public class TodoApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("/todo/{userId}")
+    @GetMapping("user/{userId}/todo")
     public ResponseEntity<?> findTodoListByUserId(@PathVariable Long userId) {
         TodoListRespDto tododListRespDto = todoService.findTodoListByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 리스트 보기 성공", tododListRespDto),

@@ -27,7 +27,7 @@ public class ScheduleApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("/schedule/{userId}")
+    @GetMapping("/user/{userId}/schedule")
     public ResponseEntity<?> findScheduleListAndCategoryByUserId(@PathVariable Long userId) {
         ScheduleListRespDto scheduleListRespDto = scheduleService.findScheduleListAndCategoryByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "일정과 카테고리 리스트 보기 성공", scheduleListRespDto),
