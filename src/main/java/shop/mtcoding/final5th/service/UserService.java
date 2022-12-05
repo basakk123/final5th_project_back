@@ -24,8 +24,12 @@ public class UserService {
         log.debug("디버그 : findUserRealnameById 서비스 실행됨");
         User userPS = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-        log.debug("디버그 : findUserRealnameById 서비스 리턴전");
+        log.debug("디버그 : findUserRealnameById 서비스 리턴 전");
         return new UserRealnameRespDto(userPS);
+    }
+
+    public void findScheduleListByUserId(Long userId) {
+
     }
 
 }

@@ -24,6 +24,9 @@ public class Schedule {
     private Long scheduleId;
 
     @Column(nullable = false)
+    private Long userId;
+
+    @Column(nullable = false)
     private String scheduleTitle;
 
     @Column(nullable = false)
