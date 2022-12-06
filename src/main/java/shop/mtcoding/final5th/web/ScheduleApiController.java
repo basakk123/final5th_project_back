@@ -21,6 +21,7 @@ import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.ResponseDto;
 import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleSaveReqDto;
 import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleUpdateReqDto;
+import shop.mtcoding.final5th.dto.ScheduleRespDto.FollowingScheduleListRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleDetailRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleSaveRespDto;
@@ -46,6 +47,20 @@ public class ScheduleApiController {
         }
         ScheduleListRespDto scheduleListRespDto = scheduleService.findScheduleListAndCategoryByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "일정과 카테고리 리스트 보기 성공", scheduleListRespDto),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{followinguserid}/schedule/{userid}")
+    public ResponseEntity<?> findScheduleListAndCategoryByFollowingUserId(@PathVariable Long followingUserId,
+            @PathVariable Long userId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != followingUserId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        FollowingScheduleListRespDto followingScheduleListRespDto = scheduleService
+                .findScheduleListAndCategoryByFollowingUserId(followingUserId, userId);
+        return new ResponseEntity<>(
+                new ResponseDto<>(HttpStatus.OK, "팔로잉 일정과 카테고리 리스트 보기 성공", followingScheduleListRespDto),
                 HttpStatus.OK);
     }
 

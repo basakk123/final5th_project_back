@@ -54,6 +54,47 @@ public class ScheduleRespDto {
 
     @Setter
     @Getter
+    public static class FollowingScheduleListRespDto {
+        private List<ScheduleDto> scheduleDtos;
+
+        public FollowingScheduleListRespDto(List<Schedule> schedules) {
+            this.scheduleDtos = schedules.stream().map((schedule) -> new ScheduleDto(schedule))
+                    .collect(Collectors.toList());
+        }
+
+        @Setter
+        @Getter
+        public class ScheduleDto {
+            private Long scheduleId;
+            private Long userId;
+            private String scheduleTitle;
+            private Timestamp scheduleCreatedAt;
+            private Timestamp scheduleStartAt;
+            private Timestamp scheduleFinishAt;
+            private String scheduleLocation;
+            private String scheduleContent;
+            private String scheduleNote;
+            private String field;
+            private List<Category> categoryList;
+
+            public ScheduleDto(Schedule schedule) {
+                this.scheduleId = schedule.getScheduleId();
+                this.userId = schedule.getUserId();
+                this.scheduleTitle = schedule.getScheduleTitle();
+                this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
+                this.scheduleStartAt = schedule.getScheduleStartAt();
+                this.scheduleFinishAt = schedule.getScheduleFinishAt();
+                this.scheduleLocation = schedule.getScheduleLocation();
+                this.scheduleContent = schedule.getScheduleContent();
+                this.scheduleNote = schedule.getScheduleNote();
+                this.field = schedule.getField();
+                this.categoryList = schedule.getCategoryList();
+            }
+        }
+    }
+
+    @Setter
+    @Getter
     public static class ScheduleDetailRespDto {
         private Long scheduleId;
         private Long userId;
