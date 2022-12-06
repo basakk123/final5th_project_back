@@ -1,5 +1,7 @@
 package shop.mtcoding.final5th.domain.follow;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,4 +25,7 @@ public class Follow {
 
     @Column(nullable = false)
     private Long followingUserId;
+
+    @Column(nullable = false)
+    private Timestamp createdAt;
 }
