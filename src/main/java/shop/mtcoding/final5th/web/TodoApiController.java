@@ -21,6 +21,7 @@ import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.ResponseDto;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoSaveReqDto;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoUpdateReqDto;
+import shop.mtcoding.final5th.dto.TodoRespDto.FollowingTodoListRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoDetailRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoListRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoSaveRespDto;
@@ -38,7 +39,7 @@ public class TodoApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("user/{userId}/todo")
+    @GetMapping("/user/{userId}/todo")
     public ResponseEntity<?> findTodoListByUserId(@PathVariable Long userId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {
@@ -49,7 +50,20 @@ public class TodoApiController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("user/{userId}/todo/{todoId}")
+    @GetMapping("/user/{followinguserid}/todo/{userId}")
+    public ResponseEntity<?> findTodoListByFollowingUserId(@PathVariable Long followingUserId,
+            @PathVariable Long userId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        FollowingTodoListRespDto followingTodoListRespDto = todoService.findTodoListByFollowingUserId(followingUserId,
+                userId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로잉 투두 리스트 보기 성공", followingTodoListRespDto),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}/todo/{todoId}")
     public ResponseEntity<?> findTodoDetail(@PathVariable Long userId, @PathVariable Long todoId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {
@@ -71,7 +85,7 @@ public class TodoApiController {
                 HttpStatus.OK);
     }
 
-    @PutMapping("user/{userId}/todo/{todoId}")
+    @PutMapping("/user/{userId}/todo/{todoId}")
     public ResponseEntity<?> updateTodo(@PathVariable Long userId, @PathVariable Long todoId,
             @RequestBody TodoUpdateReqDto todoUpdateReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -84,7 +98,7 @@ public class TodoApiController {
                 HttpStatus.OK);
     }
 
-    @DeleteMapping("user/{userId}/todo/{todoId}")
+    @DeleteMapping("/user/{userId}/todo/{todoId}")
     public ResponseEntity<?> deleteByTodoId(@PathVariable Long userId, @PathVariable Long todoId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {

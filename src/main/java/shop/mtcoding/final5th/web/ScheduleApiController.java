@@ -64,7 +64,7 @@ public class ScheduleApiController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("user/{userId}/schedule/{scheduleId}")
+    @GetMapping("/user/{userId}/schedule/{scheduleId}")
     public ResponseEntity<?> findScheduleDetail(@PathVariable Long userId, @PathVariable Long scheduleId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {
@@ -86,7 +86,7 @@ public class ScheduleApiController {
                 HttpStatus.OK);
     }
 
-    @PutMapping("user/{userId}/schedule/{scheduleId}")
+    @PutMapping("/user/{userId}/schedule/{scheduleId}")
     public ResponseEntity<?> updateSchedule(@PathVariable Long userId, @PathVariable Long scheduleId,
             @RequestBody ScheduleUpdateReqDto scheduleUpdateReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -99,7 +99,7 @@ public class ScheduleApiController {
                 HttpStatus.OK);
     }
 
-    @DeleteMapping("user/{userId}/schedule/{scheduleId}")
+    @DeleteMapping("/user/{userId}/schedule/{scheduleId}")
     public ResponseEntity<?> deleteByScheduleId(@PathVariable Long userId, @PathVariable Long scheduleId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {

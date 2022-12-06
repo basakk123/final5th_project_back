@@ -29,7 +29,7 @@ public class FollowApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("user/{followinguserid}/follow")
+    @GetMapping("/user/{followinguserid}/follow")
     public ResponseEntity<?> findFollowListByFollowingUserId(@PathVariable Long followingUserId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != followingUserId) {

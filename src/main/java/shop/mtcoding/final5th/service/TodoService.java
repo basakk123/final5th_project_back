@@ -10,13 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
-import shop.mtcoding.final5th.domain.schedule.ScheduleRepository;
+import shop.mtcoding.final5th.domain.follow.Follow;
+import shop.mtcoding.final5th.domain.follow.FollowRepository;
 import shop.mtcoding.final5th.domain.todo.Todo;
 import shop.mtcoding.final5th.domain.todo.TodoRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoSaveReqDto;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoUpdateReqDto;
+import shop.mtcoding.final5th.dto.TodoRespDto.FollowingTodoListRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoDetailRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoListRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoSaveRespDto;
@@ -29,7 +31,7 @@ public class TodoService {
 
         private final UserRepository userRepository;
         private final TodoRepository todoRepository;
-        private final ScheduleRepository scheduleRepository;
+        private final FollowRepository followRepository;
         private final Logger log = LoggerFactory.getLogger(getClass());
 
         public TodoListRespDto findTodoListByUserId(Long userId) {
@@ -37,6 +39,15 @@ public class TodoService {
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
                 List<Todo> todoListPS = todoRepository.findTodoListByUserId(userId);
                 return new TodoListRespDto(todoListPS);
+        }
+
+        public FollowingTodoListRespDto findTodoListByFollowingUserId(Long followingUserId, Long userId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                Follow followPS = followRepository.checkFollowing(followingUserId, userId)
+                                .orElseThrow(() -> new CustomApiException("팔로잉하지 않은 유저입니다", HttpStatus.BAD_REQUEST));
+                List<Todo> todoListPS = todoRepository.findTodoListByUserId(userId);
+                return new FollowingTodoListRespDto(todoListPS);
         }
 
         public TodoDetailRespDto findTodoDetail(Long userId, Long todoId) {

@@ -31,7 +31,7 @@ public class JoinedChatApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("user/{userId}/joinedchat")
+    @GetMapping("/user/{userId}/joinedchat")
     public ResponseEntity<?> findJoindeChatListByUserId(@PathVariable Long userId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {
@@ -42,14 +42,14 @@ public class JoinedChatApiController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("user/{userId}/joinedchat/{joinedchatId}")
+    @GetMapping("/user/{userId}/joinedchat/{joinedchatId}")
     public ResponseEntity<?> findJoinedChatDetail(@PathVariable Long userId, @PathVariable Long joinedChatId) {
         JoinedChatDetailRespDto joinedChatDetailRespDto = joinedChatService.findJoinedChatDetail(userId, joinedChatId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "채팅 상세보기 성공", joinedChatDetailRespDto),
                 HttpStatus.OK);
     }
 
-    @DeleteMapping("user/{userId}/joinedchat/{joinedchatId}")
+    @DeleteMapping("/user/{userId}/joinedchat/{joinedchatId}")
     public ResponseEntity<?> deleteByJoinedChatId(@PathVariable Long userId, @PathVariable Long joinedChatId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {

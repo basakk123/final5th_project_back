@@ -45,7 +45,7 @@ public class CategoryApiController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("user/{userId}/category/{categoryId}")
+    @PostMapping("/user/{userId}/category/{categoryId}")
     public ResponseEntity<?> updateCategory(@PathVariable Long userId, @PathVariable Long categoryId,
             @RequestBody CategoryUpdateReqDto categoryUpdateReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -58,7 +58,7 @@ public class CategoryApiController {
                 HttpStatus.OK);
     }
 
-    @DeleteMapping("user/{userId}/category/{categoryId}")
+    @DeleteMapping("/user/{userId}/category/{categoryId}")
     public ResponseEntity<?> deleteByCategoryId(@PathVariable Long userId, @PathVariable Long categoryId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {

@@ -29,7 +29,7 @@ public class NewsApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("user/{userId}/news")
+    @GetMapping("/user/{userId}/news")
     public ResponseEntity<?> findNewsListByUserId(@PathVariable Long userId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {

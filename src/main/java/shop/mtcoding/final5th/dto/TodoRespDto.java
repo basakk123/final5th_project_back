@@ -38,6 +38,33 @@ public class TodoRespDto {
 
     @Setter
     @Getter
+    public static class FollowingTodoListRespDto {
+        private List<TodoDto> todoDtos;
+
+        public FollowingTodoListRespDto(List<Todo> todoList) {
+            this.todoDtos = todoList.stream().map((todo) -> new TodoDto(todo))
+                    .collect(Collectors.toList());
+        }
+
+        @Setter
+        @Getter
+        public class TodoDto {
+            private Long todoId;
+            private Long userId;
+            private String todoTitle;
+            private boolean todoFinished;
+
+            public TodoDto(Todo todo) {
+                this.todoId = todo.getTodoId();
+                this.userId = todo.getUserId();
+                this.todoTitle = todo.getTodoTitle();
+                this.todoFinished = todo.isTodoFinished();
+            }
+        }
+    }
+
+    @Setter
+    @Getter
     public static class TodoDetailRespDto {
         private Long todoId;
         private Long userId;
