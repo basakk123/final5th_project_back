@@ -20,32 +20,32 @@ import shop.mtcoding.final5th.domain.AudingTime;
 public class User extends AudingTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long userId;
+    private Long userId;
 
     @Column(unique = true, nullable = false, length = 50)
-    String userName;
+    private String userName;
     @Column(unique = true, nullable = false, length = 255)
-    String userEmail;
+    private String userEmail;
     @Column(unique = true, nullable = false, length = 50)
-    String userPhonenumber;
+    private String userPhonenumber;
     @Column(nullable = false, length = 1000)
-    String userPassword;
+    private String userPassword;
     @Column(length = 50)
-    String userRealname;
+    private String userRealname;
     @Column(length = 255)
-    String userImgfile;
+    private String userImgfile;
     @Column(length = 255)
-    String userProfileIntro;
+    private String userProfileIntro;
     @Column(length = 255)
-    String userWebLink;
+    private String userWebLink;
     @Column(length = 255)
-    String userImageUrl;
+    private String userImageUrl;
     @Column(length = 255)
-    String userImageType;
+    private String userImageType;
     @Column(length = 255)
-    String userImageName;
+    private String userImageName;
     @Column(length = 255)
-    String userImageUuid;
+    private String userImageUuid;
 
     @Builder
     public User(Long userId, String userName, String userEmail, String userPhonenumber, String userPassword,
