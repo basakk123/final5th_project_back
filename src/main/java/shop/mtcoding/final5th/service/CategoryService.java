@@ -43,4 +43,13 @@ public class CategoryService {
                 CategoryPS = categoryRepository.save(category);
                 return new CategoryUpdateRespDto(CategoryPS);
         }
+
+        @Transactional
+        public void deleteByCategoryId(Long userId, Long categoryId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                Category CategoryPS = categoryRepository.findById(categoryId)
+                                .orElseThrow(() -> new CustomApiException("해당 카테고리 없습니다", HttpStatus.BAD_REQUEST));
+                categoryRepository.deleteById(categoryId);
+        }
 }
