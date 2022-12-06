@@ -15,12 +15,9 @@ public class ScheduleRespDto {
     @Getter
     public static class ScheduleListRespDto {
         private List<ScheduleDto> scheduleDtos;
-        private List<CategoryDto> categoryDtos;
 
-        public ScheduleListRespDto(List<Schedule> scheduleList, List<Category> categoryList) {
-            this.scheduleDtos = scheduleList.stream().map((schedule) -> new ScheduleDto(schedule))
-                    .collect(Collectors.toList());
-            this.categoryDtos = categoryList.stream().map((category) -> new CategoryDto(category))
+        public ScheduleListRespDto(List<Schedule> schedules) {
+            this.scheduleDtos = schedules.stream().map((schedule) -> new ScheduleDto(schedule))
                     .collect(Collectors.toList());
         }
 
@@ -37,6 +34,7 @@ public class ScheduleRespDto {
             private String scheduleContent;
             private String scheduleNote;
             private String field;
+            private List<Category> categoryList;
 
             public ScheduleDto(Schedule schedule) {
                 this.scheduleId = schedule.getScheduleId();
@@ -49,53 +47,36 @@ public class ScheduleRespDto {
                 this.scheduleContent = schedule.getScheduleContent();
                 this.scheduleNote = schedule.getScheduleNote();
                 this.field = schedule.getField();
+                this.categoryList = schedule.getCategoryList();
             }
         }
+    }
 
-        @Setter
-        @Getter
-        public class CategoryDto {
-            private Long categoryId;
-            private Long scheduleId;
-            private String categoryName;
-            private Long userId;
-            private String categoryColor;
+    @Setter
+    @Getter
+    public static class ScheduleDetailRespDto {
+        private Long scheduleId;
+        private Long userId;
+        private String scheduleTitle;
+        private Timestamp scheduleCreatedAt;
+        private Timestamp scheduleStartAt;
+        private Timestamp scheduleFinishAt;
+        private String scheduleLocation;
+        private String scheduleContent;
+        private String scheduleNote;
+        private String field;
 
-            public CategoryDto(Category category) {
-                this.categoryId = category.getCategoryId();
-                this.scheduleId = category.getScheduleId();
-                this.categoryName = category.getCategoryName();
-                this.userId = category.getUserId();
-                this.categoryColor = category.getCategoryColor();
-            }
-        }
-
-        @Setter
-        @Getter
-        public static class ScheduleDetailRespDto {
-            private Long scheduleId;
-            private Long userId;
-            private String scheduleTitle;
-            private Timestamp scheduleCreatedAt;
-            private Timestamp scheduleStartAt;
-            private Timestamp scheduleFinishAt;
-            private String scheduleLocation;
-            private String scheduleContent;
-            private String scheduleNote;
-            private String field;
-
-            public ScheduleDetailRespDto(Schedule schedule) {
-                this.scheduleId = schedule.getScheduleId();
-                this.userId = schedule.getUserId();
-                this.scheduleTitle = schedule.getScheduleTitle();
-                this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
-                this.scheduleStartAt = schedule.getScheduleStartAt();
-                this.scheduleFinishAt = schedule.getScheduleFinishAt();
-                this.scheduleLocation = schedule.getScheduleLocation();
-                this.scheduleContent = schedule.getScheduleContent();
-                this.scheduleNote = schedule.getScheduleNote();
-                this.field = schedule.getField();
-            }
+        public ScheduleDetailRespDto(Schedule schedule) {
+            this.scheduleId = schedule.getScheduleId();
+            this.userId = schedule.getUserId();
+            this.scheduleTitle = schedule.getScheduleTitle();
+            this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
+            this.scheduleStartAt = schedule.getScheduleStartAt();
+            this.scheduleFinishAt = schedule.getScheduleFinishAt();
+            this.scheduleLocation = schedule.getScheduleLocation();
+            this.scheduleContent = schedule.getScheduleContent();
+            this.scheduleNote = schedule.getScheduleNote();
+            this.field = schedule.getField();
         }
     }
 

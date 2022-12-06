@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
-import shop.mtcoding.final5th.domain.category.Category;
 import shop.mtcoding.final5th.domain.category.CategoryRepository;
 import shop.mtcoding.final5th.domain.schedule.Schedule;
 import shop.mtcoding.final5th.domain.schedule.ScheduleRepository;
@@ -18,8 +17,8 @@ import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleSaveReqDto;
 import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleUpdateReqDto;
+import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleDetailRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto;
-import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleListRespDto.ScheduleDetailRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleSaveRespDto;
 import shop.mtcoding.final5th.dto.ScheduleRespDto.ScheduleUpdateRespDto;
 
@@ -36,9 +35,8 @@ public class ScheduleService {
         public ScheduleListRespDto findScheduleListAndCategoryByUserId(Long userId) {
                 User userPS = userRepository.findById(userId)
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-                List<Schedule> scheduleListPS = scheduleRepository.findScheduleListByUserId(userId);
-                List<Category> categoryListPS = categoryRepository.findCategoryListByUserId(userId);
-                return new ScheduleListRespDto(scheduleListPS, categoryListPS);
+                List<Schedule> scheduleListPS = scheduleRepository.findScheduleListAndCategoryByUserId(userId);
+                return new ScheduleListRespDto(scheduleListPS);
         }
 
         public ScheduleDetailRespDto findScheduleDetail(Long userId, Long scheduleId) {
