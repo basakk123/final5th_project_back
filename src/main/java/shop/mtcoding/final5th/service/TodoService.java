@@ -48,8 +48,8 @@ public class TodoService {
         }
 
         @Transactional
-        public TodoSaveRespDto saveTodo(TodoSaveReqDto TodoSaveReqDto) {
-                Todo TodoPS = todoRepository.save(TodoSaveReqDto.toEntity());
+        public TodoSaveRespDto saveTodo(TodoSaveReqDto todoSaveReqDto) {
+                Todo TodoPS = todoRepository.save(todoSaveReqDto.toEntity());
                 return new TodoSaveRespDto(TodoPS);
         }
 

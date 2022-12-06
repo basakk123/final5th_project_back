@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,4 +33,13 @@ public class Category {
 
     @Column(nullable = false, length = 50)
     private String categoryColor;
+
+    @Builder
+    public Category(Long categoryId, Long scheduleId, String categoryName, Long userId, String categoryColor) {
+        this.categoryId = categoryId;
+        this.scheduleId = scheduleId;
+        this.categoryName = categoryName;
+        this.userId = userId;
+        this.categoryColor = categoryColor;
+    }
 }
