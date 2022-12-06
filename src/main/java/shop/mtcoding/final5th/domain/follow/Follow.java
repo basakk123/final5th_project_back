@@ -4,12 +4,15 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import shop.mtcoding.final5th.domain.user.User;
 
 @Getter
 @Table(name = "follow")
@@ -28,4 +31,7 @@ public class Follow {
 
     @Column(nullable = false)
     private Timestamp createdAt;
+
+    @OneToOne(mappedBy = "follow", fetch = FetchType.LAZY)
+    private User user;
 }

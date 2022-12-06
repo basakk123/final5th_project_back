@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import shop.mtcoding.final5th.domain.follow.Follow;
+import shop.mtcoding.final5th.domain.user.User;
 
 public class FollowRespDto {
 
@@ -27,21 +28,14 @@ public class FollowRespDto {
             private Long userId;
             private Long followingUserId;
             private Timestamp createdAt;
-            private String userName;
-            private String userRealname;
-            private String userImgfile;
-            private String userProfileIntro;
-            private String userWebLink;
-            private String userImageUrl;
-            private String userImageType;
-            private String userImageName;
-            private String userImageUuid;
+            private User user;
 
             public FollowDto(Follow follow) {
                 this.followId = follow.getFollowId();
                 this.userId = follow.getUserId();
                 this.followingUserId = follow.getFollowingUserId();
                 this.createdAt = follow.getCreatedAt();
+                this.user = follow.getUser();
             }
         }
     }

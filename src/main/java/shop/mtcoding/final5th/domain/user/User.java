@@ -2,9 +2,11 @@ package shop.mtcoding.final5th.domain.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -12,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.mtcoding.final5th.domain.AudingTime;
+import shop.mtcoding.final5th.domain.follow.Follow;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
@@ -46,6 +49,9 @@ public class User extends AudingTime {
     private String userImageName;
     @Column(length = 255)
     private String userImageUuid;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Follow follow;
 
     @Builder
     public User(Long userId, String userName, String userEmail, String userPhonenumber, String userPassword,
