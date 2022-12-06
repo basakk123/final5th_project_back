@@ -24,4 +24,19 @@ public class CategoryReqDto {
             return category;
         }
     }
+
+    @Setter
+    @Getter
+    public static class CategoryUpdateReqDto {
+        private String categoryName;
+        private String categoryColor;
+
+        public Category toEntity() {
+            Category category = Category.builder()
+                    .categoryName(categoryName)
+                    .categoryColor(categoryColor)
+                    .build();
+            return category;
+        }
+    }
 }

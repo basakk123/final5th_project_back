@@ -21,4 +21,16 @@ public class CategoryRespDto {
             this.categoryColor = category.getCategoryColor();
         }
     }
+
+    @Setter
+    @Getter
+    public static class CategoryUpdateRespDto {
+        private String categoryName;
+        private String categoryColor;
+
+        public CategoryUpdateRespDto(Category category) {
+            this.categoryName = category.getCategoryName();
+            this.categoryColor = category.getCategoryColor();
+        }
+    }
 }
