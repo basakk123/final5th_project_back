@@ -25,9 +25,6 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
-    @Column(nullable = false)
-    private Long scheduleId;
-
     @Column(nullable = false, length = 50)
     private String categoryName;
 
@@ -41,9 +38,8 @@ public class Category {
     private Schedule schedule;
 
     @Builder
-    public Category(Long categoryId, Long scheduleId, String categoryName, Long userId, String categoryColor) {
+    public Category(Long categoryId, String categoryName, Long userId, String categoryColor) {
         this.categoryId = categoryId;
-        this.scheduleId = scheduleId;
         this.categoryName = categoryName;
         this.userId = userId;
         this.categoryColor = categoryColor;

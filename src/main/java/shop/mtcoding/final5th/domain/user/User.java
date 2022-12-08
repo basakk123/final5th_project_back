@@ -6,7 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -50,7 +50,7 @@ public class User extends AudingTime {
     @Column(length = 255)
     private String userImageUuid;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Follow follow;
 
     @Builder

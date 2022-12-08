@@ -33,6 +33,9 @@ public class Schedule {
     private Long userId;
 
     @Column(nullable = false)
+    private Long categoryId;
+
+    @Column(nullable = false)
     private String scheduleTitle;
 
     @Column(nullable = false)
@@ -48,8 +51,8 @@ public class Schedule {
 
     private String field;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<Category> categoryList = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Category> categoryList;
 
     @Builder
     public Schedule(Long scheduleId, Long userId, String scheduleTitle, Timestamp scheduleCreatedAt,

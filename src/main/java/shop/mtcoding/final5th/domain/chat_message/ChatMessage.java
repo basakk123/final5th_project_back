@@ -1,5 +1,7 @@
 package shop.mtcoding.final5th.domain.chat_message;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,4 +31,7 @@ public class ChatMessage {
 
     @Column(length = 10000)
     private String chatMessageContents;
+
+    @Column(nullable = false)
+    private Timestamp chatMessageCreatedAt;
 }

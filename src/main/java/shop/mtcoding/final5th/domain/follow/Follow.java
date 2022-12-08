@@ -23,7 +23,7 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long followId;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private Long userId;
 
     @Column(nullable = false)
