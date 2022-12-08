@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.dummy.DummyEntity;
+import shop.mtcoding.final5th.domain.todo.Todo;
+import shop.mtcoding.final5th.domain.todo.TodoRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoSaveReqDto;
@@ -45,6 +47,9 @@ public class TodoApiControllerTest extends DummyEntity {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TodoRepository todoRepository;
+
     private MockHttpSession session;
 
     @BeforeEach
@@ -52,6 +57,8 @@ public class TodoApiControllerTest extends DummyEntity {
         User green = userRepository.save(newUser("green"));
         session = new MockHttpSession();
         session.setAttribute("loginUser", new LoginUser(1L, newUser("green")));
+        Todo greenTodo1 = todoRepository.save(newTodo("운동하기"));
+        Todo greenTodo2 = todoRepository.save(newTodo("공부하기"));
     }
 
     @Test
@@ -83,6 +90,7 @@ public class TodoApiControllerTest extends DummyEntity {
     public void findTodoListByUserId_test() throws Exception {
         // given
         Long userId = 1L;
+        session.getAttribute("loginUser");
 
         // when
         ResultActions resultActions = mvc

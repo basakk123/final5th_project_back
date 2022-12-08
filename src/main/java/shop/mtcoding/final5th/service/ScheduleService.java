@@ -36,12 +36,14 @@ public class ScheduleService {
         private final FollowRepository followRepository;
         private final Logger log = LoggerFactory.getLogger(getClass());
 
-        public ScheduleListRespDto findScheduleListAndCategoryByUserId(Long userId) {
-                User userPS = userRepository.findById(userId)
-                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-                List<Schedule> scheduleListPS = scheduleRepository.findScheduleListAndCategoryByUserId(userId);
-                return new ScheduleListRespDto(scheduleListPS);
-        }
+        // public ScheduleListRespDto findScheduleListAndCategoryByUserId(Long userId) {
+        // User userPS = userRepository.findById(userId)
+        // .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다",
+        // HttpStatus.BAD_REQUEST));
+        // List<Schedule> scheduleListPS =
+        // scheduleRepository.findScheduleListAndCategoryByUserId(userId);
+        // return new ScheduleListRespDto(scheduleListPS);
+        // }
 
         // public FollowingScheduleListRespDto
         // findScheduleListAndCategoryByFollowingUserId(Long followingUserId,
