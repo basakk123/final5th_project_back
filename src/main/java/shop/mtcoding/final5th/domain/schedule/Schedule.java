@@ -51,9 +51,6 @@ public class Schedule {
 
     private String field;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Category> categoryList;
-
     @Builder
     public Schedule(Long scheduleId, Long userId, String scheduleTitle, Timestamp scheduleCreatedAt,
             Timestamp scheduleStartAt, Timestamp scheduleFinishAt, String scheduleLocation, String scheduleContent,

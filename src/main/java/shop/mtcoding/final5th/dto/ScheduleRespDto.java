@@ -34,7 +34,6 @@ public class ScheduleRespDto {
             private String scheduleContent;
             private String scheduleNote;
             private String field;
-            private List<Category> categoryList;
 
             public ScheduleDto(Schedule schedule) {
                 this.scheduleId = schedule.getScheduleId();
@@ -47,7 +46,6 @@ public class ScheduleRespDto {
                 this.scheduleContent = schedule.getScheduleContent();
                 this.scheduleNote = schedule.getScheduleNote();
                 this.field = schedule.getField();
-                this.categoryList = schedule.getCategoryList();
             }
         }
     }
@@ -75,7 +73,6 @@ public class ScheduleRespDto {
             private String scheduleContent;
             private String scheduleNote;
             private String field;
-            private List<Category> categoryList;
 
             public ScheduleDto(Schedule schedule) {
                 this.scheduleId = schedule.getScheduleId();
@@ -88,7 +85,6 @@ public class ScheduleRespDto {
                 this.scheduleContent = schedule.getScheduleContent();
                 this.scheduleNote = schedule.getScheduleNote();
                 this.field = schedule.getField();
-                this.categoryList = schedule.getCategoryList();
             }
         }
     }

@@ -77,7 +77,7 @@ public class TodoApiController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/todo")
+    @PostMapping("/user/{userId}/todo")
     public ResponseEntity<?> saveTodo(@RequestBody TodoSaveReqDto todoSaveReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser == null) {

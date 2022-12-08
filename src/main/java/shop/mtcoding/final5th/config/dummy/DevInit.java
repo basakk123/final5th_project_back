@@ -13,11 +13,11 @@ import shop.mtcoding.final5th.domain.user.UserRepository;
 @Configuration
 public class DevInit extends DummyEntity {
 
-    @Profile("dev")
-    @Bean
-    public CommandLineRunner dataSetting(UserRepository userRepository) {
-        return (args) -> {
-            User green = userRepository.save(newUser("green"));
-        };
-    }
+    // @Profile("dev")
+    // @Bean
+    // public CommandLineRunner dataSetting(UserRepository userRepository) {
+    // return (args) -> {
+    // User green = userRepository.save(newUser("green"));
+    // };
+    // }
 }

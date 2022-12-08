@@ -11,6 +11,11 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password: 
+  # sql:
+  #   init:
+  #   mode: always
+  #   continue-on-error: true
+  #   data-locations: classpath:import.sqls
   h2:
     console:
       enabled: true
@@ -22,6 +27,7 @@ spring:
       #'[hibernate.default_batch_fetch_size]': 100
       '[hibernate.format_sql]': true
     show-sql: true
+    defer-datasource-initialization: true
   output: 
     ansi:
       enabled: always
