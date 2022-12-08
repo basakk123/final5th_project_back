@@ -16,7 +16,6 @@ public class CategoryReqDto {
 
         public Category toEntity() {
             Category category = Category.builder()
-                    .scheduleId(scheduleId)
                     .categoryName(categoryName)
                     .userId(userId)
                     .categoryColor(categoryColor)

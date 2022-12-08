@@ -15,7 +15,6 @@ public class CategoryRespDto {
         private String categoryColor;
 
         public CategorySaveRespDto(Category category) {
-            this.scheduleId = category.getScheduleId();
             this.categoryName = category.getCategoryName();
             this.userId = category.getUserId();
             this.categoryColor = category.getCategoryColor();
