@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
-import shop.mtcoding.final5th.domain.follow.Follow;
 import shop.mtcoding.final5th.domain.follow.FollowRepository;
 import shop.mtcoding.final5th.domain.todo.Todo;
 import shop.mtcoding.final5th.domain.todo.TodoRepository;
@@ -18,7 +17,6 @@ import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoSaveReqDto;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoUpdateReqDto;
-import shop.mtcoding.final5th.dto.TodoRespDto.FollowingTodoListRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoDetailRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoListRespDto;
 import shop.mtcoding.final5th.dto.TodoRespDto.TodoSaveRespDto;

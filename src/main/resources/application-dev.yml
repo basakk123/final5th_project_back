@@ -15,7 +15,7 @@ spring:
   #   init:
   #   mode: always
   #   continue-on-error: true
-  #   data-locations: classpath:import.sqls
+  #   data-locations: classpath:import.sql
   h2:
     console:
       enabled: true

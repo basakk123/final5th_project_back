@@ -8,9 +8,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    @Query(value = "select sch from Schedule sch where sch.user_id = :userId", nativeQuery = true)
+    @Query("select sch from Schedule sch where sch.userId = :userId")
     List<Schedule> findScheduleListByUserId(@Param("userId") Long userId);
 
-    @Query(value = "select sch from Schedule sch left join sch.category ca where sch.user_id = :userId", nativeQuery = true)
-    List<Schedule> findScheduleListAndCategoryByUserId(@Param("userId") Long userId);
+    // @Query("select sch from Schedule sch left join sch.category ca where
+    // sch.userId = :userId")
+    // List<Schedule> findScheduleListAndCategoryByUserId(@Param("userId") Long
+    // userId);
 }

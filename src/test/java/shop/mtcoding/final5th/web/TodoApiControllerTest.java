@@ -1,5 +1,7 @@
 package shop.mtcoding.final5th.web;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -14,7 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,19 +62,35 @@ public class TodoApiControllerTest extends DummyEntity {
         System.out.println("테스트 : " + loginUser.getUserId());
         System.out.println("테스트 : " + loginUser.getUserName());
         TodoSaveReqDto todoSaveReqDto = new TodoSaveReqDto();
-        todoSaveReqDto.setUserId(userId);
         todoSaveReqDto.setTodoTitle("운동하기");
         todoSaveReqDto.setTodoFinished(false);
         String requestBody = om.writeValueAsString(todoSaveReqDto);
         System.out.println("테스트 : " + requestBody);
+
         // when
-        ResultActions resultActions = mvc.perform(
-                MockMvcRequestBuilders.post("/s/api/user/" + userId + "/todo").content(requestBody)
+        ResultActions resultActions = mvc
+                .perform(post("/s/api/user/" + userId + "/todo").content(requestBody)
                         .contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         System.out.println("테스트 : " + responseBody);
+
         // then
         resultActions.andExpect(status().isCreated());
         resultActions.andExpect(jsonPath("$.data.todoTitle").value("운동하기"));
+    }
+
+    @Test
+    public void findTodoListByUserId_test() throws Exception {
+        // given
+        Long userId = 1L;
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + userId + "/todo"));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
     }
 }

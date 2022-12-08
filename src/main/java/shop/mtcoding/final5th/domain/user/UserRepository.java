@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("select u from User u where user_name = :userName")
+    @Query("select u from User u where userName = :userName")
     Optional<User> findByUsername(@Param("userName") String userName);
 }

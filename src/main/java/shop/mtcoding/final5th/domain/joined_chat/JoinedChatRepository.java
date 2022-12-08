@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface JoinedChatRepository extends JpaRepository<JoinedChat, Long> {
 
-    @Query(value = "select jo from JoinedChat jo where jo.user_id = :userId", nativeQuery = true)
+    @Query("select jo from JoinedChat jo where jo.userId = :userId")
     List<JoinedChat> findJoinedChatListByUserId(@Param("userId") Long userId);
 }

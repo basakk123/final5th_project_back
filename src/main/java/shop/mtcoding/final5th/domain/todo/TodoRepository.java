@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface TodoRepository extends JpaRepository<Todo, Long> {
 
-    @Query(value = "select td from Todo td where td.user_id = :userId", nativeQuery = true)
+    @Query("select td from Todo td where td.userId = :userId")
     List<Todo> findTodoListByUserId(@Param("userId") Long userId);
 }

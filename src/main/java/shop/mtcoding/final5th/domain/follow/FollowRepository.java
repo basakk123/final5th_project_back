@@ -9,9 +9,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface FollowRepository extends JpaRepository<Follow, Long> {
 
-    @Query(value = "select fo from Follow fo left join fo.users us on fo.user_id = us.user_id where fo.following_user_id = :followingUserId", nativeQuery = true)
-    List<Follow> findFollowListByFollowingUserId(@Param("followingUserId") Long followingUserId);
+    // @Query("select fo from Follow fo left join users us on fo.userId = us.userId
+    // where fo.followingUserId = :followingUserId")
+    // List<Follow> findFollowListByFollowingUserId(@Param("followingUserId") Long
+    // followingUserId);
 
-    @Query(value = "select fo from Follow fo where fo.following_user_id =:followingUserId and fo.user_id=:userId", nativeQuery = true)
+    @Query("select fo from Follow fo where fo.followingUserId =:followingUserId and fo.userId=:userId")
     Optional<Follow> checkFollowing(@Param("followingUserId") Long followingUserId, @Param("userId") Long userId);
 }

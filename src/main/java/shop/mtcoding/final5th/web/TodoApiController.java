@@ -78,11 +78,14 @@ public class TodoApiController {
     }
 
     @PostMapping("/user/{userId}/todo")
-    public ResponseEntity<?> saveTodo(@RequestBody TodoSaveReqDto todoSaveReqDto) {
+    public ResponseEntity<?> saveTodo(@PathVariable Long userId, @RequestBody TodoSaveReqDto todoSaveReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser == null) {
+        log.debug("디버그 : loginUser " + loginUser);
+        log.debug("디버그 : loginUser.getUserId() " + loginUser.getUserId());
+        if (loginUser.getUserId() == null) {
             throw new CustomApiException("로그인을 진행해주세요", HttpStatus.FORBIDDEN);
         }
+        todoSaveReqDto.setUserId(userId);
         TodoSaveRespDto todoSaveRespDto = todoService.saveTodo(todoSaveReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "스케줄 작성 성공", todoSaveRespDto),
                 HttpStatus.OK);
