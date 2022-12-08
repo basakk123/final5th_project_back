@@ -9,10 +9,10 @@ public class UserRespDto {
     @Setter
     @Getter
     public static class UserRealnameRespDto {
-        private String userName;
+        private String userRealname;
 
         public UserRealnameRespDto(User user) {
-            this.userName = user.getUserRealname();
+            this.userRealname = user.getUserRealname();
         }
     }
 }

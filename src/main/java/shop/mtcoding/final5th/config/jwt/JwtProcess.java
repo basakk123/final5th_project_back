@@ -17,6 +17,6 @@ public class JwtProcess {
                 .withClaim("userName", loginUser.getUserName())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
-        return JwtProperties.TOKEN_PREFIX + jwtToken;
+        return jwtToken;
     }
 }

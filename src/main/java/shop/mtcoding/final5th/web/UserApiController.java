@@ -31,11 +31,13 @@ public class UserApiController {
     public ResponseEntity<?> findUserRealnameById(@PathVariable Long userId) {
         log.debug("디버그 : findUserRealnameById 컨트롤러 실행됨");
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        log.debug("디버그 : loginUser.getUserId() " + loginUser.getUserId());
         if (loginUser.getUserId() != userId) {
             throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
         }
         UserRealnameRespDto userRealnameRespDto = userService.findUserRealnameById(userId);
         log.debug("디버그 : findUserRealnameById 컨트롤러 리턴 전");
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "유저네임보기 성공", userRealnameRespDto), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "유저리얼네임보기 성공", userRealnameRespDto),
+                HttpStatus.OK);
     }
 }

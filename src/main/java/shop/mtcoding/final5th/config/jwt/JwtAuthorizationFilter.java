@@ -49,8 +49,8 @@ public class JwtAuthorizationFilter implements Filter {
         jwtToken = jwtToken.trim();
         try {
             DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken);
-            Long userId = decodedJWT.getClaim("id").asLong();
-            String userName = decodedJWT.getClaim("username").asString();
+            Long userId = decodedJWT.getClaim("userId").asLong();
+            String userName = decodedJWT.getClaim("userName").asString();
             LoginUser loginUser = new LoginUser(User.builder().userId(userId).userName(userName).build());
             HttpSession session = req.getSession();
             session.setAttribute("loginUser", loginUser);
