@@ -10,7 +10,7 @@ public abstract class DummyEntity {
                 .userEmail(userName + "@nate.com")
                 .userPhonenumber("01012345678")
                 .userPassword("1234")
-                .userRealname("그린컴퓨터")
+                .userRealname("그린")
                 .build();
         return user;
     }

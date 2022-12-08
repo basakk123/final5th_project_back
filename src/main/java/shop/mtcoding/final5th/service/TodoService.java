@@ -41,14 +41,17 @@ public class TodoService {
                 return new TodoListRespDto(todoListPS);
         }
 
-        public FollowingTodoListRespDto findTodoListByFollowingUserId(Long followingUserId, Long userId) {
-                User userPS = userRepository.findById(userId)
-                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-                Follow followPS = followRepository.checkFollowing(followingUserId, userId)
-                                .orElseThrow(() -> new CustomApiException("팔로잉하지 않은 유저입니다", HttpStatus.BAD_REQUEST));
-                List<Todo> todoListPS = todoRepository.findTodoListByUserId(userId);
-                return new FollowingTodoListRespDto(todoListPS);
-        }
+        // public FollowingTodoListRespDto findTodoListByFollowingUserId(Long
+        // followingUserId, Long userId) {
+        // User userPS = userRepository.findById(userId)
+        // .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다",
+        // HttpStatus.BAD_REQUEST));
+        // Follow followPS = followRepository.checkFollowing(followingUserId, userId)
+        // .orElseThrow(() -> new CustomApiException("팔로잉하지 않은 유저입니다",
+        // HttpStatus.BAD_REQUEST));
+        // List<Todo> todoListPS = todoRepository.findTodoListByUserId(userId);
+        // return new FollowingTodoListRespDto(todoListPS);
+        // }
 
         public TodoDetailRespDto findTodoDetail(Long userId, Long todoId) {
                 User userPS = userRepository.findById(userId)

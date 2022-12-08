@@ -25,10 +25,13 @@ public class FollowService {
         private final FollowRepository followRepository;
         private final Logger log = LoggerFactory.getLogger(getClass());
 
-        public FollowListRespDto findFollowListByFollowingUserId(Long followingUserId) {
-                User userPS = userRepository.findById(followingUserId)
-                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-                List<Follow> followListPS = followRepository.findFollowListByFollowingUserId(followingUserId);
-                return new FollowListRespDto(followListPS);
-        }
+        // public FollowListRespDto findFollowListByFollowingUserId(Long
+        // followingUserId) {
+        // User userPS = userRepository.findById(followingUserId)
+        // .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다",
+        // HttpStatus.BAD_REQUEST));
+        // List<Follow> followListPS =
+        // followRepository.findFollowListByFollowingUserId(followingUserId);
+        // return new FollowListRespDto(followListPS);
+        // }
 }

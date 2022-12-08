@@ -43,15 +43,19 @@ public class ScheduleService {
                 return new ScheduleListRespDto(scheduleListPS);
         }
 
-        public FollowingScheduleListRespDto findScheduleListAndCategoryByFollowingUserId(Long followingUserId,
-                        Long userId) {
-                User userPS = userRepository.findById(followingUserId)
-                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-                Follow followPS = followRepository.checkFollowing(followingUserId, userId)
-                                .orElseThrow(() -> new CustomApiException("팔로잉하지 않은 유저입니다", HttpStatus.BAD_REQUEST));
-                List<Schedule> scheduleListPS = scheduleRepository.findScheduleListAndCategoryByUserId(userId);
-                return new FollowingScheduleListRespDto(scheduleListPS);
-        }
+        // public FollowingScheduleListRespDto
+        // findScheduleListAndCategoryByFollowingUserId(Long followingUserId,
+        // Long userId) {
+        // User userPS = userRepository.findById(followingUserId)
+        // .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다",
+        // HttpStatus.BAD_REQUEST));
+        // Follow followPS = followRepository.checkFollowing(followingUserId, userId)
+        // .orElseThrow(() -> new CustomApiException("팔로잉하지 않은 유저입니다",
+        // HttpStatus.BAD_REQUEST));
+        // List<Schedule> scheduleListPS =
+        // scheduleRepository.findScheduleListAndCategoryByUserId(userId);
+        // return new FollowingScheduleListRespDto(scheduleListPS);
+        // }
 
         public ScheduleDetailRespDto findScheduleDetail(Long userId, Long scheduleId) {
                 User userPS = userRepository.findById(userId)

@@ -29,14 +29,17 @@ public class FollowApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("/user/{followinguserid}/follow")
-    public ResponseEntity<?> findFollowListByFollowingUserId(@PathVariable Long followingUserId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != followingUserId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
-        FollowListRespDto followListRespDto = followService.findFollowListByFollowingUserId(followingUserId);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로우 리스트 보기 성공", followListRespDto),
-                HttpStatus.OK);
-    }
+    // @GetMapping("/user/{followinguserid}/follow")
+    // public ResponseEntity<?> findFollowListByFollowingUserId(@PathVariable Long
+    // followingUserId) {
+    // LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    // if (loginUser.getUserId() != followingUserId) {
+    // throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+    // }
+    // FollowListRespDto followListRespDto =
+    // followService.findFollowListByFollowingUserId(followingUserId);
+    // return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로우 리스트 보기 성공",
+    // followListRespDto),
+    // HttpStatus.OK);
+    // }
 }

@@ -16,6 +16,11 @@ public class LoginUser {
         this.userName = user.getUserName();
     }
 
+    public LoginUser(Long userId, User user) {
+        this.userId = userId;
+        this.userName = user.getUserName();
+    }
+
     public User toEntity() {
         return User.builder().userId(userId).userName(userName).build();
     }

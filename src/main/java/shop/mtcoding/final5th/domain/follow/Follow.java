@@ -11,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import shop.mtcoding.final5th.domain.user.User;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Table(name = "follow")
 @Entity

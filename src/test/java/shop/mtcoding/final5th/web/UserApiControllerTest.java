@@ -14,14 +14,18 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.dummy.DummyEntity;
+import shop.mtcoding.final5th.domain.user.User;
+import shop.mtcoding.final5th.domain.user.UserRepository;
 
 @Sql("classpath:db/truncate.sql") // 롤백 대신 사용 (auto_increment 초기화 + 데이터 비우기)
 @ActiveProfiles("test")
+@Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class UserApiControllerTest extends DummyEntity {
@@ -35,18 +39,25 @@ public class UserApiControllerTest extends DummyEntity {
     @Autowired
     private ObjectMapper om;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private MockHttpSession session;
 
     @BeforeEach
     public void sessionInit() {
+        User green = userRepository.save(newUser("green"));
         session = new MockHttpSession();
-        session.setAttribute("loginUser", new LoginUser(newUser("green")));
+        session.setAttribute("loginUser", new LoginUser(1L, newUser("green")));
     }
 
     @Test
     public void findUserRealnameById_test() throws Exception {
         // given
         Long userId = 1L;
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        System.out.println("테스트 : " + loginUser.getUserId());
+        System.out.println("테스트 : " + loginUser.getUserName());
 
         // when
         ResultActions resultActions = mvc

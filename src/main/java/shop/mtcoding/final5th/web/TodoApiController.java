@@ -50,18 +50,21 @@ public class TodoApiController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/user/{followinguserid}/todo/{userId}")
-    public ResponseEntity<?> findTodoListByFollowingUserId(@PathVariable Long followingUserId,
-            @PathVariable Long userId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
-        FollowingTodoListRespDto followingTodoListRespDto = todoService.findTodoListByFollowingUserId(followingUserId,
-                userId);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로잉 투두 리스트 보기 성공", followingTodoListRespDto),
-                HttpStatus.OK);
-    }
+    // @GetMapping("/user/{followinguserid}/todo/{userId}")
+    // public ResponseEntity<?> findTodoListByFollowingUserId(@PathVariable Long
+    // followingUserId,
+    // @PathVariable Long userId) {
+    // LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    // if (loginUser.getUserId() != userId) {
+    // throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+    // }
+    // FollowingTodoListRespDto followingTodoListRespDto =
+    // todoService.findTodoListByFollowingUserId(followingUserId,
+    // userId);
+    // return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로잉 투두 리스트 보기
+    // 성공", followingTodoListRespDto),
+    // HttpStatus.OK);
+    // }
 
     @GetMapping("/user/{userId}/todo/{todoId}")
     public ResponseEntity<?> findTodoDetail(@PathVariable Long userId, @PathVariable Long todoId) {
