@@ -61,9 +61,14 @@ public class JoinedChatApiController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/user/{userId}/joinedchat/{joinedchatId}")
-    public ResponseEntity<?> findJoinedChatDetail(@PathVariable Long userId, @PathVariable Long joinedChatId) {
-        JoinedChatDetailRespDto joinedChatDetailRespDto = joinedChatService.findJoinedChatDetail(userId, joinedChatId);
+    @GetMapping("/user/{userId}/joinedchat/{joinedChatRoomId}")
+    public ResponseEntity<?> findJoinedChatDetail(@PathVariable Long userId, @PathVariable Long joinedChatRoomId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        JoinedChatDetailRespDto joinedChatDetailRespDto = joinedChatService.findJoinedChatDetail(userId,
+                joinedChatRoomId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "채팅 상세보기 성공", joinedChatDetailRespDto),
                 HttpStatus.OK);
     }

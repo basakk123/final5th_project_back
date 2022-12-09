@@ -41,11 +41,11 @@ public class JoinedChatService {
                 return new JoinedChatListRespDto(joinedChatListPS);
         }
 
-        public JoinedChatDetailRespDto findJoinedChatDetail(Long userId, Long joinedChatId) {
+        public JoinedChatDetailRespDto findJoinedChatDetail(Long userId, Long joinedChatRoomId) {
                 User userPS = userRepository.findById(userId)
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-                JoinedChat joinedChatPS = joinedChatRepository.findById(joinedChatId)
-                                .orElseThrow(() -> new CustomApiException("해당 투두가 없습니다", HttpStatus.BAD_REQUEST));
+                JoinedChat joinedChatPS = joinedChatRepository.findById(joinedChatRoomId)
+                                .orElseThrow(() -> new CustomApiException("해당 채팅방이 없습니다", HttpStatus.BAD_REQUEST));
                 return new JoinedChatDetailRespDto(joinedChatPS);
         }
 
@@ -54,7 +54,7 @@ public class JoinedChatService {
                 User userPS = userRepository.findById(userId)
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
                 JoinedChat joinedChatPS = joinedChatRepository.findById(joinedChatId)
-                                .orElseThrow(() -> new CustomApiException("해당 투두가 없습니다", HttpStatus.BAD_REQUEST));
+                                .orElseThrow(() -> new CustomApiException("해당 채팅방이 없습니다", HttpStatus.BAD_REQUEST));
                 joinedChatRepository.deleteById(joinedChatId);
         }
 }
