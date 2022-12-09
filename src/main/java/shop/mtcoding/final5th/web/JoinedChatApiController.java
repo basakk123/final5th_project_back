@@ -9,14 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
+import shop.mtcoding.final5th.dto.JoinedChatReqDto.JoinedChatSaveReqDto;
 import shop.mtcoding.final5th.dto.JoinedChatRespDto.JoinedChatDetailRespDto;
 import shop.mtcoding.final5th.dto.JoinedChatRespDto.JoinedChatListRespDto;
+import shop.mtcoding.final5th.dto.JoinedChatRespDto.JoinedChatSaveRespDto;
 import shop.mtcoding.final5th.dto.ResponseDto;
 import shop.mtcoding.final5th.service.JoinedChatService;
 import shop.mtcoding.final5th.service.UserService;
@@ -30,6 +34,21 @@ public class JoinedChatApiController {
     private final JoinedChatService joinedChatService;
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
+
+    @PostMapping("/user/{userId}/joinedchat")
+    public ResponseEntity<?> saveJoindedChat(@PathVariable Long userId,
+            @RequestBody JoinedChatSaveReqDto joinedChatSaveReqDto) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        log.debug("디버그 : loginUser " + loginUser);
+        log.debug("디버그 : loginUser.getUserId() " + loginUser.getUserId());
+        if (loginUser.getUserId() == null) {
+            throw new CustomApiException("로그인을 진행해주세요", HttpStatus.FORBIDDEN);
+        }
+        joinedChatSaveReqDto.setUserId(userId);
+        JoinedChatSaveRespDto joinedChatSaveRespDto = joinedChatService.saveJoindedChat(joinedChatSaveReqDto);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "채팅방 생성 성공", joinedChatSaveRespDto),
+                HttpStatus.CREATED);
+    }
 
     @GetMapping("/user/{userId}/joinedchat")
     public ResponseEntity<?> findJoindeChatListByUserId(@PathVariable Long userId) {

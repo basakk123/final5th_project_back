@@ -14,8 +14,10 @@ import shop.mtcoding.final5th.domain.joined_chat.JoinedChat;
 import shop.mtcoding.final5th.domain.joined_chat.JoinedChatRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.JoinedChatReqDto.JoinedChatSaveReqDto;
 import shop.mtcoding.final5th.dto.JoinedChatRespDto.JoinedChatDetailRespDto;
 import shop.mtcoding.final5th.dto.JoinedChatRespDto.JoinedChatListRespDto;
+import shop.mtcoding.final5th.dto.JoinedChatRespDto.JoinedChatSaveRespDto;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -25,6 +27,12 @@ public class JoinedChatService {
         private final UserRepository userRepository;
         private final JoinedChatRepository joinedChatRepository;
         private final Logger log = LoggerFactory.getLogger(getClass());
+
+        @Transactional
+        public JoinedChatSaveRespDto saveJoindedChat(JoinedChatSaveReqDto joinedChatSaveReqDto) {
+                JoinedChat joinedChatPS = joinedChatRepository.save(joinedChatSaveReqDto.toEntity());
+                return new JoinedChatSaveRespDto(joinedChatPS);
+        }
 
         public JoinedChatListRespDto findJoindeChatListByUserId(Long userId) {
                 User userPS = userRepository.findById(userId)

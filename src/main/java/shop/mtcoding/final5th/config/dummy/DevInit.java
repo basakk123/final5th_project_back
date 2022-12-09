@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Profile;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.domain.category.Category;
 import shop.mtcoding.final5th.domain.category.CategoryRepository;
+import shop.mtcoding.final5th.domain.joined_chat.JoinedChat;
+import shop.mtcoding.final5th.domain.joined_chat.JoinedChatRepository;
 import shop.mtcoding.final5th.domain.news.News;
 import shop.mtcoding.final5th.domain.news.NewsRepository;
 import shop.mtcoding.final5th.domain.schedule.Schedule;
@@ -25,7 +27,7 @@ public class DevInit extends DummyEntity {
     @Bean
     public CommandLineRunner dataSetting(UserRepository userRepository, TodoRepository todoRepository,
             ScheduleRepository scheduleRepository, CategoryRepository categoryRepository,
-            NewsRepository newsRepository) {
+            NewsRepository newsRepository, JoinedChatRepository joinedChatRepository) {
         return (args) -> {
             User green = userRepository.save(newUser("green"));
             Todo greenTodo1 = todoRepository.save(newTodo("운동하기"));
@@ -36,6 +38,8 @@ public class DevInit extends DummyEntity {
             Category greenCategory2 = categoryRepository.save(newCategory("red", "쇼핑"));
             News greenNews1 = newsRepository.save(newNews(2L));
             News greenNews2 = newsRepository.save(newNews(3L));
+            JoinedChat greenJoinedChat1 = joinedChatRepository.save(newJoinedChat(1L));
+            JoinedChat greenJoinedChat2 = joinedChatRepository.save(newJoinedChat(2L));
         };
     }
 }

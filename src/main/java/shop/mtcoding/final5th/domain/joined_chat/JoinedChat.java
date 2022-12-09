@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,4 +32,12 @@ public class JoinedChat {
 
     @Column(nullable = false)
     private Timestamp joinedChatCreatedAt;
+
+    @Builder
+    public JoinedChat(Long joinedChatRoomId, Long userId, Long chatRoomId2, Timestamp joinedChatCreatedAt) {
+        this.joinedChatRoomId = joinedChatRoomId;
+        this.userId = userId;
+        this.chatRoomId2 = chatRoomId2;
+        this.joinedChatCreatedAt = joinedChatCreatedAt;
+    }
 }

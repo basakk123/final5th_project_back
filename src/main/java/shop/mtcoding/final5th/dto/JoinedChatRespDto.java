@@ -12,6 +12,22 @@ public class JoinedChatRespDto {
 
     @Setter
     @Getter
+    public static class JoinedChatSaveRespDto {
+        private Long joinedChatRoomId;
+        private Long userId;
+        private Long chatRoomId2;
+        private Timestamp joinedChatCreatedAt;
+
+        public JoinedChatSaveRespDto(JoinedChat joinedChat) {
+            this.joinedChatRoomId = joinedChat.getJoinedChatRoomId();
+            this.userId = joinedChat.getUserId();
+            this.chatRoomId2 = joinedChat.getChatRoomId2();
+            this.joinedChatCreatedAt = joinedChat.getJoinedChatCreatedAt();
+        }
+    }
+
+    @Setter
+    @Getter
     public static class JoinedChatListRespDto {
         private List<JoinedChatDto> joinedChatDtos;
 

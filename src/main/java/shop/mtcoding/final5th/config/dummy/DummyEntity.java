@@ -3,6 +3,7 @@ package shop.mtcoding.final5th.config.dummy;
 import java.sql.Timestamp;
 
 import shop.mtcoding.final5th.domain.category.Category;
+import shop.mtcoding.final5th.domain.joined_chat.JoinedChat;
 import shop.mtcoding.final5th.domain.news.News;
 import shop.mtcoding.final5th.domain.schedule.Schedule;
 import shop.mtcoding.final5th.domain.todo.Todo;
@@ -57,5 +58,14 @@ public abstract class DummyEntity {
                 .followId(1L)
                 .build();
         return news;
+    }
+
+    protected JoinedChat newJoinedChat(Long chatRoomId2) {
+        JoinedChat joinedChat = JoinedChat.builder()
+                .userId(1L)
+                .chatRoomId2(chatRoomId2)
+                .joinedChatCreatedAt(Timestamp.valueOf("2022-12-11 11:00:00.0"))
+                .build();
+        return joinedChat;
     }
 }
