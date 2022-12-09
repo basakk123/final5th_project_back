@@ -31,4 +31,13 @@ public class NewsService {
                 List<News> newsListPS = newsRepository.findNewsListByTargetUserId(targetUserId);
                 return new NewsListRespDto(newsListPS);
         }
+
+        @Transactional
+        public void deleteByNewsId(Long userId, Long newsId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                News newsPS = newsRepository.findById(newsId)
+                                .orElseThrow(() -> new CustomApiException("해당 알림이 없습니다", HttpStatus.BAD_REQUEST));
+                newsRepository.deleteById(newsId);
+        }
 }

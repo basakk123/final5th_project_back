@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,17 @@ public class NewsApiController {
         }
         NewsListRespDto newsListRespDto = newsService.findNewsListByTargetUserId(targetUserId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "알림 리스트 보기 성공", newsListRespDto),
+                HttpStatus.OK);
+    }
+
+    @DeleteMapping("/user/{userId}/news/{newsId}")
+    public ResponseEntity<?> deleteByNewsId(@PathVariable Long userId, @PathVariable Long newsId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        newsService.deleteByNewsId(userId, newsId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "알림 삭제 성공", null),
                 HttpStatus.OK);
     }
 }
