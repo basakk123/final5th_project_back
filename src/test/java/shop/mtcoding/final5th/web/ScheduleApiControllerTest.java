@@ -105,4 +105,23 @@ public class ScheduleApiControllerTest extends DummyEntity {
         // then
         resultActions.andExpect(status().isOk());
     }
+
+    @Test
+    public void findScheduleDetail_test() throws Exception {
+        // given
+        Long userId = 1L;
+        Long scheduleId = 2L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + userId + "/schedule/" + scheduleId)
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
 }

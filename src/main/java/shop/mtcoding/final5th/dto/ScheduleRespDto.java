@@ -26,6 +26,7 @@ public class ScheduleRespDto {
         public class ScheduleDto {
             private Long scheduleId;
             private Long userId;
+            private Long categoryId;
             private String scheduleTitle;
             private Timestamp scheduleCreatedAt;
             private Timestamp scheduleStartAt;
@@ -38,6 +39,7 @@ public class ScheduleRespDto {
             public ScheduleDto(Schedule schedule) {
                 this.scheduleId = schedule.getScheduleId();
                 this.userId = schedule.getUserId();
+                this.categoryId = schedule.getCategoryId();
                 this.scheduleTitle = schedule.getScheduleTitle();
                 this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
                 this.scheduleStartAt = schedule.getScheduleStartAt();
@@ -94,6 +96,7 @@ public class ScheduleRespDto {
     public static class ScheduleDetailRespDto {
         private Long scheduleId;
         private Long userId;
+        private Long categoryId;
         private String scheduleTitle;
         private Timestamp scheduleCreatedAt;
         private Timestamp scheduleStartAt;
@@ -106,6 +109,7 @@ public class ScheduleRespDto {
         public ScheduleDetailRespDto(Schedule schedule) {
             this.scheduleId = schedule.getScheduleId();
             this.userId = schedule.getUserId();
+            this.categoryId = schedule.getCategoryId();
             this.scheduleTitle = schedule.getScheduleTitle();
             this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
             this.scheduleStartAt = schedule.getScheduleStartAt();
