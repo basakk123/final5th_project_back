@@ -29,13 +29,13 @@ public class NewsApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("/user/{userId}/news")
-    public ResponseEntity<?> findNewsListByUserId(@PathVariable Long userId) {
+    @GetMapping("/user/{targetUserId}/news")
+    public ResponseEntity<?> findNewsListByTargetUserId(@PathVariable Long targetUserId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
+        if (loginUser.getUserId() != targetUserId) {
             throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
         }
-        NewsListRespDto newsListRespDto = newsService.findNewsListByUserId(userId);
+        NewsListRespDto newsListRespDto = newsService.findNewsListByTargetUserId(targetUserId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "알림 리스트 보기 성공", newsListRespDto),
                 HttpStatus.OK);
     }

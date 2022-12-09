@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface NewsRepository extends JpaRepository<News, Long> {
 
-    @Query("select ne from News ne where ne.userId = :userId")
-    List<News> findNewsListByUserId(@Param("userId") Long userId);
+    @Query("select ne from News ne where ne.targetUserId = :targetUserId")
+    List<News> findNewsListByTargetUserId(@Param("targetUserId") Long targetUserId);
 }

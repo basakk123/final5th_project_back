@@ -25,10 +25,10 @@ public class NewsService {
         private final NewsRepository newsRepository;
         private final Logger log = LoggerFactory.getLogger(getClass());
 
-        public NewsListRespDto findNewsListByUserId(Long userId) {
-                User userPS = userRepository.findById(userId)
+        public NewsListRespDto findNewsListByTargetUserId(Long targetUserId) {
+                User userPS = userRepository.findById(targetUserId)
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-                List<News> newsListPS = newsRepository.findNewsListByUserId(userId);
+                List<News> newsListPS = newsRepository.findNewsListByTargetUserId(targetUserId);
                 return new NewsListRespDto(newsListPS);
         }
 }

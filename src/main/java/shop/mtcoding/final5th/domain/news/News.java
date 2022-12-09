@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,12 +28,19 @@ public class News {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false)
     private Long scheduleId;
 
-    @Column(nullable = false)
     private Long commentsId;
 
-    @Column(nullable = false)
     private Long followId;
+
+    @Builder
+    public News(Long newsId, Long targetUserId, Long userId, Long scheduleId, Long commentsId, Long followId) {
+        this.newsId = newsId;
+        this.targetUserId = targetUserId;
+        this.userId = userId;
+        this.scheduleId = scheduleId;
+        this.commentsId = commentsId;
+        this.followId = followId;
+    }
 }

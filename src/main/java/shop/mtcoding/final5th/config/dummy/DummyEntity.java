@@ -3,6 +3,7 @@ package shop.mtcoding.final5th.config.dummy;
 import java.sql.Timestamp;
 
 import shop.mtcoding.final5th.domain.category.Category;
+import shop.mtcoding.final5th.domain.news.News;
 import shop.mtcoding.final5th.domain.schedule.Schedule;
 import shop.mtcoding.final5th.domain.todo.Todo;
 import shop.mtcoding.final5th.domain.user.User;
@@ -45,5 +46,16 @@ public abstract class DummyEntity {
                 .userId(1L)
                 .build();
         return category;
+    }
+
+    protected News newNews(Long userId) {
+        News news = News.builder()
+                .targetUserId(1L)
+                .userId(userId)
+                .scheduleId(1L)
+                .commentsId(1L)
+                .followId(1L)
+                .build();
+        return news;
     }
 }
