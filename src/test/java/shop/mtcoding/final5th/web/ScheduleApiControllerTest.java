@@ -1,7 +1,9 @@
 package shop.mtcoding.final5th.web;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,6 +31,7 @@ import shop.mtcoding.final5th.domain.schedule.ScheduleRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleSaveReqDto;
+import shop.mtcoding.final5th.dto.ScheduleReqDto.ScheduleUpdateReqDto;
 
 @Sql("classpath:db/truncate.sql") // 롤백 대신 사용 (auto_increment 초기화 + 데이터 비우기)
 @ActiveProfiles("test")
@@ -116,6 +119,51 @@ public class ScheduleApiControllerTest extends DummyEntity {
         // when
         ResultActions resultActions = mvc
                 .perform(get("/s/api/user/" + userId + "/schedule/" + scheduleId)
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateTodo_test() throws Exception {
+        // given
+        Long userId = 1L;
+        Long scheduleId = 2L;
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        System.out.println("테스트 : " + loginUser.getUserId());
+        System.out.println("테스트 : " + loginUser.getUserName());
+        ScheduleUpdateReqDto scheduleUpdateReqDto = new ScheduleUpdateReqDto();
+        scheduleUpdateReqDto.setScheduleTitle("여행가기 (은지랑)");
+        scheduleUpdateReqDto.setScheduleCreatedAt(Timestamp.valueOf("2022-12-11 11:00:00.0"));
+        String requestBody = om.writeValueAsString(scheduleUpdateReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(put("/s/api/user/" + userId + "/schedule/" + scheduleId).content(requestBody)
+                        .contentType(APPLICATION_JSON_UTF8).session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
+        resultActions.andExpect(jsonPath("$.data.scheduleTitle").value("여행가기 (은지랑)"));
+    }
+
+    @Test
+    public void deleteByScheduleId_test() throws Exception {
+        // given
+        Long userId = 1L;
+        Long scheduleId = 2L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(delete("/s/api/user/" + userId + "/schedule/" + scheduleId)
                         .accept(APPLICATION_JSON_UTF8)
                         .session(session));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();

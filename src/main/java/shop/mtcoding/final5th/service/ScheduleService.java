@@ -79,6 +79,7 @@ public class ScheduleService {
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
                 Schedule SchedulePS = scheduleRepository.findById(scheduleId)
                                 .orElseThrow(() -> new CustomApiException("해당 스케줄이 없습니다", HttpStatus.BAD_REQUEST));
+                scheduleUpdateReqDto.setUserId(userId);
                 Schedule Schedule = scheduleUpdateReqDto.toEntity();
                 SchedulePS = scheduleRepository.save(Schedule);
                 return new ScheduleUpdateRespDto(SchedulePS);

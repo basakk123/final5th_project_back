@@ -101,8 +101,8 @@ public class ScheduleApiController {
         }
         ScheduleUpdateRespDto scheduleUpdateRespDto = scheduleService.updateSchedule(userId, scheduleId,
                 scheduleUpdateReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "스케줄 수정 성공", scheduleUpdateRespDto),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "스케줄 수정 성공", scheduleUpdateRespDto),
+                HttpStatus.CREATED);
     }
 
     @DeleteMapping("/user/{userId}/schedule/{scheduleId}")

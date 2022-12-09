@@ -42,6 +42,8 @@ public class ScheduleReqDto {
     @Setter
     @Getter
     public static class ScheduleUpdateReqDto {
+        private Long userId;
+        private Long categoryId;
         private String scheduleTitle;
         private Timestamp scheduleCreatedAt;
         private Timestamp scheduleStartAt;
@@ -53,6 +55,8 @@ public class ScheduleReqDto {
 
         public Schedule toEntity() {
             Schedule schedule = Schedule.builder()
+                    .userId(userId)
+                    .categoryId(categoryId)
                     .scheduleTitle(scheduleTitle)
                     .scheduleCreatedAt(scheduleCreatedAt)
                     .scheduleStartAt(scheduleStartAt)

@@ -154,6 +154,7 @@ public class ScheduleRespDto {
     @Setter
     @Getter
     public static class ScheduleUpdateRespDto {
+        private Long categoryId;
         private String scheduleTitle;
         private Timestamp scheduleCreatedAt;
         private Timestamp scheduleStartAt;
@@ -164,6 +165,7 @@ public class ScheduleRespDto {
         private String field;
 
         public ScheduleUpdateRespDto(Schedule schedule) {
+            this.categoryId = schedule.getCategoryId();
             this.scheduleTitle = schedule.getScheduleTitle();
             this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
             this.scheduleStartAt = schedule.getScheduleStartAt();
