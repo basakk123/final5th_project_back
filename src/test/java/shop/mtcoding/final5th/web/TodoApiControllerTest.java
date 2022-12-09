@@ -2,6 +2,7 @@ package shop.mtcoding.final5th.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,6 +28,7 @@ import shop.mtcoding.final5th.domain.todo.TodoRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.TodoReqDto.TodoSaveReqDto;
+import shop.mtcoding.final5th.dto.TodoReqDto.TodoUpdateReqDto;
 
 @Sql("classpath:db/truncate.sql") // 롤백 대신 사용 (auto_increment 초기화 + 데이터 비우기)
 @ActiveProfiles("test")
@@ -53,7 +55,7 @@ public class TodoApiControllerTest extends DummyEntity {
     private MockHttpSession session;
 
     @BeforeEach
-    public void sessionInit() {
+    public void setUp() {
         User green = userRepository.save(newUser("green"));
         session = new MockHttpSession();
         session.setAttribute("loginUser", new LoginUser(1L, newUser("green")));
@@ -77,7 +79,7 @@ public class TodoApiControllerTest extends DummyEntity {
         // when
         ResultActions resultActions = mvc
                 .perform(post("/s/api/user/" + userId + "/todo").content(requestBody)
-                        .contentType(APPLICATION_JSON_UTF8));
+                        .contentType(APPLICATION_JSON_UTF8).session(session));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         System.out.println("테스트 : " + responseBody);
 
@@ -94,11 +96,58 @@ public class TodoApiControllerTest extends DummyEntity {
 
         // when
         ResultActions resultActions = mvc
-                .perform(get("/s/api/user/" + userId + "/todo"));
+                .perform(get("/s/api/user/" + userId + "/todo")
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         System.out.println("테스트 : " + responseBody);
 
         // then
         resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void findTodoDetail_test() throws Exception {
+        // given
+        Long userId = 1L;
+        Long todoId = 2L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + userId + "/todo/" + todoId)
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateTodo_test() throws Exception {
+        // given
+        Long userId = 1L;
+        Long todoId = 2L;
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        System.out.println("테스트 : " + loginUser.getUserId());
+        System.out.println("테스트 : " + loginUser.getUserName());
+        TodoUpdateReqDto todoUpdateReqDto = new TodoUpdateReqDto();
+        todoUpdateReqDto.setTodoTitle("공부하기");
+        todoUpdateReqDto.setTodoFinished(true);
+        String requestBody = om.writeValueAsString(todoUpdateReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(put("/s/api/user/" + userId + "/todo/" + todoId).content(requestBody)
+                        .contentType(APPLICATION_JSON_UTF8).session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
+        resultActions.andExpect(jsonPath("$.data.todoFinished").value(true));
     }
 }

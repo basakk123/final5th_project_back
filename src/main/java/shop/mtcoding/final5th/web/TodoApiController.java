@@ -87,8 +87,8 @@ public class TodoApiController {
         }
         todoSaveReqDto.setUserId(userId);
         TodoSaveRespDto todoSaveRespDto = todoService.saveTodo(todoSaveReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "스케줄 작성 성공", todoSaveRespDto),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "스케줄 작성 성공", todoSaveRespDto),
+                HttpStatus.CREATED);
     }
 
     @PutMapping("/user/{userId}/todo/{todoId}")
@@ -100,8 +100,8 @@ public class TodoApiController {
         }
         TodoUpdateRespDto todoUpdateRespDto = todoService.updateTodo(userId, todoId,
                 todoUpdateReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 수정 성공", todoUpdateRespDto),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "투두 수정 성공", todoUpdateRespDto),
+                HttpStatus.CREATED);
     }
 
     @DeleteMapping("/user/{userId}/todo/{todoId}")

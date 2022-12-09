@@ -72,6 +72,7 @@ public class TodoService {
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
                 Todo todoPS = todoRepository.findById(todoId)
                                 .orElseThrow(() -> new CustomApiException("해당 투두가 없습니다", HttpStatus.BAD_REQUEST));
+                todoUpdateReqDto.setUserId(userId);
                 Todo todo = todoUpdateReqDto.toEntity();
                 todoPS = todoRepository.save(todo);
                 return new TodoUpdateRespDto(todoPS);

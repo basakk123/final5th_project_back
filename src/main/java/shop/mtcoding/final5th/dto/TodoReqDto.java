@@ -26,11 +26,13 @@ public class TodoReqDto {
     @Setter
     @Getter
     public static class TodoUpdateReqDto {
+        private Long userId;
         private String todoTitle;
         private boolean todoFinished;
 
         public Todo toEntity() {
             Todo todo = Todo.builder()
+                    .userId(userId)
                     .todoTitle(todoTitle)
                     .todoFinished(todoFinished)
                     .build();
