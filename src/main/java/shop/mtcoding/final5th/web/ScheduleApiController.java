@@ -39,19 +39,16 @@ public class ScheduleApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    // @GetMapping("/user/{userId}/schedule")
-    // public ResponseEntity<?> findScheduleListAndCategoryByUserId(@PathVariable
-    // Long userId) {
-    // LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-    // if (loginUser.getUserId() != userId) {
-    // throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-    // }
-    // ScheduleListRespDto scheduleListRespDto =
-    // scheduleService.findScheduleListAndCategoryByUserId(userId);
-    // return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "일정과 카테고리 리스트 보기
-    // 성공", scheduleListRespDto),
-    // HttpStatus.OK);
-    // }
+    @GetMapping("/user/{userId}/schedule")
+    public ResponseEntity<?> findScheduleListByUserId(@PathVariable Long userId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        ScheduleListRespDto scheduleListRespDto = scheduleService.findScheduleListByUserId(userId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "스케줄 리스트 보기 성공", scheduleListRespDto),
+                HttpStatus.OK);
+    }
 
     // @GetMapping("/user/{followinguserid}/schedule/{userid}")
     // public ResponseEntity<?>

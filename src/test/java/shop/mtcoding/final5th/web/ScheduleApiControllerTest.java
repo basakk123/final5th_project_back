@@ -1,5 +1,6 @@
 package shop.mtcoding.final5th.web;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -59,7 +60,7 @@ public class ScheduleApiControllerTest extends DummyEntity {
         session = new MockHttpSession();
         session.setAttribute("loginUser", new LoginUser(1L, newUser("green")));
         Schedule greenSchedule1 = scheduleRepository.save(newSchedule("자격증 시험"));
-        Schedule greenSchedule2 = scheduleRepository.save(newSchedule("자격증 시험"));
+        Schedule greenSchedule2 = scheduleRepository.save(newSchedule("여행가기"));
     }
 
     @Test
@@ -85,5 +86,23 @@ public class ScheduleApiControllerTest extends DummyEntity {
         // then
         resultActions.andExpect(status().isCreated());
         resultActions.andExpect(jsonPath("$.data.scheduleTitle").value("자격증시험"));
+    }
+
+    @Test
+    public void findTodoListByUserId_test() throws Exception {
+        // given
+        Long userId = 1L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + userId + "/schedule")
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
     }
 }
