@@ -26,13 +26,15 @@ public class CategoryReqDto {
     @Setter
     @Getter
     public static class CategoryUpdateReqDto {
-        private String categoryName;
         private String categoryColor;
+        private String categoryName;
+        private Long userId;
 
         public Category toEntity() {
             Category category = Category.builder()
-                    .categoryName(categoryName)
                     .categoryColor(categoryColor)
+                    .categoryName(categoryName)
+                    .userId(userId)
                     .build();
             return category;
         }

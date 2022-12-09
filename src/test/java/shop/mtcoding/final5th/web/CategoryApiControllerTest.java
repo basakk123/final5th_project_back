@@ -2,6 +2,7 @@ package shop.mtcoding.final5th.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,6 +28,7 @@ import shop.mtcoding.final5th.domain.category.CategoryRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategorySaveReqDto;
+import shop.mtcoding.final5th.dto.CategoryReqDto.CategoryUpdateReqDto;
 
 @Sql("classpath:db/truncate.sql") // 롤백 대신 사용 (auto_increment 초기화 + 데이터 비우기)
 @ActiveProfiles("test")
@@ -121,5 +123,31 @@ public class CategoryApiControllerTest extends DummyEntity {
 
         // then
         resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateCategory_test() throws Exception {
+        // given
+        Long userId = 1L;
+        Long categoryId = 2L;
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        System.out.println("테스트 : " + loginUser.getUserId());
+        System.out.println("테스트 : " + loginUser.getUserName());
+        CategoryUpdateReqDto categoryUpdateReqDto = new CategoryUpdateReqDto();
+        categoryUpdateReqDto.setCategoryColor("blue");
+        categoryUpdateReqDto.setCategoryName("쇼핑");
+        String requestBody = om.writeValueAsString(categoryUpdateReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(put("/s/api/user/" + userId + "/category/" + categoryId).content(requestBody)
+                        .contentType(APPLICATION_JSON_UTF8).session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
+        resultActions.andExpect(jsonPath("$.data.categoryColor").value("blue"));
     }
 }

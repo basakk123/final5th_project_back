@@ -58,6 +58,7 @@ public class CategoryService {
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
                 Category CategoryPS = categoryRepository.findById(categoryId)
                                 .orElseThrow(() -> new CustomApiException("해당 카테고리가 없습니다", HttpStatus.BAD_REQUEST));
+                categoryUpdateReqDto.setUserId(userId);
                 Category category = categoryUpdateReqDto.toEntity();
                 CategoryPS = categoryRepository.save(category);
                 return new CategoryUpdateRespDto(CategoryPS);

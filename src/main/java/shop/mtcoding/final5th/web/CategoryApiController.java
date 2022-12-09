@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,7 +73,7 @@ public class CategoryApiController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/user/{userId}/category/{categoryId}")
+    @PutMapping("/user/{userId}/category/{categoryId}")
     public ResponseEntity<?> updateCategory(@PathVariable Long userId, @PathVariable Long categoryId,
             @RequestBody CategoryUpdateReqDto categoryUpdateReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -81,8 +82,8 @@ public class CategoryApiController {
         }
         CategoryUpdateRespDto categoryUpdateRespDto = categoryService.updateCategory(userId, categoryId,
                 categoryUpdateReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "카테고리 수정 성공", categoryUpdateRespDto),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "카테고리 수정 성공", categoryUpdateRespDto),
+                HttpStatus.CREATED);
     }
 
     @DeleteMapping("/user/{userId}/category/{categoryId}")
