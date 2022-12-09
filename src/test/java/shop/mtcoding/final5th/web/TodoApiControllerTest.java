@@ -1,5 +1,6 @@
 package shop.mtcoding.final5th.web;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -149,5 +150,24 @@ public class TodoApiControllerTest extends DummyEntity {
         // then
         resultActions.andExpect(status().isCreated());
         resultActions.andExpect(jsonPath("$.data.todoFinished").value(true));
+    }
+
+    @Test
+    public void deleteByTodoId_test() throws Exception {
+        // given
+        Long userId = 1L;
+        Long todoId = 2L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(delete("/s/api/user/" + userId + "/todo/" + todoId)
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
     }
 }
