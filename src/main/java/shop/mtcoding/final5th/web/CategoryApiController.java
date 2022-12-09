@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategorySaveReqDto;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategoryUpdateReqDto;
+import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryListRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategorySaveRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryUpdateRespDto;
 import shop.mtcoding.final5th.dto.ResponseDto;
@@ -45,6 +47,17 @@ public class CategoryApiController {
         CategorySaveRespDto categorySaveRespDto = categoryService.saveCategory(categorySaveReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "카테고리 작성 성공", categorySaveRespDto),
                 HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user/{userId}/category")
+    public ResponseEntity<?> findCategoryListByUserId(@PathVariable Long userId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        CategoryListRespDto categoryListRespDto = categoryService.findCategoryListByUserId(userId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "카테고리 리스트 보기 성공", categoryListRespDto),
+                HttpStatus.OK);
     }
 
     @PostMapping("/user/{userId}/category/{categoryId}")
