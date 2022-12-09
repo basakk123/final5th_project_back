@@ -2,6 +2,8 @@ package shop.mtcoding.final5th.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +27,7 @@ import shop.mtcoding.final5th.domain.news.News;
 import shop.mtcoding.final5th.domain.news.NewsRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.NewsReqDto.NewsSaveReqDto;
 
 @Sql("classpath:db/truncate.sql") // 롤백 대신 사용 (auto_increment 초기화 + 데이터 비우기)
 @ActiveProfiles("test")
@@ -57,6 +60,33 @@ public class NewsApiControllerTest extends DummyEntity {
         session.setAttribute("loginUser", new LoginUser(1L, newUser("green")));
         News greenNews1 = newsRepository.save(newNews(2L));
         News greenNews2 = newsRepository.save(newNews(3L));
+    }
+
+    @Test
+    public void saveNews_test() throws Exception {
+        // given
+        Long targetUserId = 1L;
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        System.out.println("테스트 : " + loginUser.getUserId());
+        System.out.println("테스트 : " + loginUser.getUserName());
+        NewsSaveReqDto newsSaveReqDto = new NewsSaveReqDto();
+        newsSaveReqDto.setUserId(2L);
+        newsSaveReqDto.setScheduleId(1L);
+        newsSaveReqDto.setCommentsId(1L);
+        newsSaveReqDto.setFollowId(1L);
+        String requestBody = om.writeValueAsString(newsSaveReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(post("/s/api/user/" + targetUserId + "/news").content(requestBody)
+                        .contentType(APPLICATION_JSON_UTF8).session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
+        resultActions.andExpect(jsonPath("$.data.userId").value(2L));
     }
 
     @Test

@@ -14,7 +14,9 @@ import shop.mtcoding.final5th.domain.news.News;
 import shop.mtcoding.final5th.domain.news.NewsRepository;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.NewsReqDto.NewsSaveReqDto;
 import shop.mtcoding.final5th.dto.NewsRespDto.NewsListRespDto;
+import shop.mtcoding.final5th.dto.NewsRespDto.NewsSaveRespDto;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -24,6 +26,12 @@ public class NewsService {
         private final UserRepository userRepository;
         private final NewsRepository newsRepository;
         private final Logger log = LoggerFactory.getLogger(getClass());
+
+        @Transactional
+        public NewsSaveRespDto saveNews(NewsSaveReqDto newsSaveReqDto) {
+                News newsPS = newsRepository.save(newsSaveReqDto.toEntity());
+                return new NewsSaveRespDto(newsPS);
+        }
 
         public NewsListRespDto findNewsListByTargetUserId(Long targetUserId) {
                 User userPS = userRepository.findById(targetUserId)

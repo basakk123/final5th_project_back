@@ -39,4 +39,24 @@ public class NewsRespDto {
             }
         }
     }
+
+    @Setter
+    @Getter
+    public static class NewsSaveRespDto {
+        private Long newsId;
+        private Long targetUserId;
+        private Long userId;
+        private Long scheduleId;
+        private Long commentsId;
+        private Long followId;
+
+        public NewsSaveRespDto(News news) {
+            this.newsId = news.getNewsId();
+            this.targetUserId = news.getTargetUserId();
+            this.userId = news.getUserId();
+            this.scheduleId = news.getScheduleId();
+            this.commentsId = news.getCommentsId();
+            this.followId = news.getFollowId();
+        }
+    }
 }
