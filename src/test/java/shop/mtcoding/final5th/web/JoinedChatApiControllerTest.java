@@ -1,5 +1,6 @@
 package shop.mtcoding.final5th.web;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -85,5 +86,23 @@ public class JoinedChatApiControllerTest extends DummyEntity {
         // then
         resultActions.andExpect(status().isCreated());
         resultActions.andExpect(jsonPath("$.data.chatRoomId2").value(1L));
+    }
+
+    @Test
+    public void findJoindeChatListByUserId_test() throws Exception {
+        // given
+        Long userId = 1L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + userId + "/joinedchat")
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
     }
 }
