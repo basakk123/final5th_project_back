@@ -73,13 +73,13 @@ public class JoinedChatApiController {
                 HttpStatus.OK);
     }
 
-    @DeleteMapping("/user/{userId}/joinedchat/{joinedchatId}")
-    public ResponseEntity<?> deleteByJoinedChatId(@PathVariable Long userId, @PathVariable Long joinedChatId) {
+    @DeleteMapping("/user/{userId}/joinedchat/{joinedChatRoomId}")
+    public ResponseEntity<?> deleteByJoinedChatId(@PathVariable Long userId, @PathVariable Long joinedChatRoomId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (loginUser.getUserId() != userId) {
             throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
         }
-        joinedChatService.deleteByJoinedChatId(userId, joinedChatId);
+        joinedChatService.deleteByJoinedChatId(userId, joinedChatRoomId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "채팅방 삭제 성공", null),
                 HttpStatus.OK);
     }

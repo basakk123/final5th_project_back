@@ -50,11 +50,11 @@ public class JoinedChatService {
         }
 
         @Transactional
-        public void deleteByJoinedChatId(Long userId, Long joinedChatId) {
+        public void deleteByJoinedChatId(Long userId, Long joinedChatRoomId) {
                 User userPS = userRepository.findById(userId)
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
-                JoinedChat joinedChatPS = joinedChatRepository.findById(joinedChatId)
+                JoinedChat joinedChatPS = joinedChatRepository.findById(joinedChatRoomId)
                                 .orElseThrow(() -> new CustomApiException("해당 채팅방이 없습니다", HttpStatus.BAD_REQUEST));
-                joinedChatRepository.deleteById(joinedChatId);
+                joinedChatRepository.deleteById(joinedChatRoomId);
         }
 }
