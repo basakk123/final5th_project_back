@@ -1,5 +1,7 @@
 package shop.mtcoding.final5th.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategorySaveReqDto;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategoryUpdateReqDto;
+import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryListRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategorySaveRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryUpdateRespDto;
 
@@ -30,6 +33,13 @@ public class CategoryService {
         public CategorySaveRespDto saveCategory(CategorySaveReqDto categorySaveReqDto) {
                 Category CategoryPS = categoryRepository.save(categorySaveReqDto.toEntity());
                 return new CategorySaveRespDto(CategoryPS);
+        }
+
+        public CategoryListRespDto findCategoryListByUserId(Long userId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                List<Category> categoryPS = categoryRepository.findCategoryListByUserId(userId);
+                return new CategoryListRespDto(categoryPS);
         }
 
         @Transactional
