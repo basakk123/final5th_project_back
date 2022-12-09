@@ -16,6 +16,7 @@ import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategorySaveReqDto;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategoryUpdateReqDto;
+import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryDetailRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryListRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategorySaveRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryUpdateRespDto;
@@ -40,6 +41,14 @@ public class CategoryService {
                                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
                 List<Category> categoryPS = categoryRepository.findCategoryListByUserId(userId);
                 return new CategoryListRespDto(categoryPS);
+        }
+
+        public CategoryDetailRespDto findCategoryDetail(Long userId, Long categoryId) {
+                User userPS = userRepository.findById(userId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+                Category categoryPS = categoryRepository.findById(categoryId)
+                                .orElseThrow(() -> new CustomApiException("해당 투두가 없습니다", HttpStatus.BAD_REQUEST));
+                return new CategoryDetailRespDto(categoryPS);
         }
 
         @Transactional

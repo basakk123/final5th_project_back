@@ -19,6 +19,7 @@ import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategorySaveReqDto;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategoryUpdateReqDto;
+import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryDetailRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryListRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategorySaveRespDto;
 import shop.mtcoding.final5th.dto.CategoryRespDto.CategoryUpdateRespDto;
@@ -57,6 +58,17 @@ public class CategoryApiController {
         }
         CategoryListRespDto categoryListRespDto = categoryService.findCategoryListByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "카테고리 리스트 보기 성공", categoryListRespDto),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}/category/{categoryId}")
+    public ResponseEntity<?> findCategoryDetail(@PathVariable Long userId, @PathVariable Long categoryId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        CategoryDetailRespDto categoryDetailRespDto = categoryService.findCategoryDetail(userId, categoryId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "카테고리 상세보기 성공", categoryDetailRespDto),
                 HttpStatus.OK);
     }
 

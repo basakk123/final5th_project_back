@@ -55,6 +55,22 @@ public class CategoryRespDto {
 
     @Setter
     @Getter
+    public static class CategoryDetailRespDto {
+        private Long categoryId;
+        private String categoryColor;
+        private String categoryName;
+        private Long userId;
+
+        public CategoryDetailRespDto(Category category) {
+            this.categoryId = category.getCategoryId();
+            this.categoryColor = category.getCategoryColor();
+            this.categoryName = category.getCategoryName();
+            this.userId = category.getUserId();
+        }
+    }
+
+    @Setter
+    @Getter
     public static class CategoryUpdateRespDto {
         private String categoryName;
         private String categoryColor;
