@@ -81,15 +81,18 @@ public class ScheduleApiController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/schedule")
-    public ResponseEntity<?> saveSchedule(@RequestBody ScheduleSaveReqDto scheduleSaveReqDto) {
+    @PostMapping("/user/{userId}/schedule")
+    public ResponseEntity<?> saveSchedule(@PathVariable Long userId,
+            @RequestBody ScheduleSaveReqDto scheduleSaveReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser == null) {
+        if (loginUser.getUserId() == null) {
             throw new CustomApiException("로그인을 진행해주세요", HttpStatus.FORBIDDEN);
         }
+        scheduleSaveReqDto.setUserId(userId);
+        log.debug("디버그 : scheduleSaveReqDto.getUserId() " + scheduleSaveReqDto.getUserId());
         ScheduleSaveRespDto scheduleSaveRespDto = scheduleService.saveSchedule(scheduleSaveReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "스케줄 작성 성공", scheduleSaveRespDto),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "스케줄 작성 성공", scheduleSaveRespDto),
+                HttpStatus.CREATED);
     }
 
     @PutMapping("/user/{userId}/schedule/{scheduleId}")

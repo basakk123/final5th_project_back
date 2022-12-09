@@ -87,7 +87,7 @@ public class TodoApiController {
         }
         todoSaveReqDto.setUserId(userId);
         TodoSaveRespDto todoSaveRespDto = todoService.saveTodo(todoSaveReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "스케줄 작성 성공", todoSaveRespDto),
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "투두 작성 성공", todoSaveRespDto),
                 HttpStatus.CREATED);
     }
 

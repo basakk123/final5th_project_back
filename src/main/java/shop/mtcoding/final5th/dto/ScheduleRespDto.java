@@ -122,6 +122,7 @@ public class ScheduleRespDto {
     public static class ScheduleSaveRespDto {
         private Long scheduleId;
         private Long userId;
+        private Long categoryId;
         private String scheduleTitle;
         private Timestamp scheduleCreatedAt;
         private Timestamp scheduleStartAt;
@@ -134,6 +135,7 @@ public class ScheduleRespDto {
         public ScheduleSaveRespDto(Schedule schedule) {
             this.scheduleId = schedule.getScheduleId();
             this.userId = schedule.getUserId();
+            this.categoryId = schedule.getCategoryId();
             this.scheduleTitle = schedule.getScheduleTitle();
             this.scheduleCreatedAt = schedule.getScheduleCreatedAt();
             this.scheduleStartAt = schedule.getScheduleStartAt();

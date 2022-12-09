@@ -1,5 +1,8 @@
 package shop.mtcoding.final5th.config.dummy;
 
+import java.sql.Timestamp;
+
+import shop.mtcoding.final5th.domain.schedule.Schedule;
 import shop.mtcoding.final5th.domain.todo.Todo;
 import shop.mtcoding.final5th.domain.user.User;
 
@@ -23,5 +26,14 @@ public abstract class DummyEntity {
                 .todoFinished(false)
                 .build();
         return todo;
+    }
+
+    protected Schedule newSchedule(String scheduleTitle) {
+        Schedule schedule = Schedule.builder()
+                .userId(1L)
+                .scheduleTitle(scheduleTitle)
+                .scheduleCreatedAt(Timestamp.valueOf("2022-12-11 11:00:00.0"))
+                .build();
+        return schedule;
     }
 }

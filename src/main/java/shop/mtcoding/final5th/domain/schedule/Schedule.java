@@ -32,7 +32,6 @@ public class Schedule {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false)
     private Long categoryId;
 
     @Column(nullable = false)
@@ -52,11 +51,12 @@ public class Schedule {
     private String field;
 
     @Builder
-    public Schedule(Long scheduleId, Long userId, String scheduleTitle, Timestamp scheduleCreatedAt,
+    public Schedule(Long scheduleId, Long userId, Long categoryId, String scheduleTitle, Timestamp scheduleCreatedAt,
             Timestamp scheduleStartAt, Timestamp scheduleFinishAt, String scheduleLocation, String scheduleContent,
             String scheduleNote, String field) {
         this.scheduleId = scheduleId;
         this.userId = userId;
+        this.categoryId = categoryId;
         this.scheduleTitle = scheduleTitle;
         this.scheduleCreatedAt = scheduleCreatedAt;
         this.scheduleStartAt = scheduleStartAt;
@@ -66,5 +66,4 @@ public class Schedule {
         this.scheduleNote = scheduleNote;
         this.field = field;
     }
-
 }

@@ -12,6 +12,7 @@ public class ScheduleReqDto {
     @Getter
     public static class ScheduleSaveReqDto {
         private Long userId;
+        private Long categoryId;
         private String scheduleTitle;
         private Timestamp scheduleCreatedAt;
         private Timestamp scheduleStartAt;
@@ -23,7 +24,8 @@ public class ScheduleReqDto {
 
         public Schedule toEntity() {
             Schedule schedule = Schedule.builder()
-                    .scheduleId(userId)
+                    .userId(userId)
+                    .categoryId(categoryId)
                     .scheduleTitle(scheduleTitle)
                     .scheduleCreatedAt(scheduleCreatedAt)
                     .scheduleStartAt(scheduleStartAt)
