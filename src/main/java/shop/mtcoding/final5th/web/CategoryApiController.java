@@ -34,15 +34,17 @@ public class CategoryApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @PostMapping("/category")
-    public ResponseEntity<?> saveCategory(@RequestBody CategorySaveReqDto categorySaveReqDto) {
+    @PostMapping("/user/{userId}/category")
+    public ResponseEntity<?> saveCategory(@PathVariable Long userId,
+            @RequestBody CategorySaveReqDto categorySaveReqDto) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser == null) {
+        if (loginUser.getUserId() == null) {
             throw new CustomApiException("로그인을 진행해주세요", HttpStatus.FORBIDDEN);
         }
+        categorySaveReqDto.setUserId(userId);
         CategorySaveRespDto categorySaveRespDto = categoryService.saveCategory(categorySaveReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "카테고리 작성 성공", categorySaveRespDto),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "카테고리 작성 성공", categorySaveRespDto),
+                HttpStatus.CREATED);
     }
 
     @PostMapping("/user/{userId}/category/{categoryId}")

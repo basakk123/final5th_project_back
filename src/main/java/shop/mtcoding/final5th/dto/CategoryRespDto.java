@@ -9,15 +9,17 @@ public class CategoryRespDto {
     @Setter
     @Getter
     public static class CategorySaveRespDto {
-        private Long scheduleId;
+        private Long categoryId;
+        private String categoryColor;
         private String categoryName;
         private Long userId;
-        private String categoryColor;
 
         public CategorySaveRespDto(Category category) {
+            this.categoryId = category.getCategoryId();
+            this.categoryColor = category.getCategoryColor();
             this.categoryName = category.getCategoryName();
             this.userId = category.getUserId();
-            this.categoryColor = category.getCategoryColor();
+
         }
     }
 

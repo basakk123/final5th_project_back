@@ -9,16 +9,15 @@ public class CategoryReqDto {
     @Setter
     @Getter
     public static class CategorySaveReqDto {
-        private Long scheduleId;
+        private String categoryColor;
         private String categoryName;
         private Long userId;
-        private String categoryColor;
 
         public Category toEntity() {
             Category category = Category.builder()
+                    .categoryColor(categoryColor)
                     .categoryName(categoryName)
                     .userId(userId)
-                    .categoryColor(categoryColor)
                     .build();
             return category;
         }

@@ -2,6 +2,7 @@ package shop.mtcoding.final5th.config.dummy;
 
 import java.sql.Timestamp;
 
+import shop.mtcoding.final5th.domain.category.Category;
 import shop.mtcoding.final5th.domain.schedule.Schedule;
 import shop.mtcoding.final5th.domain.todo.Todo;
 import shop.mtcoding.final5th.domain.user.User;
@@ -35,5 +36,14 @@ public abstract class DummyEntity {
                 .scheduleCreatedAt(Timestamp.valueOf("2022-12-11 11:00:00.0"))
                 .build();
         return schedule;
+    }
+
+    protected Category newCategory(String categoryColor, String categoryName) {
+        Category category = Category.builder()
+                .categoryColor(categoryColor)
+                .categoryName(categoryName)
+                .userId(1L)
+                .build();
+        return category;
     }
 }
