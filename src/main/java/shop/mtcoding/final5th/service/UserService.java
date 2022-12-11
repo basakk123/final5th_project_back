@@ -10,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
-import shop.mtcoding.final5th.dto.UserReqDto.FindPasswordByEmailReqDto;
 import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
-import shop.mtcoding.final5th.dto.UserRespDto.FindPasswordByEmailRespDto;
+import shop.mtcoding.final5th.dto.UserReqDto.UserUpdateReqDto;
 import shop.mtcoding.final5th.dto.UserRespDto.JoinRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
+import shop.mtcoding.final5th.dto.UserRespDto.UserUpdateRespDto;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -36,6 +36,14 @@ public class UserService {
     public JoinRespDto joinUser(JoinReqDto joinReqDto) {
         log.debug("디버그 : 서비스 회원가입 실행됨");
         return new JoinRespDto(userRepository.save(joinReqDto.toEntity()));
+    }
+
+    @Transactional
+    public UserUpdateRespDto updateUser(Long userId, UserUpdateReqDto userUpdateReqDto) {
+        User userPS = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+        userUpdateReqDto.setUserId(userId);
+        return new UserUpdateRespDto(userRepository.save(userUpdateReqDto.toEntity()));
     }
 
 }

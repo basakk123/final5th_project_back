@@ -37,4 +37,18 @@ public class UserRespDto {
             this.userPassword = user.getUserPassword();
         }
     }
+
+    @Setter
+    @Getter
+    public static class UserUpdateRespDto {
+        private String userImgfile;
+        private String userName;
+        private String userProfileIntro;
+
+        public UserUpdateRespDto(User user) {
+            this.userImgfile = user.getUserImgfile();
+            this.userName = user.getUserName();
+            this.userProfileIntro = user.getUserProfileIntro();
+        }
+    }
 }

@@ -63,6 +63,8 @@ public class UserReqDto {
         }
     }
 
+    @Setter
+    @Getter
     public static class findByEmail {
         private Long userId;
         private String userEmail;
@@ -71,6 +73,25 @@ public class UserReqDto {
             User user = User.builder()
                     .userId(userId)
                     .userEmail(userEmail)
+                    .build();
+            return user;
+        }
+    }
+
+    @Setter
+    @Getter
+    public static class UserUpdateReqDto {
+        private Long userId;
+        private String userImgfile;
+        private String userName;
+        private String userProfileIntro;
+
+        public User toEntity() {
+            User user = User.builder()
+                    .userId(userId)
+                    .userImgfile(userImgfile)
+                    .userEmail(userImgfile)
+                    .userProfileIntro(userProfileIntro)
                     .build();
             return user;
         }
