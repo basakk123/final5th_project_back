@@ -32,6 +32,7 @@ public class UserApiController {
 
     @PostMapping("/join")
     public ResponseEntity<?> joinApi(@RequestBody JoinReqDto joinReqDto) {
+        log.debug("디버그 : UserApiController join 실행됨");
         JoinRespDto joinRespDto = userService.joinUser(joinReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "회원 가입 성공", joinRespDto),
                 HttpStatus.OK);

@@ -32,7 +32,9 @@ public class UserService {
         return new UserRealnameRespDto(userPS);
     }
 
+    @Transactional
     public JoinRespDto joinUser(JoinReqDto joinReqDto) {
+        log.debug("디버그 : 서비스 회원가입 실행됨");
         return new JoinRespDto(userRepository.save(joinReqDto.toEntity()));
     }
 
