@@ -26,8 +26,6 @@ public class User extends AudingTime {
     String userName;
     @Column(unique = true, nullable = false, length = 255)
     String userEmail;
-    @Column(nullable = false, length = 20)
-    String userEmailConfirm;
     @Column(unique = true, nullable = false, length = 50)
     String userPhonenumber;
     @Column(nullable = false, length = 1000)
@@ -50,14 +48,13 @@ public class User extends AudingTime {
     String userImageUuid;
 
     @Builder
-    public User(Long userId, String userName, String userEmail, String userEmailConfirm, String userPhonenumber,
+    public User(Long userId, String userName, String userEmail,  String userPhonenumber,
             String userPassword,
             String userRealname, String userImgfile, String userProfileIntro, String userWebLink, String userImageUrl,
             String userImageType, String userImageName, String userImageUuid) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
-        this.userEmailConfirm = userEmailConfirm;
         this.userPhonenumber = userPhonenumber;
         this.userPassword = userPassword;
         this.userRealname = userRealname;

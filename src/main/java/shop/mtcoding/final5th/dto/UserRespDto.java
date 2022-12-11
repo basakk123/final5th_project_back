@@ -15,4 +15,14 @@ public class UserRespDto {
             this.userName = user.getUserRealname();
         }
     }
+
+    @Getter
+    @Setter
+    public static class JoinRespDto {
+        private User user;
+
+        public JoinRespDto(User user) {
+            this.user = user;
+        }
+    }
 }

@@ -10,9 +10,8 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
-import shop.mtcoding.final5th.dto.UserReqDto.EmailCheckReqDto;
 import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
-import shop.mtcoding.final5th.dto.UserReqDto.LoginReqDto;
+import shop.mtcoding.final5th.dto.UserRespDto.JoinRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
 
 @Transactional(readOnly = true)
@@ -31,22 +30,7 @@ public class UserService {
         return new UserRealnameRespDto(userPS);
     }
 
-    public void 회원가입(JoinReqDto dto) {
-        userRepository.save(dto.toEntity());
-
-    }
-
-    public User 로그인(LoginReqDto dto) {
-        User userEntity = userRepository.mLogin(dto.getUsername(), dto.getPassword());
-        return userEntity;
-    }
-
-    public User 이메일인증확인(EmailCheckReqDto dto) {
-        User userEntity = userRepository.mCheck(dto.getUsername(), dto.getUserEmailConfirm());
-        return userEntity;
-    }
-
-    public void 이메일인증업데이트(EmailCheckReqDto dto) {
-        userRepository.mUpdate(dto.getUsername());
+    public JoinRespDto joinUser(JoinReqDto joinReqDto) {
+        return new JoinRespDto(userRepository.save(joinReqDto.toEntity()));
     }
 }
