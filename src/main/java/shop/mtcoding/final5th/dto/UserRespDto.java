@@ -19,10 +19,22 @@ public class UserRespDto {
     @Getter
     @Setter
     public static class JoinRespDto {
-        private User user;
+        private Long userId;
 
         public JoinRespDto(User user) {
-            this.user = user;
+            this.userId = user.getUserId();
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class findByEmail {
+        private Long userId;
+        private String userPassword;
+
+        public findByEmail(User user) {
+            this.userId = user.getUserId();
+            this.userPassword = user.getUserPassword();
         }
     }
 }

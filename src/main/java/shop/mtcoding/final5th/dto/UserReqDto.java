@@ -28,4 +28,18 @@ public class UserReqDto {
                     .build();
         }
     }
+
+    public static class findByEmail {
+        private Long userId;
+        private String userEmail;
+
+        public User toEntity() {
+            User user = User.builder()
+                    .userId(userId)
+                    .userEmail(userEmail)
+                    .build();
+            return user;
+        }
+    }
+
 }
