@@ -46,9 +46,9 @@ public class UserApiControllerTest extends DummyEntity {
 
     @BeforeEach
     public void sessionInit() {
-        User green = userRepository.save(newUser("green"));
+        User green = userRepository.save(newUser("green", "01012345678"));
         session = new MockHttpSession();
-        session.setAttribute("loginUser", new LoginUser(1L, newUser("green")));
+        session.setAttribute("loginUser", new LoginUser(1L, green));
     }
 
     @Test

@@ -28,14 +28,12 @@ public class FollowRespDto {
             private Long userId;
             private Long followingUserId;
             private Timestamp createdAt;
-            private User user;
 
             public FollowDto(Follow follow) {
                 this.followId = follow.getFollowId();
                 this.userId = follow.getUserId();
                 this.followingUserId = follow.getFollowingUserId();
                 this.createdAt = follow.getCreatedAt();
-                this.user = follow.getUser();
             }
         }
     }

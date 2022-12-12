@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Profile;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.domain.category.Category;
 import shop.mtcoding.final5th.domain.category.CategoryRepository;
+import shop.mtcoding.final5th.domain.follow.Follow;
+import shop.mtcoding.final5th.domain.follow.FollowRepository;
 import shop.mtcoding.final5th.domain.joined_chat.JoinedChat;
 import shop.mtcoding.final5th.domain.joined_chat.JoinedChatRepository;
 import shop.mtcoding.final5th.domain.news.News;
@@ -27,19 +29,26 @@ public class DevInit extends DummyEntity {
     @Bean
     public CommandLineRunner dataSetting(UserRepository userRepository, TodoRepository todoRepository,
             ScheduleRepository scheduleRepository, CategoryRepository categoryRepository,
-            NewsRepository newsRepository, JoinedChatRepository joinedChatRepository) {
+            NewsRepository newsRepository, JoinedChatRepository joinedChatRepository,
+            FollowRepository followRepository) {
         return (args) -> {
-            User green = userRepository.save(newUser("green"));
-            Todo greenTodo1 = todoRepository.save(newTodo("운동하기"));
-            Todo greenTodo2 = todoRepository.save(newTodo("공부하기"));
-            Schedule greenSchedule1 = scheduleRepository.save(newSchedule("자격증시험"));
-            Schedule greenSchedule2 = scheduleRepository.save(newSchedule("여행가기"));
+            User green = userRepository.save(newUser("green", "01012345678"));
+            Todo greenTodo1 = todoRepository.save(newTodo(1L, "운동하기"));
+            Todo greenTodo2 = todoRepository.save(newTodo(1L, "공부하기"));
+            Schedule greenSchedule1 = scheduleRepository.save(newSchedule(1L, "자격증시험"));
+            Schedule greenSchedule2 = scheduleRepository.save(newSchedule(1L, "여행가기"));
             Category greenCategory1 = categoryRepository.save(newCategory("yellow", "운동"));
             Category greenCategory2 = categoryRepository.save(newCategory("red", "쇼핑"));
             News greenNews1 = newsRepository.save(newNews(2L));
             News greenNews2 = newsRepository.save(newNews(3L));
             JoinedChat greenJoinedChat1 = joinedChatRepository.save(newJoinedChat(1L));
             JoinedChat greenJoinedChat2 = joinedChatRepository.save(newJoinedChat(2L));
+            User orange = userRepository.save(newUser("orange", "01012341234"));
+            Todo orangeTodo1 = todoRepository.save(newTodo(2L, "운동하기"));
+            Todo orangeTodo2 = todoRepository.save(newTodo(2L, "공부하기"));
+            Schedule orangeSchedule1 = scheduleRepository.save(newSchedule(2L, "자격증시험"));
+            Schedule orangeSchedule2 = scheduleRepository.save(newSchedule(2L, "여행가기"));
+            Follow greenFollow1 = followRepository.save(newFollow(1L, 2L));
         };
     }
 }

@@ -55,9 +55,9 @@ public class NewsApiControllerTest extends DummyEntity {
 
     @BeforeEach
     public void setUp() {
-        User green = userRepository.save(newUser("green"));
+        User green = userRepository.save(newUser("green", "01012345678"));
         session = new MockHttpSession();
-        session.setAttribute("loginUser", new LoginUser(1L, newUser("green")));
+        session.setAttribute("loginUser", new LoginUser(1L, green));
         News greenNews1 = newsRepository.save(newNews(2L));
         News greenNews2 = newsRepository.save(newNews(3L));
     }

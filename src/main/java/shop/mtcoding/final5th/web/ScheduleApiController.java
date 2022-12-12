@@ -50,22 +50,22 @@ public class ScheduleApiController {
                 HttpStatus.OK);
     }
 
-    // @GetMapping("/user/{followinguserid}/schedule/{userid}")
-    // public ResponseEntity<?>
-    // findScheduleListAndCategoryByFollowingUserId(@PathVariable Long
-    // followingUserId,
-    // @PathVariable Long userId) {
-    // LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-    // if (loginUser.getUserId() != followingUserId) {
-    // throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-    // }
-    // FollowingScheduleListRespDto followingScheduleListRespDto = scheduleService
-    // .findScheduleListAndCategoryByFollowingUserId(followingUserId, userId);
-    // return new ResponseEntity<>(
-    // new ResponseDto<>(HttpStatus.OK, "팔로잉 일정과 카테고리 리스트 보기 성공",
-    // followingScheduleListRespDto),
-    // HttpStatus.OK);
-    // }
+    @GetMapping("/user/{followingUserId}/following/schedule/{userId}")
+    public ResponseEntity<?> findFollowingScheduleListByUserId(@PathVariable Long followingUserId,
+            @PathVariable Long userId) {
+        log.debug("디버그 : 컨트롤러 실행됨");
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != followingUserId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        FollowingScheduleListRespDto followingScheduleListRespDto = scheduleService
+                .findFollowingScheduleListByUserId(followingUserId, userId);
+        log.debug("디버그 : 컨트롤러 리턴 전");
+        return new ResponseEntity<>(
+                new ResponseDto<>(HttpStatus.OK, "팔로잉 스케줄 리스트 보기 성공",
+                        followingScheduleListRespDto),
+                HttpStatus.OK);
+    }
 
     @GetMapping("/user/{userId}/schedule/{scheduleId}")
     public ResponseEntity<?> findScheduleDetail(@PathVariable Long userId, @PathVariable Long scheduleId) {

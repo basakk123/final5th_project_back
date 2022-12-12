@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface FollowRepository extends JpaRepository<Follow, Long> {
 
-    // @Query("select fo from Follow fo left join users us on fo.userId = us.userId
-    // where fo.followingUserId = :followingUserId")
+    // @Query("select fo from Follow fo where fo.followingUserId =
+    // :followingUserId")
     // List<Follow> findFollowListByFollowingUserId(@Param("followingUserId") Long
     // followingUserId);
 

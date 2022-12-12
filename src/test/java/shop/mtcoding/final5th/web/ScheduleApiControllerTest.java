@@ -26,6 +26,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.dummy.DummyEntity;
+import shop.mtcoding.final5th.domain.follow.Follow;
+import shop.mtcoding.final5th.domain.follow.FollowRepository;
 import shop.mtcoding.final5th.domain.schedule.Schedule;
 import shop.mtcoding.final5th.domain.schedule.ScheduleRepository;
 import shop.mtcoding.final5th.domain.user.User;
@@ -55,15 +57,22 @@ public class ScheduleApiControllerTest extends DummyEntity {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
+    @Autowired
+    private FollowRepository followRepository;
+
     private MockHttpSession session;
 
     @BeforeEach
     public void setUp() {
-        User green = userRepository.save(newUser("green"));
+        User green = userRepository.save(newUser("green", "01012345678"));
         session = new MockHttpSession();
-        session.setAttribute("loginUser", new LoginUser(1L, newUser("green")));
-        Schedule greenSchedule1 = scheduleRepository.save(newSchedule("자격증 시험"));
-        Schedule greenSchedule2 = scheduleRepository.save(newSchedule("여행가기"));
+        session.setAttribute("loginUser", new LoginUser(1L, green));
+        Schedule greenSchedule1 = scheduleRepository.save(newSchedule(1L, "자격증 시험"));
+        Schedule greenSchedule2 = scheduleRepository.save(newSchedule(1L, "여행가기"));
+        User orange = userRepository.save(newUser("orange", "01012341234"));
+        Schedule orangeSchedule1 = scheduleRepository.save(newSchedule(2L, "자격증시험"));
+        Schedule orangeSchedule2 = scheduleRepository.save(newSchedule(2L, "여행가기"));
+        Follow greenFollow1 = followRepository.save(newFollow(1L, 2L));
     }
 
     @Test
@@ -100,6 +109,25 @@ public class ScheduleApiControllerTest extends DummyEntity {
         // when
         ResultActions resultActions = mvc
                 .perform(get("/s/api/user/" + userId + "/schedule")
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void findFollowingScheduleListByUserId_test() throws Exception {
+        // given
+        Long followingUserId = 1L;
+        Long userId = 2L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + followingUserId + "/following/schedule/" + userId)
                         .accept(APPLICATION_JSON_UTF8)
                         .session(session));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();

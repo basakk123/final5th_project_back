@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.mtcoding.final5th.domain.user.User;
@@ -35,6 +36,11 @@ public class Follow {
     @Column(nullable = false)
     private Timestamp createdAt;
 
-    @OneToOne(mappedBy = "follow", fetch = FetchType.LAZY)
-    private User user;
+    @Builder
+    public Follow(Long followId, Long userId, Long followingUserId, Timestamp createdAt) {
+        this.followId = followId;
+        this.userId = userId;
+        this.followingUserId = followingUserId;
+        this.createdAt = createdAt;
+    }
 }
