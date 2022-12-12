@@ -27,7 +27,7 @@ public class UserApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("/user/userrealname/{userId}")
+    @GetMapping("/user/{userId}/userrealname")
     public ResponseEntity<?> findUserRealnameById(@PathVariable Long userId) {
         log.debug("디버그 : findUserRealnameById 컨트롤러 실행됨");
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");

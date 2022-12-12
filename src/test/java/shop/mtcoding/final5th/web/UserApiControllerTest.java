@@ -61,7 +61,7 @@ public class UserApiControllerTest extends DummyEntity {
 
         // when
         ResultActions resultActions = mvc
-                .perform(get("/s/api/user/userrealname/" + userId)
+                .perform(get("/s/api/user/" + userId + "/userrealname/")
                         .accept(APPLICATION_JSON_UTF8)
                         .session(session));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
