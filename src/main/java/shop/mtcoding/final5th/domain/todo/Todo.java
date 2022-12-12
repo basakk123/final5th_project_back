@@ -29,13 +29,13 @@ public class Todo {
     private String todoTitle;
 
     @Column(nullable = false)
-    private boolean todoFinished;
+    private boolean isFinished;
 
     @Builder
-    public Todo(Long todoId, Long userId, String todoTitle, boolean todoFinished) {
+    public Todo(Long todoId, Long userId, String todoTitle, boolean isFinished) {
         this.todoId = todoId;
         this.userId = userId;
         this.todoTitle = todoTitle;
-        this.todoFinished = todoFinished;
+        this.isFinished = isFinished;
     }
 }

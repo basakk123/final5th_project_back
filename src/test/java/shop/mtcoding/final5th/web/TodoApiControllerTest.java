@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.dummy.DummyEntity;
+import shop.mtcoding.final5th.domain.follow.Follow;
+import shop.mtcoding.final5th.domain.follow.FollowRepository;
 import shop.mtcoding.final5th.domain.todo.Todo;
 import shop.mtcoding.final5th.domain.todo.TodoRepository;
 import shop.mtcoding.final5th.domain.user.User;
@@ -53,6 +55,9 @@ public class TodoApiControllerTest extends DummyEntity {
     @Autowired
     private TodoRepository todoRepository;
 
+    @Autowired
+    private FollowRepository followRepository;
+
     private MockHttpSession session;
 
     @BeforeEach
@@ -60,8 +65,12 @@ public class TodoApiControllerTest extends DummyEntity {
         User green = userRepository.save(newUser("green", "01012345678"));
         session = new MockHttpSession();
         session.setAttribute("loginUser", new LoginUser(1L, green));
-        Todo greenTodo1 = todoRepository.save(newTodo("운동하기"));
-        Todo greenTodo2 = todoRepository.save(newTodo("공부하기"));
+        Todo greenTodo1 = todoRepository.save(newTodo(1L, "운동하기"));
+        Todo greenTodo2 = todoRepository.save(newTodo(1L, "공부하기"));
+        User orange = userRepository.save(newUser("orange", "01012341234"));
+        Todo orangeTodo1 = todoRepository.save(newTodo(2L, "운동하기"));
+        Todo orangeTodo2 = todoRepository.save(newTodo(2L, "공부하기"));
+        Follow greenFollow1 = followRepository.save(newFollow(1L, 2L));
     }
 
     @Test
@@ -73,7 +82,7 @@ public class TodoApiControllerTest extends DummyEntity {
         System.out.println("테스트 : " + loginUser.getUserName());
         TodoSaveReqDto todoSaveReqDto = new TodoSaveReqDto();
         todoSaveReqDto.setTodoTitle("운동하기");
-        todoSaveReqDto.setTodoFinished(false);
+        todoSaveReqDto.setFinished(false);
         String requestBody = om.writeValueAsString(todoSaveReqDto);
         System.out.println("테스트 : " + requestBody);
 
@@ -98,6 +107,25 @@ public class TodoApiControllerTest extends DummyEntity {
         // when
         ResultActions resultActions = mvc
                 .perform(get("/s/api/user/" + userId + "/todo")
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void findFollowingTodoListByUserId_test() throws Exception {
+        // given
+        Long followingUserId = 1L;
+        Long userId = 2L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + followingUserId + "/following/todo/" + userId)
                         .accept(APPLICATION_JSON_UTF8)
                         .session(session));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -136,7 +164,7 @@ public class TodoApiControllerTest extends DummyEntity {
         System.out.println("테스트 : " + loginUser.getUserName());
         TodoUpdateReqDto todoUpdateReqDto = new TodoUpdateReqDto();
         todoUpdateReqDto.setTodoTitle("공부하기");
-        todoUpdateReqDto.setTodoFinished(true);
+        todoUpdateReqDto.setFinished(true);
         String requestBody = om.writeValueAsString(todoUpdateReqDto);
         System.out.println("테스트 : " + requestBody);
 
@@ -149,7 +177,7 @@ public class TodoApiControllerTest extends DummyEntity {
 
         // then
         resultActions.andExpect(status().isCreated());
-        resultActions.andExpect(jsonPath("$.data.todoFinished").value(true));
+        resultActions.andExpect(jsonPath("$.data.isFinished").value(true));
     }
 
     @Test

@@ -11,13 +11,13 @@ public class TodoReqDto {
     public static class TodoSaveReqDto {
         private Long userId;
         private String todoTitle;
-        private boolean todoFinished;
+        private boolean isFinished;
 
         public Todo toEntity() {
             Todo todo = Todo.builder()
                     .userId(userId)
                     .todoTitle(todoTitle)
-                    .todoFinished(todoFinished)
+                    .isFinished(isFinished)
                     .build();
             return todo;
         }
@@ -28,13 +28,13 @@ public class TodoReqDto {
     public static class TodoUpdateReqDto {
         private Long userId;
         private String todoTitle;
-        private boolean todoFinished;
+        private boolean isFinished;
 
         public Todo toEntity() {
             Todo todo = Todo.builder()
                     .userId(userId)
                     .todoTitle(todoTitle)
-                    .todoFinished(todoFinished)
+                    .isFinished(isFinished)
                     .build();
             return todo;
         }

@@ -27,7 +27,7 @@ public abstract class DummyEntity {
         Todo todo = Todo.builder()
                 .userId(userId)
                 .todoTitle(todoTitle)
-                .todoFinished(false)
+                .isFinished(false)
                 .build();
         return todo;
     }

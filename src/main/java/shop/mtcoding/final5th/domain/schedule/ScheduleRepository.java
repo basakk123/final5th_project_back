@@ -10,9 +10,4 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     @Query("select sch from Schedule sch where sch.userId = :userId")
     List<Schedule> findScheduleListByUserId(@Param("userId") Long userId);
-
-    // @Query("select sch from Schedule sch left join sch.category ca where
-    // sch.userId = :userId")
-    // List<Schedule> findScheduleListAndCategoryByUserId(@Param("userId") Long
-    // userId);
 }

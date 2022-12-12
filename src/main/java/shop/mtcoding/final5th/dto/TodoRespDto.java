@@ -25,13 +25,13 @@ public class TodoRespDto {
             private Long todoId;
             private Long userId;
             private String todoTitle;
-            private boolean todoFinished;
+            private boolean isFinished;
 
             public TodoDto(Todo todo) {
                 this.todoId = todo.getTodoId();
                 this.userId = todo.getUserId();
                 this.todoTitle = todo.getTodoTitle();
-                this.todoFinished = todo.isTodoFinished();
+                this.isFinished = todo.isFinished();
             }
         }
     }
@@ -52,13 +52,13 @@ public class TodoRespDto {
             private Long todoId;
             private Long userId;
             private String todoTitle;
-            private boolean todoFinished;
+            private boolean isFinished;
 
             public TodoDto(Todo todo) {
                 this.todoId = todo.getTodoId();
                 this.userId = todo.getUserId();
                 this.todoTitle = todo.getTodoTitle();
-                this.todoFinished = todo.isTodoFinished();
+                this.isFinished = todo.isFinished();
             }
         }
     }
@@ -69,13 +69,13 @@ public class TodoRespDto {
         private Long todoId;
         private Long userId;
         private String todoTitle;
-        private boolean todoFinished;
+        private boolean isFinished;
 
         public TodoDetailRespDto(Todo todo) {
             this.todoId = todo.getTodoId();
             this.userId = todo.getUserId();
             this.todoTitle = todo.getTodoTitle();
-            this.todoFinished = todo.isTodoFinished();
+            this.isFinished = todo.isFinished();
         }
     }
 
@@ -85,13 +85,13 @@ public class TodoRespDto {
         private Long todoId;
         private Long userId;
         private String todoTitle;
-        private boolean todoFinished;
+        private boolean isFinished;
 
         public TodoSaveRespDto(Todo todo) {
             this.todoId = todo.getTodoId();
             this.userId = todo.getUserId();
             this.todoTitle = todo.getTodoTitle();
-            this.todoFinished = todo.isTodoFinished();
+            this.isFinished = todo.isFinished();
         }
     }
 
@@ -99,11 +99,11 @@ public class TodoRespDto {
     @Getter
     public static class TodoUpdateRespDto {
         private String todoTitle;
-        private boolean todoFinished;
+        private boolean isFinished;
 
         public TodoUpdateRespDto(Todo todo) {
             this.todoTitle = todo.getTodoTitle();
-            this.todoFinished = todo.isTodoFinished();
+            this.isFinished = todo.isFinished();
         }
     }
 }
