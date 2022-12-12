@@ -62,6 +62,7 @@ public class CommentService {
                                 .orElseThrow(() -> new CustomApiException("해당 코멘트가 없습니다", HttpStatus.BAD_REQUEST));
                 commentUpdateReqDto.setUserId(userId);
                 commentUpdateReqDto.setScheduleId(scheduleId);
+                commentUpdateReqDto.setCommentCreatedAt(commentPS.getCommentCreatedAt());
                 Comment comment = commentUpdateReqDto.toEntity();
                 commentPS = commentRepository.save(comment);
                 return new CommentUpdateRespDto(commentPS);

@@ -36,6 +36,7 @@ public class CommentReqDto {
         private Long userId;
         private Long parentsCommentsId;
         private String commentContent;
+        private Timestamp commentCreatedAt;
 
         public Comment toEntity() {
             Comment comment = Comment.builder()
@@ -43,6 +44,7 @@ public class CommentReqDto {
                     .userId(userId)
                     .parentsCommentsId(parentsCommentsId)
                     .commentContent(commentContent)
+                    .commentCreatedAt(commentCreatedAt)
                     .build();
             return comment;
         }

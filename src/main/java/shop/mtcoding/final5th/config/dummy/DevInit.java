@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Profile;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.domain.category.Category;
 import shop.mtcoding.final5th.domain.category.CategoryRepository;
+import shop.mtcoding.final5th.domain.comment.Comment;
+import shop.mtcoding.final5th.domain.comment.CommentRepository;
 import shop.mtcoding.final5th.domain.follow.Follow;
 import shop.mtcoding.final5th.domain.follow.FollowRepository;
 import shop.mtcoding.final5th.domain.joined_chat.JoinedChat;
@@ -30,7 +32,7 @@ public class DevInit extends DummyEntity {
     public CommandLineRunner dataSetting(UserRepository userRepository, TodoRepository todoRepository,
             ScheduleRepository scheduleRepository, CategoryRepository categoryRepository,
             NewsRepository newsRepository, JoinedChatRepository joinedChatRepository,
-            FollowRepository followRepository) {
+            FollowRepository followRepository, CommentRepository commentRepository) {
         return (args) -> {
             User green = userRepository.save(newUser("green", "01012345678"));
             Todo greenTodo1 = todoRepository.save(newTodo(1L, "운동하기"));
@@ -49,6 +51,8 @@ public class DevInit extends DummyEntity {
             Schedule orangeSchedule1 = scheduleRepository.save(newSchedule(2L, "자격증시험"));
             Schedule orangeSchedule2 = scheduleRepository.save(newSchedule(2L, "여행가기"));
             Follow greenFollow1 = followRepository.save(newFollow(1L, 2L));
+            Comment orangeComment1 = commentRepository.save(newComment(2L, "오 멋있다 ㅋㅋㅋㅋㅋㅋ"));
+            Comment orangeComment2 = commentRepository.save(newComment(1L, "고마워!"));
         };
     }
 }
