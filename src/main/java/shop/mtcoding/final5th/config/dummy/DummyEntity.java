@@ -3,6 +3,7 @@ package shop.mtcoding.final5th.config.dummy;
 import java.sql.Timestamp;
 
 import shop.mtcoding.final5th.domain.category.Category;
+import shop.mtcoding.final5th.domain.comment.Comment;
 import shop.mtcoding.final5th.domain.follow.Follow;
 import shop.mtcoding.final5th.domain.joined_chat.JoinedChat;
 import shop.mtcoding.final5th.domain.news.News;
@@ -77,5 +78,15 @@ public abstract class DummyEntity {
                 .createdAt(Timestamp.valueOf("2022-12-11 11:00:00.0"))
                 .build();
         return follow;
+    }
+
+    protected Comment newComment(Long userId, String commentContent) {
+        Comment comment = Comment.builder()
+                .scheduleId(1L)
+                .userId(userId)
+                .commentContent(commentContent)
+                .commentCreatedAt(Timestamp.valueOf("2022-12-11 11:00:00.0"))
+                .build();
+        return comment;
     }
 }

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,4 +36,15 @@ public class Comment {
 
     @Column(nullable = false)
     private Timestamp commentCreatedAt;
+
+    @Builder
+    public Comment(Long commentsId, Long scheduleId, Long userId, Long parentsCommentsId, String commentContent,
+            Timestamp commentCreatedAt) {
+        this.commentsId = commentsId;
+        this.scheduleId = scheduleId;
+        this.userId = userId;
+        this.parentsCommentsId = parentsCommentsId;
+        this.commentContent = commentContent;
+        this.commentCreatedAt = commentCreatedAt;
+    }
 }

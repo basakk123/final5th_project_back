@@ -45,8 +45,8 @@ public class TodoApiController {
         if (loginUser.getUserId() != userId) {
             throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
         }
-        TodoListRespDto tododListRespDto = todoService.findTodoListByUserId(userId);
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 리스트 보기 성공", tododListRespDto),
+        TodoListRespDto todoListRespDto = todoService.findTodoListByUserId(userId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 리스트 보기 성공", todoListRespDto),
                 HttpStatus.OK);
     }
 

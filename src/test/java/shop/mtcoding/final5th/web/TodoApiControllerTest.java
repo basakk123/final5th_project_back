@@ -177,7 +177,7 @@ public class TodoApiControllerTest extends DummyEntity {
 
         // then
         resultActions.andExpect(status().isCreated());
-        resultActions.andExpect(jsonPath("$.data.isFinished").value(true));
+        resultActions.andExpect(jsonPath("$.data.finished").value(true));
     }
 
     @Test
