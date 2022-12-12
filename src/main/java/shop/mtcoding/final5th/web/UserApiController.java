@@ -24,7 +24,6 @@ import shop.mtcoding.final5th.dto.UserRespDto.UserUpdateRespDto;
 import shop.mtcoding.final5th.service.UserService;
 
 @RequiredArgsConstructor
-@RequestMapping("/s/api")
 @RestController
 public class UserApiController {
 
@@ -33,7 +32,7 @@ public class UserApiController {
     private final HttpSession session;
 
     @PostMapping("/join")
-    public ResponseEntity<?> joinApi(@RequestBody JoinReqDto joinReqDto) {
+    public ResponseEntity<?> join(@RequestBody JoinReqDto joinReqDto) {
         log.debug("디버그 : UserApiController join 실행됨");
         JoinRespDto joinRespDto = userService.joinUser(joinReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "회원 가입 성공", joinRespDto),

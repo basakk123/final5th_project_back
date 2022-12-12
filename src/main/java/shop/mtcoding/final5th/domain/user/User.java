@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,8 +41,10 @@ public class User extends AudingTime {
     private String userEmail;
     @Column(unique = true, length = 50)
     private String userPhonenumber;
+    @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     @Column(nullable = false)
     private Timestamp userCreatedAt;
+    @UpdateTimestamp // UPDATE 시 자동으로 값을 채워줌
     @Column(nullable = false)
     private Timestamp userUpdatedAt;
     @Column(length = 255)
