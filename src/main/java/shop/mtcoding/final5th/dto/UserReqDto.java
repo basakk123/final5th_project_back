@@ -54,6 +54,7 @@ public class UserReqDto {
         private String userName;
         private String userEmail;
         private String userPhonenumber;
+        private String userBeforePassword;
         private String userPassword;
         private Timestamp userCreatedAt;
 

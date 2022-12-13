@@ -39,6 +39,11 @@ public class UserService {
     public PasswordUpdateRespDto updatePassword(Long userId, PasswordUpdateReqDto passwordUpdateReqDto) {
         User userPS = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+        log.debug("디버그 : userPS.getUserPassword() " + userPS.getUserPassword());
+        log.debug("디버그 : passwordUpdateReqDto.getUserBeforePassword() " + passwordUpdateReqDto.getUserBeforePassword());
+        if (!(userPS.getUserPassword().equals(passwordUpdateReqDto.getUserBeforePassword()))) {
+            throw new CustomApiException("비밀번호가 틀렸습니다", HttpStatus.BAD_REQUEST);
+        }
         passwordUpdateReqDto.setUserId(userId);
         passwordUpdateReqDto.setUserEmail(userPS.getUserEmail());
         passwordUpdateReqDto.setUserPhonenumber(userPS.getUserPhonenumber());

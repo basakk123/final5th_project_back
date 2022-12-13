@@ -86,6 +86,7 @@ public class UserApiControllerTest extends DummyEntity {
         System.out.println("테스트 : " + loginUser.getUserId());
         System.out.println("테스트 : " + loginUser.getUserName());
         PasswordUpdateReqDto passwordUpdateReqDto = new PasswordUpdateReqDto();
+        passwordUpdateReqDto.setUserBeforePassword("1234");
         passwordUpdateReqDto.setUserName("green");
         passwordUpdateReqDto.setUserPassword("5678");
         String requestBody = om.writeValueAsString(passwordUpdateReqDto);
