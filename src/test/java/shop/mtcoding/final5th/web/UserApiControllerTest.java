@@ -1,6 +1,7 @@
 package shop.mtcoding.final5th.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.dummy.DummyEntity;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
 
 @Sql("classpath:db/truncate.sql") // 롤백 대신 사용 (auto_increment 초기화 + 데이터 비우기)
 @ActiveProfiles("test")
@@ -49,6 +51,29 @@ public class UserApiControllerTest extends DummyEntity {
         User green = userRepository.save(newUser("green", "01012345678"));
         session = new MockHttpSession();
         session.setAttribute("loginUser", new LoginUser(1L, green));
+    }
+
+    @Test
+    public void join_test() throws Exception {
+        // given
+        JoinReqDto joinReqDto = new JoinReqDto();
+        joinReqDto.setUserName("hello");
+        joinReqDto.setUserPassword("1234");
+        joinReqDto.setUserEmail("hello@naver.com");
+        joinReqDto.setUserPhonenumber("01012340987");
+        joinReqDto.setUserRealname("헬로");
+        String requestBody = om.writeValueAsString(joinReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(post("/join").content(requestBody)
+                        .contentType(APPLICATION_JSON_UTF8).session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
     }
 
     @Test

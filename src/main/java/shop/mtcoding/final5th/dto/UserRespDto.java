@@ -8,6 +8,24 @@ public class UserRespDto {
 
     @Setter
     @Getter
+    public static class JoinRespDto {
+        private Long userId;
+        private String userName;
+        private String userEmail;
+        private String userPhonenumber;
+        private String userRealname;
+
+        public JoinRespDto(User user) {
+            this.userId = user.getUserId();
+            this.userName = user.getUserName();
+            this.userEmail = user.getUserEmail();
+            this.userPhonenumber = user.getUserPhonenumber();
+            this.userRealname = user.getUserRealname();
+        }
+    }
+
+    @Setter
+    @Getter
     public static class UserRealnameRespDto {
         private String userRealname;
 

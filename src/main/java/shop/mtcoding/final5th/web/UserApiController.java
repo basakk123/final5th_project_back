@@ -8,18 +8,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.ResponseDto;
+import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
+import shop.mtcoding.final5th.dto.UserRespDto.JoinRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
 import shop.mtcoding.final5th.service.UserService;
 
 @RequiredArgsConstructor
-@RequestMapping("/s/api")
 @RestController
 public class UserApiController {
 
@@ -27,7 +29,14 @@ public class UserApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
-    @GetMapping("/user/{userId}/userrealname")
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody JoinReqDto joinReqDto) {
+        log.debug("디버그 : join 실행됨");
+        JoinRespDto joinRespDto = userService.join(joinReqDto);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "회원가입 성공", joinRespDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/s/api/user/{userId}/userrealname")
     public ResponseEntity<?> findUserRealnameById(@PathVariable Long userId) {
         log.debug("디버그 : findUserRealnameById 컨트롤러 실행됨");
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");

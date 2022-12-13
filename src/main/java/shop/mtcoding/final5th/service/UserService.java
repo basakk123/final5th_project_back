@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
+import shop.mtcoding.final5th.dto.UserRespDto.JoinRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
 
 @Transactional(readOnly = true)
@@ -19,6 +21,17 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    @Transactional
+    public JoinRespDto join(JoinReqDto joinReqDto) {
+        log.debug("디버그 : 회원가입 실행됨");
+        // String rawPassword = joinReqDto.getPassword();
+        // String encPassword = passwordEncoder.encode(rawPassword);
+        // joinReqDto.setPassword(encPassword);
+        // log.debug("디버그 : encPassword" + encPassword);
+        User userPS = userRepository.save(joinReqDto.toEntity());
+        return new JoinRespDto(userPS);
+    }
 
     public UserRealnameRespDto findUserRealnameById(Long userId) {
         log.debug("디버그 : findUserRealnameById 서비스 실행됨");
