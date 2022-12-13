@@ -123,4 +123,19 @@ public class UserApiControllerTest extends DummyEntity {
         resultActions.andExpect(status().isOk());
     }
 
+    @Test
+    public void findUserList_test() throws Exception {
+        // given
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/user/list")
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
 }

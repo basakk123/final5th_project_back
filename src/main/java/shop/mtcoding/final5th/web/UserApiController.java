@@ -21,6 +21,7 @@ import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
 import shop.mtcoding.final5th.dto.UserReqDto.PasswordUpdateReqDto;
 import shop.mtcoding.final5th.dto.UserRespDto.JoinRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.PasswordUpdateRespDto;
+import shop.mtcoding.final5th.dto.UserRespDto.UserListRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
 import shop.mtcoding.final5th.service.UserService;
 
@@ -65,6 +66,13 @@ public class UserApiController {
         UserRealnameRespDto userRealnameRespDto = userService.findUserRealnameById(userId);
         log.debug("디버그 : findUserRealnameById 컨트롤러 리턴 전");
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "유저리얼네임보기 성공", userRealnameRespDto),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/user/list")
+    public ResponseEntity<?> findUserList() {
+        UserListRespDto userListRespDto = userService.findUserList();
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "유저 전체 리스트 보기 성공", userListRespDto),
                 HttpStatus.OK);
     }
 }
