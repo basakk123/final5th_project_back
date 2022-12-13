@@ -1,26 +1,24 @@
 package shop.mtcoding.final5th.domain.user;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import shop.mtcoding.final5th.domain.AudingTime;
-import shop.mtcoding.final5th.domain.follow.Follow;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Table(name = "users")
 @Entity
-public class User extends AudingTime {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -50,13 +48,15 @@ public class User extends AudingTime {
     @Column(length = 255)
     private String userImageUuid;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Follow follow;
+    private Timestamp userCreatedAt;
+
+    private Timestamp userUpdatedAt;
 
     @Builder
     public User(Long userId, String userName, String userEmail, String userPhonenumber, String userPassword,
             String userRealname, String userImgfile, String userProfileIntro, String userWebLink, String userImageUrl,
-            String userImageType, String userImageName, String userImageUuid) {
+            String userImageType, String userImageName, String userImageUuid, Timestamp userCreatedAt,
+            Timestamp userUpdatedAt) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -70,5 +70,7 @@ public class User extends AudingTime {
         this.userImageType = userImageType;
         this.userImageName = userImageName;
         this.userImageUuid = userImageUuid;
+        this.userCreatedAt = userCreatedAt;
+        this.userUpdatedAt = userUpdatedAt;
     }
 }

@@ -2,6 +2,7 @@ package shop.mtcoding.final5th.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,7 @@ import shop.mtcoding.final5th.config.dummy.DummyEntity;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
+import shop.mtcoding.final5th.dto.UserReqDto.PasswordUpdateReqDto;
 
 @Sql("classpath:db/truncate.sql") // 롤백 대신 사용 (auto_increment 초기화 + 데이터 비우기)
 @ActiveProfiles("test")
@@ -77,6 +79,30 @@ public class UserApiControllerTest extends DummyEntity {
     }
 
     @Test
+    public void updatePassword_test() throws Exception {
+        // given
+        Long userId = 1L;
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        System.out.println("테스트 : " + loginUser.getUserId());
+        System.out.println("테스트 : " + loginUser.getUserName());
+        PasswordUpdateReqDto passwordUpdateReqDto = new PasswordUpdateReqDto();
+        passwordUpdateReqDto.setUserName("green");
+        passwordUpdateReqDto.setUserPassword("5678");
+        String requestBody = om.writeValueAsString(passwordUpdateReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(put("/s/api/user/" + userId + "/password").content(requestBody)
+                        .contentType(APPLICATION_JSON_UTF8).session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
+    }
+
+    @Test
     public void findUserRealnameById_test() throws Exception {
         // given
         Long userId = 1L;
@@ -86,7 +112,7 @@ public class UserApiControllerTest extends DummyEntity {
 
         // when
         ResultActions resultActions = mvc
-                .perform(get("/s/api/user/" + userId + "/userrealname/")
+                .perform(get("/s/api/user/" + userId + "/userrealname")
                         .accept(APPLICATION_JSON_UTF8)
                         .session(session));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();

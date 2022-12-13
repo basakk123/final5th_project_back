@@ -1,5 +1,7 @@
 package shop.mtcoding.final5th.dto;
 
+import java.sql.Timestamp;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -43,5 +45,27 @@ public class UserReqDto {
     public static class LoginReqDto {
         private String username;
         private String password;
+    }
+
+    @Setter
+    @Getter
+    public static class PasswordUpdateReqDto {
+        private Long userId;
+        private String userName;
+        private String userEmail;
+        private String userPhonenumber;
+        private String userPassword;
+        private Timestamp userCreatedAt;
+
+        public User toEntity() {
+            return User.builder()
+                    .userId(userId)
+                    .userName(userName)
+                    .userEmail(userEmail)
+                    .userPhonenumber(userPhonenumber)
+                    .userPassword(userPassword)
+                    .userCreatedAt(userCreatedAt)
+                    .build();
+        }
     }
 }

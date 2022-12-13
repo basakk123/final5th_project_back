@@ -11,7 +11,9 @@ import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
+import shop.mtcoding.final5th.dto.UserReqDto.PasswordUpdateReqDto;
 import shop.mtcoding.final5th.dto.UserRespDto.JoinRespDto;
+import shop.mtcoding.final5th.dto.UserRespDto.PasswordUpdateRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
 
 @Transactional(readOnly = true)
@@ -31,6 +33,19 @@ public class UserService {
         // log.debug("디버그 : encPassword" + encPassword);
         User userPS = userRepository.save(joinReqDto.toEntity());
         return new JoinRespDto(userPS);
+    }
+
+    @Transactional
+    public PasswordUpdateRespDto updatePassword(Long userId, PasswordUpdateReqDto passwordUpdateReqDto) {
+        User userPS = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+        passwordUpdateReqDto.setUserId(userId);
+        passwordUpdateReqDto.setUserEmail(userPS.getUserEmail());
+        passwordUpdateReqDto.setUserPhonenumber(userPS.getUserPhonenumber());
+        passwordUpdateReqDto.setUserCreatedAt(userPS.getUserCreatedAt());
+        User user = passwordUpdateReqDto.toEntity();
+        userPS = userRepository.save(user);
+        return new PasswordUpdateRespDto(userPS);
     }
 
     public UserRealnameRespDto findUserRealnameById(Long userId) {

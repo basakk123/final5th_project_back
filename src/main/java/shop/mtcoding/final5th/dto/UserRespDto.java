@@ -26,6 +26,16 @@ public class UserRespDto {
 
     @Setter
     @Getter
+    public static class PasswordUpdateRespDto {
+        private String userName;
+
+        public PasswordUpdateRespDto(User user) {
+            this.userName = user.getUserName();
+        }
+    }
+
+    @Setter
+    @Getter
     public static class UserRealnameRespDto {
         private String userRealname;
 
