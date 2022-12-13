@@ -34,7 +34,7 @@ public class DevInit extends DummyEntity {
             NewsRepository newsRepository, JoinedChatRepository joinedChatRepository,
             FollowRepository followRepository, CommentRepository commentRepository) {
         return (args) -> {
-            User green = userRepository.save(newUser("green", "01012345678"));
+            User green = userRepository.save(newUser("green", "01012345678", "그린"));
             Todo greenTodo1 = todoRepository.save(newTodo(1L, "운동하기"));
             Todo greenTodo2 = todoRepository.save(newTodo(1L, "공부하기"));
             Schedule greenSchedule1 = scheduleRepository.save(newSchedule(1L, "자격증시험"));
@@ -45,7 +45,7 @@ public class DevInit extends DummyEntity {
             News greenNews2 = newsRepository.save(newNews(3L));
             JoinedChat greenJoinedChat1 = joinedChatRepository.save(newJoinedChat(1L));
             JoinedChat greenJoinedChat2 = joinedChatRepository.save(newJoinedChat(2L));
-            User orange = userRepository.save(newUser("orange", "01012341234"));
+            User orange = userRepository.save(newUser("orange", "01012341234", "오렌지"));
             Todo orangeTodo1 = todoRepository.save(newTodo(2L, "운동하기"));
             Todo orangeTodo2 = todoRepository.save(newTodo(2L, "공부하기"));
             Schedule orangeSchedule1 = scheduleRepository.save(newSchedule(2L, "자격증시험"));
@@ -53,6 +53,8 @@ public class DevInit extends DummyEntity {
             Follow greenFollow1 = followRepository.save(newFollow(1L, 2L));
             Comment orangeComment1 = commentRepository.save(newComment(2L, "오 멋있다 ㅋㅋㅋㅋㅋㅋ"));
             Comment orangeComment2 = commentRepository.save(newComment(1L, "고마워!"));
+            User yellow = userRepository.save(newUser("yellow", "01012345578", "노랑"));
+            Follow greenFollow2 = followRepository.save(newFollow(1L, 3L));
         };
     }
 }

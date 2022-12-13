@@ -57,7 +57,7 @@ public class JoinedChatApiControllerTest extends DummyEntity {
 
     @BeforeEach
     public void setUp() {
-        User green = userRepository.save(newUser("green", "01012345678"));
+        User green = userRepository.save(newUser("green", "01012345678", "그린"));
         session = new MockHttpSession();
         session.setAttribute("loginUser", new LoginUser(1L, green));
         JoinedChat greenJoinedChat1 = joinedChatRepository.save(newJoinedChat(1L));

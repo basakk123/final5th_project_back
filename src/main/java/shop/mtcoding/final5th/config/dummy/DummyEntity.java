@@ -13,13 +13,13 @@ import shop.mtcoding.final5th.domain.user.User;
 
 public abstract class DummyEntity {
 
-    protected User newUser(String userName, String userPhonenumber) {
+    protected User newUser(String userName, String userPhonenumber, String userRealname) {
         User user = User.builder()
                 .userName(userName)
                 .userEmail(userName + "@nate.com")
                 .userPhonenumber(userPhonenumber)
                 .userPassword("1234")
-                .userRealname("그린")
+                .userRealname(userRealname)
                 .build();
         return user;
     }

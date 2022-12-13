@@ -64,12 +64,12 @@ public class ScheduleApiControllerTest extends DummyEntity {
 
     @BeforeEach
     public void setUp() {
-        User green = userRepository.save(newUser("green", "01012345678"));
+        User green = userRepository.save(newUser("green", "01012345678", "그린"));
         session = new MockHttpSession();
         session.setAttribute("loginUser", new LoginUser(1L, green));
         Schedule greenSchedule1 = scheduleRepository.save(newSchedule(1L, "자격증 시험"));
         Schedule greenSchedule2 = scheduleRepository.save(newSchedule(1L, "여행가기"));
-        User orange = userRepository.save(newUser("orange", "01012341234"));
+        User orange = userRepository.save(newUser("orange", "01012341234", "오렌지"));
         Schedule orangeSchedule1 = scheduleRepository.save(newSchedule(2L, "자격증시험"));
         Schedule orangeSchedule2 = scheduleRepository.save(newSchedule(2L, "여행가기"));
         Follow greenFollow1 = followRepository.save(newFollow(1L, 2L));
