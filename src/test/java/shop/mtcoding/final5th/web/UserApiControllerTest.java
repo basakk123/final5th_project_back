@@ -26,6 +26,7 @@ import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
 import shop.mtcoding.final5th.dto.UserReqDto.PasswordUpdateReqDto;
+import shop.mtcoding.final5th.dto.UserReqDto.ProfileUpdateReqDto;
 
 @Sql("classpath:db/truncate.sql") // 롤백 대신 사용 (auto_increment 초기화 + 데이터 비우기)
 @ActiveProfiles("test")
@@ -137,5 +138,30 @@ public class UserApiControllerTest extends DummyEntity {
 
         // then
         resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateProfile_test() throws Exception {
+        // given
+        Long userId = 1L;
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        System.out.println("테스트 : " + loginUser.getUserId());
+        System.out.println("테스트 : " + loginUser.getUserName());
+        ProfileUpdateReqDto profileUpdateReqDto = new ProfileUpdateReqDto();
+        profileUpdateReqDto.setUserRealname("그린컴퓨터");
+        profileUpdateReqDto.setUserImgfile("이미지 파일1");
+        profileUpdateReqDto.setUserProfileIntro("반가워요 ㅎㅎ");
+        String requestBody = om.writeValueAsString(profileUpdateReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(put("/s/api/user/" + userId + "/profile").content(requestBody)
+                        .contentType(APPLICATION_JSON_UTF8).session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
     }
 }

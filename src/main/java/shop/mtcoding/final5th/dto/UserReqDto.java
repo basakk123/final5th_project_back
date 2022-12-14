@@ -69,4 +69,20 @@ public class UserReqDto {
                     .build();
         }
     }
+
+    @Setter
+    @Getter
+    public static class ProfileUpdateReqDto {
+        private String userRealname;
+        private String userImgfile;
+        private String userProfileIntro;
+
+        public User toEntity() {
+            return User.builder()
+                    .userRealname(userRealname)
+                    .userImgfile(userImgfile)
+                    .userProfileIntro(userProfileIntro)
+                    .build();
+        }
+    }
 }

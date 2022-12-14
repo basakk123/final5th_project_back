@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import shop.mtcoding.final5th.dto.UserReqDto.ProfileUpdateReqDto;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
@@ -72,5 +73,11 @@ public class User {
         this.userImageUuid = userImageUuid;
         this.userCreatedAt = userCreatedAt;
         this.userUpdatedAt = userUpdatedAt;
+    }
+
+    public void updateProfile(ProfileUpdateReqDto profileUpdateReqDto) {
+        this.userRealname = profileUpdateReqDto.getUserRealname();
+        this.userImgfile = profileUpdateReqDto.getUserImgfile();
+        this.userProfileIntro = profileUpdateReqDto.getUserProfileIntro();
     }
 }

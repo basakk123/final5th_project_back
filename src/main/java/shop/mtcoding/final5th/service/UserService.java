@@ -14,8 +14,10 @@ import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.UserReqDto.JoinReqDto;
 import shop.mtcoding.final5th.dto.UserReqDto.PasswordUpdateReqDto;
+import shop.mtcoding.final5th.dto.UserReqDto.ProfileUpdateReqDto;
 import shop.mtcoding.final5th.dto.UserRespDto.JoinRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.PasswordUpdateRespDto;
+import shop.mtcoding.final5th.dto.UserRespDto.ProfileUpdateRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserListRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
 
@@ -67,5 +69,13 @@ public class UserService {
     public UserListRespDto findUserList() {
         List<User> userList = userRepository.findAll();
         return new UserListRespDto(userList);
+    }
+
+    @Transactional
+    public ProfileUpdateRespDto updateProfile(Long userId, ProfileUpdateReqDto profileUpdateReqDto) {
+        User userPS = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다", HttpStatus.BAD_REQUEST));
+        userPS.updateProfile(profileUpdateReqDto);
+        return new ProfileUpdateRespDto(userPS);
     }
 }
