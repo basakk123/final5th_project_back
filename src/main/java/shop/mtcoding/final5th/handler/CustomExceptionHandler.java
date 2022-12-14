@@ -2,7 +2,6 @@ package shop.mtcoding.final5th.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -17,7 +16,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(CustomApiException.class)
     public ResponseEntity<?> apiException(CustomApiException e) {
         log.debug("디버그 : CustomExceptionHandler 실행됨");
-        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.BAD_REQUEST, e.getMessage(), null),
-                HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ResponseDto<>(e.getHttpStatus(), e.getMessage(), null),
+                e.getHttpStatus());
     }
 }

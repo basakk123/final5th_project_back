@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.final5th.config.annotation.AuthorizationCheck;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.CategoryReqDto.CategorySaveReqDto;
@@ -51,12 +52,9 @@ public class CategoryApiController {
                 HttpStatus.CREATED);
     }
 
+    @AuthorizationCheck
     @GetMapping("/user/{userId}/category")
     public ResponseEntity<?> findCategoryListByUserId(@PathVariable Long userId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         CategoryListRespDto categoryListRespDto = categoryService.findCategoryListByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "카테고리 리스트 보기 성공", categoryListRespDto),
                 HttpStatus.OK);

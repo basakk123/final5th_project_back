@@ -49,8 +49,10 @@ public class User {
     @Column(length = 255)
     private String userImageUuid;
 
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp userCreatedAt;
 
+    @Column(updatable = true)
     private Timestamp userUpdatedAt;
 
     @Builder
