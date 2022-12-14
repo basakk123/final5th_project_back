@@ -24,7 +24,6 @@ import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.ResponseDto;
 import shop.mtcoding.final5th.dto.UserReqDto.LoginReqDto;
-import shop.mtcoding.final5th.util.SHA256;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -52,11 +51,11 @@ public class JwtAuthenticationFilter implements Filter {
         // Body 값 받기
         ObjectMapper om = new ObjectMapper();
         LoginReqDto loginReqDto = om.readValue(req.getInputStream(), LoginReqDto.class);
-        log.debug("디버그 : " + loginReqDto.getUsername());
-        log.debug("디버그 : " + loginReqDto.getPassword());
+        log.debug("디버그 : " + loginReqDto.getUserName());
+        log.debug("디버그 : " + loginReqDto.getUserPassword());
 
         // 유저네임 있는지 체크
-        Optional<User> userOP = userRepository.findByUsername(loginReqDto.getUsername());
+        Optional<User> userOP = userRepository.findByUsername(loginReqDto.getUserName());
         if (userOP.isEmpty()) {
             customResponse("유저네임을 찾을 수 없습니다.", resp);
             return;
@@ -71,7 +70,7 @@ public class JwtAuthenticationFilter implements Filter {
         // return;
         // }
         User userPS = userOP.get();
-        if (!userPS.getUserPassword().equals(loginReqDto.getPassword())) {
+        if (!userPS.getUserPassword().equals(loginReqDto.getUserPassword())) {
             customResponse("패스워드가 틀렸습니다.", resp);
             return;
         }

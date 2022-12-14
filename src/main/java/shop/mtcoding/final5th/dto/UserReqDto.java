@@ -43,8 +43,8 @@ public class UserReqDto {
     @Setter
     @Getter
     public static class LoginReqDto {
-        private String username;
-        private String password;
+        private String userName;
+        private String userPassword;
     }
 
     @Setter
