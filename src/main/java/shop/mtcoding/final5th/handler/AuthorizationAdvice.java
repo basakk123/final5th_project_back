@@ -46,7 +46,7 @@ public class AuthorizationAdvice {
 
         // 권한 확인
         if (userId != loginUser.getUserId()) {
-            throw new CustomApiException("권한이 없습니다dsasdfsdf", HttpStatus.FORBIDDEN);
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
         }
 
         return proceedingJoinPoint.proceed();
