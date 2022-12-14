@@ -62,6 +62,8 @@ public class FollowApiControllerTest extends DummyEntity {
         User yellow = userRepository.save(newUser("yellow", "01012345578", "노랑"));
         Follow greenFollow1 = followRepository.save(newFollow(1L, 2L));
         Follow greenFollow2 = followRepository.save(newFollow(1L, 3L));
+        Follow orangeFollow1 = followRepository.save(newFollow(2L, 1L));
+        Follow yellowFollow1 = followRepository.save(newFollow(3L, 1L));
     }
 
     @Test
@@ -73,6 +75,24 @@ public class FollowApiControllerTest extends DummyEntity {
         // when
         ResultActions resultActions = mvc
                 .perform(get("/s/api/user/" + followingUserId + "/follow")
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void findFollowerListByUserId_test() throws Exception {
+        // given
+        Long userId = 1L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + userId + "/follower")
                         .accept(APPLICATION_JSON_UTF8)
                         .session(session));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();

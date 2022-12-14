@@ -16,6 +16,7 @@ import shop.mtcoding.final5th.config.dummy.DummyEntity;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.FollowListRespDto;
+import shop.mtcoding.final5th.dto.FollowerListRespDto;
 
 @Import(FollowRepositoryQuery.class)
 @ActiveProfiles("test")
@@ -41,6 +42,8 @@ public class FollowRepositoryQueryTest extends DummyEntity {
         User yellow = userRepository.save(newUser("yellow", "01012345578", "노랑"));
         Follow greenFollow1 = followRepository.save(newFollow(1L, 2L));
         Follow greenFollow2 = followRepository.save(newFollow(1L, 3L));
+        Follow orangeFollow1 = followRepository.save(newFollow(2L, 1L));
+        Follow yellowFollow1 = followRepository.save(newFollow(3L, 1L));
         this.em
                 .createNativeQuery("ALTER TABLE users ALTER COLUMN `user_id` RESTART WITH 1")
                 .executeUpdate();
@@ -60,5 +63,22 @@ public class FollowRepositoryQueryTest extends DummyEntity {
 
         // then
         Assertions.assertThat(followListRespDtos.get(0));
+    }
+
+    @Test
+    public void findFollowerListByUserId_test() {
+        // given
+        Long userId = 1L;
+
+        // when
+        List<FollowerListRespDto> followerListRespDtos = followRepositoryQuery.findFollowerListByUserId(1L);
+        System.out.println("테스트 :  followerListRespDtos.getUserId() : " + followerListRespDtos.get(0).getUserId());
+        System.out.println("테스트 : followerListRespDtos.getUserName() : " + followerListRespDtos.get(0).getUserName());
+        System.out
+                .println("테스트 : followerListRespDtos.getUserRealname() : "
+                        + followerListRespDtos.get(0).getUserRealname());
+
+        // then
+        Assertions.assertThat(followerListRespDtos.get(0));
     }
 }

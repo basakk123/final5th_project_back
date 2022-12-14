@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.FollowListRespDto;
+import shop.mtcoding.final5th.dto.FollowerListRespDto;
 import shop.mtcoding.final5th.dto.ResponseDto;
 import shop.mtcoding.final5th.service.FollowService;
 import shop.mtcoding.final5th.service.UserService;
@@ -40,6 +41,18 @@ public class FollowApiController {
         List<FollowListRespDto> followListRespDtos = followService.findFollowListByFollowingUserId(followingUserId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로우 리스트 보기 성공",
                 followListRespDtos),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}/follower")
+    public ResponseEntity<?> findFollowerListByUserId(@PathVariable Long userId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        List<FollowerListRespDto> followerListRespDtos = followService.findFollowerListByUserId(userId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로워 리스트 보기 성공",
+                followerListRespDtos),
                 HttpStatus.OK);
     }
 }

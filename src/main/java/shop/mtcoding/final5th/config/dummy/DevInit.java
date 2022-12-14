@@ -55,6 +55,8 @@ public class DevInit extends DummyEntity {
             Comment orangeComment2 = commentRepository.save(newComment(1L, "고마워!"));
             User yellow = userRepository.save(newUser("yellow", "01012345578", "노랑"));
             Follow greenFollow2 = followRepository.save(newFollow(1L, 3L));
+            Follow orangeFollow1 = followRepository.save(newFollow(2L, 1L));
+            Follow yellowFollow1 = followRepository.save(newFollow(3L, 1L));
         };
     }
 }
