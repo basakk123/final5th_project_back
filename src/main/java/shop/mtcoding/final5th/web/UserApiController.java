@@ -22,6 +22,7 @@ import shop.mtcoding.final5th.dto.UserReqDto.PasswordUpdateReqDto;
 import shop.mtcoding.final5th.dto.UserReqDto.ProfileUpdateReqDto;
 import shop.mtcoding.final5th.dto.UserRespDto.JoinRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.PasswordUpdateRespDto;
+import shop.mtcoding.final5th.dto.UserRespDto.ProfileDetailRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.ProfileUpdateRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserListRespDto;
 import shop.mtcoding.final5th.dto.UserRespDto.UserRealnameRespDto;
@@ -75,6 +76,17 @@ public class UserApiController {
     public ResponseEntity<?> findUserList() {
         UserListRespDto userListRespDto = userService.findUserList();
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "유저 전체 리스트 보기 성공", userListRespDto),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/s/api/user/{userId}/profile")
+    public ResponseEntity<?> findProfileDetail(@PathVariable Long userId) {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser.getUserId() != userId) {
+            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        }
+        ProfileDetailRespDto profileDetailRespDto = userService.findProfileDetail(userId);
+        return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "프로필 보기 성공", profileDetailRespDto),
                 HttpStatus.OK);
     }
 

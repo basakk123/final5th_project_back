@@ -98,6 +98,20 @@ public class UserRespDto {
 
     @Setter
     @Getter
+    public static class ProfileDetailRespDto {
+        private String userRealname;
+        private String userImgfile;
+        private String userProfileIntro;
+
+        public ProfileDetailRespDto(User user) {
+            this.userRealname = user.getUserRealname();
+            this.userImgfile = user.getUserImgfile();
+            this.userProfileIntro = user.getUserProfileIntro();
+        }
+    }
+
+    @Setter
+    @Getter
     public static class ProfileUpdateRespDto {
         private String userRealname;
         private String userImgfile;
