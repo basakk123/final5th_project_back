@@ -9,6 +9,7 @@ import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import shop.mtcoding.final5th.dto.FollowCountRespDto;
 import shop.mtcoding.final5th.dto.FollowListRespDto;
 import shop.mtcoding.final5th.dto.FollowerListRespDto;
 
@@ -42,5 +43,18 @@ public class FollowRepositoryQuery {
         JpaResultMapper result = new JpaResultMapper();
         List<FollowerListRespDto> followerListRespDtos = result.list(query, FollowerListRespDto.class);
         return followerListRespDtos;
+    }
+
+    public FollowCountRespDto findFollowCountByFollowingUserId(Long followingUserId) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(
+                "select count(*) as followingCount from follow fo where fo.following_user_id = :followingUserId");
+
+        Query query = em.createNativeQuery(sb.toString())
+                .setParameter("followingUserId", followingUserId);
+
+        JpaResultMapper result = new JpaResultMapper();
+        FollowCountRespDto followCountRespDto = result.uniqueResult(query, FollowCountRespDto.class);
+        return followCountRespDto;
     }
 }

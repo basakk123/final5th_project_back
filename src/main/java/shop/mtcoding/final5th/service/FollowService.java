@@ -14,6 +14,7 @@ import shop.mtcoding.final5th.domain.follow.FollowRepository;
 import shop.mtcoding.final5th.domain.follow.FollowRepositoryQuery;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.FollowCountRespDto;
 import shop.mtcoding.final5th.dto.FollowListRespDto;
 import shop.mtcoding.final5th.dto.FollowerListRespDto;
 
@@ -43,5 +44,14 @@ public class FollowService {
                 List<FollowerListRespDto> followerListRespDtos = followRepositoryQuery
                                 .findFollowerListByUserId(userId);
                 return followerListRespDtos;
+        }
+
+        public FollowCountRespDto findFollowCountByFollowingUserId(Long followingUserId) {
+                User userPS = userRepository.findById(followingUserId)
+                                .orElseThrow(() -> new CustomApiException("해당 유저가 없습니다",
+                                                HttpStatus.BAD_REQUEST));
+                FollowCountRespDto followCountRespDto = followRepositoryQuery
+                                .findFollowCountByFollowingUserId(followingUserId);
+                return followCountRespDto;
         }
 }

@@ -101,4 +101,22 @@ public class FollowApiControllerTest extends DummyEntity {
         // then
         resultActions.andExpect(status().isOk());
     }
+
+    @Test
+    public void findFollowCountByFollowingUserId_test() throws Exception {
+        // given
+        Long followingUserId = 1L;
+        session.getAttribute("loginUser");
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/api/user/" + followingUserId + "/follow/count")
+                        .accept(APPLICATION_JSON_UTF8)
+                        .session(session));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
 }

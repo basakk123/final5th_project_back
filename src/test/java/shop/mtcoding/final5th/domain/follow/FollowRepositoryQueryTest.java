@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import shop.mtcoding.final5th.config.dummy.DummyEntity;
 import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
+import shop.mtcoding.final5th.dto.FollowCountRespDto;
 import shop.mtcoding.final5th.dto.FollowListRespDto;
 import shop.mtcoding.final5th.dto.FollowerListRespDto;
 
@@ -55,7 +56,8 @@ public class FollowRepositoryQueryTest extends DummyEntity {
         Long followingUserId = 1L;
 
         // when
-        List<FollowListRespDto> followListRespDtos = followRepositoryQuery.findFollowListByFollowingUserId(1L);
+        List<FollowListRespDto> followListRespDtos = followRepositoryQuery
+                .findFollowListByFollowingUserId(followingUserId);
         System.out.println("테스트 :  followListRespDto.getFollowId() : " + followListRespDtos.get(0).getUserId());
         System.out.println("테스트 : followListRespDto.getUserName() : " + followListRespDtos.get(0).getUserName());
         System.out
@@ -71,7 +73,7 @@ public class FollowRepositoryQueryTest extends DummyEntity {
         Long userId = 1L;
 
         // when
-        List<FollowerListRespDto> followerListRespDtos = followRepositoryQuery.findFollowerListByUserId(1L);
+        List<FollowerListRespDto> followerListRespDtos = followRepositoryQuery.findFollowerListByUserId(userId);
         System.out.println("테스트 :  followerListRespDtos.getUserId() : " + followerListRespDtos.get(0).getUserId());
         System.out.println("테스트 : followerListRespDtos.getUserName() : " + followerListRespDtos.get(0).getUserName());
         System.out
@@ -80,5 +82,19 @@ public class FollowRepositoryQueryTest extends DummyEntity {
 
         // then
         Assertions.assertThat(followerListRespDtos.get(0));
+    }
+
+    @Test
+    public void findFollowCountByFollowingUserId_test() {
+        // given
+        Long followingUserId = 1L;
+
+        // when
+        FollowCountRespDto followCountRespDto = followRepositoryQuery
+                .findFollowCountByFollowingUserId(followingUserId);
+        System.out.println("테스트 : followCountRespDto.getFollowCount() : " + followCountRespDto.getFollowCount());
+
+        // then
+        Assertions.assertThat(followCountRespDto.getFollowCount());
     }
 }
