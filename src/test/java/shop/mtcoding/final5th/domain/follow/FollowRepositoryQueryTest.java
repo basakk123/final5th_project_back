@@ -17,6 +17,7 @@ import shop.mtcoding.final5th.domain.user.User;
 import shop.mtcoding.final5th.domain.user.UserRepository;
 import shop.mtcoding.final5th.dto.FollowCountRespDto;
 import shop.mtcoding.final5th.dto.FollowListRespDto;
+import shop.mtcoding.final5th.dto.FollowerCountRespDto;
 import shop.mtcoding.final5th.dto.FollowerListRespDto;
 
 @Import(FollowRepositoryQuery.class)
@@ -96,5 +97,20 @@ public class FollowRepositoryQueryTest extends DummyEntity {
 
         // then
         Assertions.assertThat(followCountRespDto.getFollowCount());
+    }
+
+    @Test
+    public void findFollowerCountByUserId_test() {
+        // given
+        Long userId = 1L;
+
+        // when
+        FollowerCountRespDto followerCountRespDto = followRepositoryQuery
+                .findFollowerCountByUserId(userId);
+        System.out
+                .println("테스트 : followerCountRespDto.getFollowerCount() : " + followerCountRespDto.getFollowerCount());
+
+        // then
+        Assertions.assertThat(followerCountRespDto.getFollowerCount());
     }
 }
