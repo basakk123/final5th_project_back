@@ -41,9 +41,11 @@ public class UserRespDto {
     @Setter
     @Getter
     public static class UserRealnameRespDto {
+        private Long userId;
         private String userName;
 
         public UserRealnameRespDto(User user) {
+            this.userId = user.getUserId();
             this.userName = user.getUserRealname();
         }
     }
