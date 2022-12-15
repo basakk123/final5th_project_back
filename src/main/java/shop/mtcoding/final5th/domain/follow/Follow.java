@@ -33,7 +33,7 @@ public class Follow {
     @Column(nullable = false)
     private Long followingUserId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
 
     @Builder

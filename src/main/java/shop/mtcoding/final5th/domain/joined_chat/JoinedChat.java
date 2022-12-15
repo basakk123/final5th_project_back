@@ -30,7 +30,7 @@ public class JoinedChat {
     @Column(nullable = false)
     private Long chatRoomId2;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp joinedChatCreatedAt;
 
     @Builder

@@ -32,6 +32,6 @@ public class ChatMessage {
     @Column(length = 10000)
     private String chatMessageContents;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp chatMessageCreatedAt;
 }

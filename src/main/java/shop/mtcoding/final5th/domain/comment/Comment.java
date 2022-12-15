@@ -34,7 +34,7 @@ public class Comment {
     @Column(nullable = false, length = 255)
     private String commentContent;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp commentCreatedAt;
 
     @Builder

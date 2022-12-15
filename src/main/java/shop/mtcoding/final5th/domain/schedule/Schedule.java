@@ -37,7 +37,7 @@ public class Schedule {
     @Column(nullable = false)
     private String scheduleTitle;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp scheduleCreatedAt;
     private Timestamp scheduleStartAt;
     private Timestamp scheduleFinishAt;

@@ -29,7 +29,7 @@ public class SubSchedule {
     @Column(nullable = false, length = 255)
     private String subScheduleTitle;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp subScheduleCreatedAt;
     private Timestamp subScheduleStartAt;
     private Timestamp subScheduleFinishAt;

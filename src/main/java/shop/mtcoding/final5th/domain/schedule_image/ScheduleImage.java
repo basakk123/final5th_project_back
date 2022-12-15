@@ -38,6 +38,6 @@ public class ScheduleImage {
     @Column(nullable = false, length = 255)
     private String scheduleImageUuid;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp shceduleImageCreatedAt;
 }
