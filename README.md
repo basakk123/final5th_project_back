@@ -7,6 +7,8 @@ CREATE DATABASE final5;
 GRANT ALL PRIVILEGES ON final5.* TO 'final5'@'%';
 
 USE final5;
+
+application-dev.yml 파일에 ddl-auto: none 부분 ddl-auto: create 로 변경해서 테이블 만들고 테스트하세요~
 ```
 
 ### 더미데이터 생성
