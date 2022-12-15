@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.final5th.config.annotation.AuthorizationCheck;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.ResponseDto;
@@ -39,12 +40,9 @@ public class TodoApiController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final HttpSession session;
 
+    @AuthorizationCheck
     @GetMapping("/user/{userId}/todo")
     public ResponseEntity<?> findTodoListByUserId(@PathVariable Long userId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         TodoListRespDto todoListRespDto = todoService.findTodoListByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 리스트 보기 성공", todoListRespDto),
                 HttpStatus.OK);
@@ -63,12 +61,9 @@ public class TodoApiController {
                 HttpStatus.OK);
     }
 
+    @AuthorizationCheck
     @GetMapping("/user/{userId}/todo/{todoId}")
     public ResponseEntity<?> findTodoDetail(@PathVariable Long userId, @PathVariable Long todoId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         TodoDetailRespDto todoDetailRespDto = todoService.findTodoDetail(userId, todoId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 상세보기 성공", todoDetailRespDto),
                 HttpStatus.OK);
@@ -88,25 +83,19 @@ public class TodoApiController {
                 HttpStatus.CREATED);
     }
 
+    @AuthorizationCheck
     @PutMapping("/user/{userId}/todo/{todoId}")
     public ResponseEntity<?> updateTodo(@PathVariable Long userId, @PathVariable Long todoId,
             @RequestBody TodoUpdateReqDto todoUpdateReqDto) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         TodoUpdateRespDto todoUpdateRespDto = todoService.updateTodo(userId, todoId,
                 todoUpdateReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "투두 수정 성공", todoUpdateRespDto),
                 HttpStatus.CREATED);
     }
 
+    @AuthorizationCheck
     @DeleteMapping("/user/{userId}/todo/{todoId}")
     public ResponseEntity<?> deleteByTodoId(@PathVariable Long userId, @PathVariable Long todoId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         todoService.deleteByTodoId(userId, todoId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "투두 삭제 성공", null),
                 HttpStatus.OK);

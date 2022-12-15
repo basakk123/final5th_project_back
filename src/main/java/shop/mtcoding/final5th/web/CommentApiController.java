@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.final5th.config.annotation.AuthorizationCheck;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.CommentReqDto.CommentSaveReqDto;
@@ -76,26 +77,20 @@ public class CommentApiController {
                 HttpStatus.CREATED);
     }
 
+    @AuthorizationCheck
     @PutMapping("/user/{userId}/schedule/{scheduleId}/comment/{commentId}")
     public ResponseEntity<?> updateComment(@PathVariable Long userId, @PathVariable Long scheduleId,
             @PathVariable Long commentId,
             @RequestBody CommentUpdateReqDto commentUpdateReqDto) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         CommentUpdateRespDto commentUpdateRespDto = commentService.updateComment(userId, scheduleId, commentId,
                 commentUpdateReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "코멘트 수정 성공", commentUpdateRespDto),
                 HttpStatus.CREATED);
     }
 
+    @AuthorizationCheck
     @DeleteMapping("/user/{userId}/comment/{commentId}")
     public ResponseEntity<?> deleteByCommentId(@PathVariable Long userId, @PathVariable Long commentId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         commentService.deleteByCommentId(userId, commentId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "코멘트 삭제 성공", null),
                 HttpStatus.OK);

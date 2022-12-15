@@ -60,36 +60,27 @@ public class CategoryApiController {
                 HttpStatus.OK);
     }
 
+    @AuthorizationCheck
     @GetMapping("/user/{userId}/category/{categoryId}")
     public ResponseEntity<?> findCategoryDetail(@PathVariable Long userId, @PathVariable Long categoryId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         CategoryDetailRespDto categoryDetailRespDto = categoryService.findCategoryDetail(userId, categoryId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "카테고리 상세보기 성공", categoryDetailRespDto),
                 HttpStatus.OK);
     }
 
+    @AuthorizationCheck
     @PutMapping("/user/{userId}/category/{categoryId}")
     public ResponseEntity<?> updateCategory(@PathVariable Long userId, @PathVariable Long categoryId,
             @RequestBody CategoryUpdateReqDto categoryUpdateReqDto) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         CategoryUpdateRespDto categoryUpdateRespDto = categoryService.updateCategory(userId, categoryId,
                 categoryUpdateReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "카테고리 수정 성공", categoryUpdateRespDto),
                 HttpStatus.CREATED);
     }
 
+    @AuthorizationCheck
     @DeleteMapping("/user/{userId}/category/{categoryId}")
     public ResponseEntity<?> deleteByCategoryId(@PathVariable Long userId, @PathVariable Long categoryId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         categoryService.deleteByCategoryId(userId, categoryId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "카테고리 삭제 성공", null),
                 HttpStatus.OK);

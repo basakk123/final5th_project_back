@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.final5th.config.annotation.AuthorizationCheck;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.ResponseDto;
@@ -43,29 +44,18 @@ public class UserApiController {
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "회원가입 성공", joinRespDto), HttpStatus.CREATED);
     }
 
+    @AuthorizationCheck
     @PutMapping("/s/api/user/{userId}/password")
     public ResponseEntity<?> updatePassword(@PathVariable Long userId,
             @RequestBody PasswordUpdateReqDto passwordUpdateReqDto) {
-        log.debug("디버그 : 비밀번호 수정 컨트롤러 실행됨");
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        log.debug("디버그 :  loginUser.getUserId() " + loginUser.getUserId());
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         PasswordUpdateRespDto passwordUpdateRespDto = userService.updatePassword(userId, passwordUpdateReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "비밀번호 수정 성공", passwordUpdateRespDto),
                 HttpStatus.CREATED);
     }
 
+    @AuthorizationCheck
     @GetMapping("/s/api/user/{userId}/userrealname")
     public ResponseEntity<?> findUserRealnameById(@PathVariable Long userId) {
-        log.debug("디버그 : findUserRealnameById 컨트롤러 실행됨");
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        log.debug("디버그 : loginUser " + loginUser);
-        log.debug("디버그 : loginUser.getUserId() " + loginUser.getUserId());
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         UserRealnameRespDto userRealnameRespDto = userService.findUserRealnameById(userId);
         log.debug("디버그 : findUserRealnameById 컨트롤러 리턴 전");
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "유저리얼네임보기 성공", userRealnameRespDto),
@@ -79,24 +69,18 @@ public class UserApiController {
                 HttpStatus.OK);
     }
 
+    @AuthorizationCheck
     @GetMapping("/s/api/user/{userId}/profile")
     public ResponseEntity<?> findProfileDetail(@PathVariable Long userId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         ProfileDetailRespDto profileDetailRespDto = userService.findProfileDetail(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "프로필 보기 성공", profileDetailRespDto),
                 HttpStatus.OK);
     }
 
+    @AuthorizationCheck
     @PutMapping("/s/api/user/{userId}/profile")
     public ResponseEntity<?> updateProfile(@PathVariable Long userId,
             @RequestBody ProfileUpdateReqDto profileUpdateReqDto) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         ProfileUpdateRespDto profileUpdateRespDto = userService.updateProfile(userId, profileUpdateReqDto);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.CREATED, "프로필 수정 성공", profileUpdateRespDto),
                 HttpStatus.CREATED);

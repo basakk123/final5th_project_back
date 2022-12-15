@@ -37,8 +37,8 @@ public class FollowApiController {
     @GetMapping("/user/{followingUserId}/follow")
     public ResponseEntity<?> findFollowListByFollowingUserId(@PathVariable Long followingUserId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != followingUserId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        if (loginUser.getUserId() == null) {
+            throw new CustomApiException("로그인을 진행해주세요", HttpStatus.FORBIDDEN);
         }
         List<FollowListRespDto> followListRespDtos = followService.findFollowListByFollowingUserId(followingUserId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로우 리스트 보기 성공",
@@ -49,8 +49,8 @@ public class FollowApiController {
     @GetMapping("/user/{userId}/follower")
     public ResponseEntity<?> findFollowerListByUserId(@PathVariable Long userId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        if (loginUser.getUserId() == null) {
+            throw new CustomApiException("로그인을 진행해주세요", HttpStatus.FORBIDDEN);
         }
         List<FollowerListRespDto> followerListRespDtos = followService.findFollowerListByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로워 리스트 보기 성공",
@@ -61,8 +61,8 @@ public class FollowApiController {
     @GetMapping("/user/{followingUserId}/follow/count")
     public ResponseEntity<?> findFollowCountByFollowingUserId(@PathVariable Long followingUserId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != followingUserId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        if (loginUser.getUserId() == null) {
+            throw new CustomApiException("로그인을 진행해주세요", HttpStatus.FORBIDDEN);
         }
         FollowCountRespDto followCountRespDto = followService.findFollowCountByFollowingUserId(followingUserId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로우 개수 보기 성공",
@@ -73,8 +73,8 @@ public class FollowApiController {
     @GetMapping("/user/{userId}/follower/count")
     public ResponseEntity<?> findFollowerCountByUserId(@PathVariable Long userId) {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
+        if (loginUser.getUserId() == null) {
+            throw new CustomApiException("로그인을 진행해주세요", HttpStatus.FORBIDDEN);
         }
         FollowerCountRespDto followerCountRespDto = followService.findFollowerCountByUserId(userId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "팔로워 개수 보기 성공",

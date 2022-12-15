@@ -93,7 +93,7 @@ public class NewsApiControllerTest extends DummyEntity {
     public void findNewsListByTargetUserId_test() throws Exception {
         // given
         Long targetUserId = 1L;
-        session.getAttribute("loginUser");
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 
         // when
         ResultActions resultActions = mvc

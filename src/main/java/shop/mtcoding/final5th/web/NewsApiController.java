@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.final5th.config.annotation.AuthorizationCheck;
 import shop.mtcoding.final5th.config.auth.LoginUser;
 import shop.mtcoding.final5th.config.exception.CustomApiException;
 import shop.mtcoding.final5th.dto.NewsReqDto.NewsSaveReqDto;
@@ -59,12 +60,9 @@ public class NewsApiController {
                 HttpStatus.OK);
     }
 
+    @AuthorizationCheck
     @DeleteMapping("/user/{userId}/news/{newsId}")
     public ResponseEntity<?> deleteByNewsId(@PathVariable Long userId, @PathVariable Long newsId) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        if (loginUser.getUserId() != userId) {
-            throw new CustomApiException("권한이 없습니다", HttpStatus.FORBIDDEN);
-        }
         newsService.deleteByNewsId(userId, newsId);
         return new ResponseEntity<>(new ResponseDto<>(HttpStatus.OK, "알림 삭제 성공", null),
                 HttpStatus.OK);
