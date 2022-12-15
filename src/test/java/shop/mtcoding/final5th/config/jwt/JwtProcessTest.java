@@ -14,4 +14,14 @@ public class JwtProcessTest {
         String token = JwtProcess.create(loginUser);
         System.out.println(token);
     }
+
+    @Test
+    public void verify_test() throws Exception {
+        // given
+
+        // when
+
+        // then
+
+    }
 }

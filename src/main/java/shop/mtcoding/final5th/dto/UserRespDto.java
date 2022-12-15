@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import shop.mtcoding.final5th.domain.user.User;
-import shop.mtcoding.final5th.dto.UserRespDto.UserListRespDto.UserDto;
 
 public class UserRespDto {
 
@@ -42,10 +41,10 @@ public class UserRespDto {
     @Setter
     @Getter
     public static class UserRealnameRespDto {
-        private String userRealname;
+        private String userName;
 
         public UserRealnameRespDto(User user) {
-            this.userRealname = user.getUserRealname();
+            this.userName = user.getUserRealname();
         }
     }
 
@@ -121,6 +120,25 @@ public class UserRespDto {
             this.userRealname = user.getUserRealname();
             this.userImgfile = user.getUserImgfile();
             this.userProfileIntro = user.getUserProfileIntro();
+        }
+    }
+
+    @Getter
+    public static class UserTokenRespDto {
+        private Long userId;
+        private String userName;
+        private String userPassword;
+        private String userEmail;
+        private Timestamp userCreatedAt;
+        private Timestamp userUpdatedAt;
+
+        public UserTokenRespDto(User user) {
+            this.userId = user.getUserId();
+            this.userName = user.getUserName();
+            this.userPassword = "";
+            this.userEmail = user.getUserEmail();
+            this.userCreatedAt = user.getUserCreatedAt();
+            this.userUpdatedAt = user.getUserUpdatedAt();
         }
     }
 }
