@@ -89,7 +89,7 @@ public class JwtAuthenticationFilter implements Filter {
         resp.setContentType("application/json; charset=utf-8");
         resp.setHeader("Authorization", "Bearer " + token);
         PrintWriter out = resp.getWriter();
-        resp.setStatus(200);
+        resp.setStatus(201);
         ResponseDto<?> responseDto = new ResponseDto<>(HttpStatus.CREATED, "성공", new LoginUser(userPS));
         ObjectMapper om = new ObjectMapper();
         String body = om.writeValueAsString(responseDto);
